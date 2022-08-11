@@ -1,7 +1,19 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * jmud - (J)ava (M)easures, (U)nits, and (D)imensions
+ * Copyright (C) 2022 andreww1011
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.jamw.jmud;
 
@@ -13,7 +25,7 @@ import java.util.stream.Collectors;
 
 /**
  *
- * @author Andrew
+ * @author andreww1011
  */
 public abstract class Units {
     
@@ -44,7 +56,7 @@ public abstract class Units {
      * Fundamental unit for measurements of {@link Dimensions#DIMENSIONLESS no dimension}.
      * Denoted as <i>"-"</i>.
      */
-    public static final FundamentalUnit UNITLESS = newFundamentalUnit(Dimensions.DIMENSIONLESS,"UNITLESS","-");
+    public static final FundamentalUnit UNITLESS = FundamentalUnit.UNITLESS;
     /**
      * Fundamental unit for measurements of {@link Dimensions#LENGTH length}, defined as the distance
      * traveled by light in a vacuum in 1/299 792 458 {@link #SECOND second}.
@@ -632,7 +644,7 @@ public abstract class Units {
         NANOSECOND      = Units.nano(SECOND);
         
         //MASS
-        GRAM            = newUnit().ofDimension(Dimensions.LENGTH).asExactly(MILLI).ofA(KILOGRAM).withName("GRAM").withSymbol("g").create();
+        GRAM            = newUnit().ofDimension(Dimensions.MASS).asExactly(MILLI).ofA(KILOGRAM).withName("GRAM").withSymbol("g").create();
         MILLIGRAM       = Units.milli(GRAM);
         
         //LENGTH
@@ -1454,7 +1466,7 @@ public abstract class Units {
         private Unit create() {
             if (!compoundMap.isEmpty()) {
                 if (scale != null)
-                    throw new IllegalStateException("scaleFunction not unity.");
+                    throw new IllegalStateException("scale not unity.");
                 else 
                     return createCompoundUnit();
             } else {
@@ -1522,7 +1534,7 @@ public abstract class Units {
         
         private static void checkDimension(Dimension thisUnit, Dimension declared) {
             if (!thisUnit.isCommensurable(declared))
-                throw new IncommensurableDimensionException();
+                throw new IncommensurableDimensionException("Attempting to create unit with dimension [" + thisUnit.getComposition().toString() + "] but was declared with dimension [" + declared.getComposition().toString() + "].");
         }
         
         private static String calcCompoundName(Map<Unit,Exponent> m) {
