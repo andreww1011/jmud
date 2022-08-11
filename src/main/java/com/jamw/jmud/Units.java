@@ -1495,11 +1495,13 @@ public abstract class Units {
                     d = d.multiply(c);
                 }
             }
-            Scalar scale = n.divide(d);
-            Dimension dimension = db.create();
+            Scalar scal = n.divide(d);
+            Dimension dim = db.create();
+            if (dimension != null) 
+                checkDimension(dim,dimension);
             String nn = isBlank(name) ? calcCompoundName(map) : name;
             String ss = isBlank(symbol) ? calcCompoundSymbol(map) : symbol;
-            return new UnitImpl(dimension,scale,nn,ss);
+            return new UnitImpl(dim,scal,nn,ss);
         }
         
         private static void cleanCompoundMap(Map<Unit,Exponent> map) {
@@ -1516,6 +1518,11 @@ public abstract class Units {
         
         private static boolean isBlank(String s) {
             return s == null || s.isBlank();
+        }
+        
+        private static void checkDimension(Dimension thisUnit, Dimension declared) {
+            if (!thisUnit.isCommensurable(declared))
+                throw new IncommensurableDimensionException();
         }
         
         private static String calcCompoundName(Map<Unit,Exponent> m) {
@@ -1569,6 +1576,8 @@ public abstract class Units {
         }
         
         private Unit createRatioUnit() {
+            if (dimension != null) 
+                checkDimension(refUnit.getDimension(),dimension);
             Scalar s = scale.multiply(refUnit.getScale());
             String nn = isBlank(name) ? calcRatioName(scale,refUnit) : name;
             String ss = isBlank(symbol) ? calcRatioSymbol(scale,refUnit) : symbol;

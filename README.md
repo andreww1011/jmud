@@ -38,7 +38,7 @@ System.out.println(speed.toString());  //prints "42.0 kph"
 | create dimension | `Dimensions.newFundamentalDimension()`<br>`Dimensions.newDimension()` |
 | create unit | `Units.newUnit()` |
 | create measurement | `Measures.take(...)` |
-| manipulate measurement | `Measure<?> m;`<br>`m.negate()`<br>`m.reciprocal()`<br>`m.add(...)`<br>`m.subtract(...)`<br>`m.multiply(...)`<br>`m.divide(...)`|
+| manipulate measurement | `Measure<?> m;`<br>`m.add(...)`<br>`m.subtract(...)`<br>`m.multiply(...)`<br>`m.divide(...)`|
 | convert unit | `m.as(unit)` |
 
 ## Advanced Features
