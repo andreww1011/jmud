@@ -23,13 +23,6 @@ package com.jamw.jmud;
  */
 public interface FundamentalUnit extends Unit {
     
-    /**
-     * Fundamental unit for measurements of {@link Dimensions#DIMENSIONLESS no dimension}.
-     * Denoted as <i>"-"</i>.
-     */
-    public static final FundamentalUnit UNITLESS 
-            = Units.newFundamentalUnit(FundamentalDimension.DIMENSIONLESS,"UNITLESS","-");
-    
     @Override
     FundamentalDimension getDimension();
 }

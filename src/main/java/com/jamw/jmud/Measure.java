@@ -119,5 +119,7 @@ public interface Measure<F extends Field<F>> extends Comparable<Measure<F>>{
     
     Measure<F> divide(Expression expression) throws ArithmeticException;
     
+    Measure<F> power(Exponent exponent) throws ArithmeticException;
+    
     Measure<F> as(Unit unit) throws IncommensurableDimensionException;
 }

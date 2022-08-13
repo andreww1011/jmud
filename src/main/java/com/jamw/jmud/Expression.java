@@ -89,5 +89,7 @@ public interface Expression {
     
     Expression divide(Expression expression) throws ArithmeticException;
     
+    Expression power(Exponent exponent) throws ArithmeticException;
+    
     <T extends Field<T>> Measure<T> using(T.Factory<T> factory);
 }

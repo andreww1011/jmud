@@ -60,6 +60,13 @@ public interface Field<F extends Field<F>> extends Comparable<F> {
         return power(exponent.using(getFactory()));
     }
     
+    public default F power(Exponent exponent) {
+        F e = getFactory().of(exponent.numerator());
+        if (exponent.denominator() != 1) //magic number
+            e = e.divide(getFactory().of(exponent.denominator()));
+        return power(e);
+    }
+    
     public default F logarithm(Scalar base) {
         return logarithm(base.using(getFactory()));
     }

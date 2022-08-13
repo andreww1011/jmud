@@ -37,7 +37,8 @@ public abstract class Dimensions {
      * <p>
      * Denoted as <i>[-]</i>
      */
-    public static final FundamentalDimension DIMENSIONLESS = FundamentalDimension.DIMENSIONLESS;
+    public static final FundamentalDimension DIMENSIONLESS 
+    = Dimensions.newFundamentalDimension("DIMENSIONLESS","-");
     
     /**
      * Fundamental dimension of <i>mass</i>, the abstraction of the 

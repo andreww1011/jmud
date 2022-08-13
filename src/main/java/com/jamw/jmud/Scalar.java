@@ -76,6 +76,8 @@ public interface Scalar {
     Scalar power(String exponent) throws ArithmeticException;
     
     Scalar power(Scalar exponent) throws ArithmeticException;
+
+    Scalar power(Exponent exponent) throws ArithmeticException;    
     
     Scalar logarithm(int base) throws ArithmeticException;
     

@@ -26,11 +26,11 @@ import java.util.function.Function;
  *
  * @author andreww1011
  */
-public abstract class Measures {
+public abstract class Expressions {
     
     static final Scalar ONE = take(1); //magic number
     
-    private Measures(){}
+    private Expressions(){}
     
     public static final Scalar take(int scalar) {
         return ScalarImpl.take(scalar);
@@ -248,7 +248,7 @@ public abstract class Measures {
             T.Factory<T> factory = measure.getFactory();
             return MeasureImpl.take(using(factory),Units.UNITLESS).divide(measure);
         }
-        
+
         @Override
         public Scalar power(int exponent) throws ArithmeticException {
             Function<Field.Factory,Field> g = (factory) -> using(factory).power(factory.of(exponent));
@@ -271,6 +271,17 @@ public abstract class Measures {
             Function<Field.Factory,Field> g = (factory) -> using(factory).power(exponent.using(factory));
             StringBuilder sb = new StringBuilder(toString.length() + exponent.toString().length() + 5); //magic number
             sb.append("(").append(toString).append(")^(").append(exponent.toString()).append(")");
+            return new ScalarImpl(g,sb.toString());
+        }
+        
+        @Override
+        public Scalar power(Exponent exponent) throws ArithmeticException {
+            Function<Field.Factory,Field> g = (factory) -> using(factory).power(exponent);
+            String i = exponent.denominator() == 1 ? 
+                       Integer.toString(exponent.numerator()) :
+                       Integer.toString(exponent.numerator()) + "/" + Integer.toString(exponent.denominator());
+            StringBuilder sb = new StringBuilder(toString.length() + i.length() + 5); //magic number
+            sb.append("(").append(toString).append(")^(").append(i).append(")");
             return new ScalarImpl(g,sb.toString());
         }
 
@@ -536,6 +547,13 @@ public abstract class Measures {
             Dimension d = Dimensions.newDimension().append(getDimension()).append(expression.getDimension(),-1).create();
             return new ExpressionImpl(g,d);
         }
+        
+        @Override
+        public Expression power(Exponent exponent) {
+            Function<Field.Factory,Measure> g = (factory) -> using(factory).power(exponent);
+            Dimension d = Dimensions.newDimension().append(getDimension(),exponent).create();
+            return new ExpressionImpl(g,d);
+        }
 
         @Override
         public <T extends Field<T>> Measure<T> using(T.Factory<T> factory) {
@@ -778,6 +796,13 @@ public abstract class Measures {
         @Override
         public Measure<F> divide(Expression expression) {
             return divide(expression.using(getFactory()));
+        }
+        
+        @Override
+        public Measure<F> power(Exponent exponent) {
+            F v = getField().power(exponent);
+            Unit u = Units.newUnit().as(getUnit(),exponent).create();
+            return take(v,u);
         }
 
         @Override

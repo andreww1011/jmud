@@ -17,6 +17,8 @@
  */
 package com.jamw.jmud.fields;
 
+import com.jamw.jmud.Exponent;
+import com.jamw.jmud.Exponents;
 import com.jamw.jmud.Field;
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -110,11 +112,13 @@ public final class BigDecimal128Field implements Field<BigDecimal128Field>, Fiel
             return ONE;
         if (exponent.isEqualTo(ONE))
             return this;
+        if (exponent.isLessThan(ZERO))
+            throw new UnsupportedOperationException();
         if (isInteger(exponent))  {
             int i = exponent.value().intValue();
-            return new BigDecimal128Field(value().pow(i));
+            return new BigDecimal128Field(value.pow(i));
         } 
-        if (exponent.isLessThan(ZERO) || !isSquareRoot(exponent))
+        if (!hasSquareRoot(exponent))
             throw new UnsupportedOperationException();
         int i = exponent.value().intValue();
         return new BigDecimal128Field(value.pow(i).multiply(value.sqrt(MATH_CONTEXT)));
@@ -132,8 +136,29 @@ public final class BigDecimal128Field implements Field<BigDecimal128Field>, Fiel
     
     private static BigDecimal ONE_HALF = new BigDecimal("0.5");
     
-    private static boolean isSquareRoot(BigDecimal128Field d) {
+    private static boolean hasSquareRoot(BigDecimal128Field d) {
         return d.value().remainder(ONE_HALF).compareTo(BigDecimal.ZERO) == 0;
+    }
+    
+    @Override
+    public final BigDecimal128Field power(Exponent exponent) {
+        if (exponent.isEqualTo(Exponents.ZERO))
+            return ONE;
+        if (exponent.isEqualTo(Exponents.ONE))
+            return this;
+        if (exponent.isLessThan(Exponents.ZERO))
+            throw new UnsupportedOperationException();
+        if (exponent.denominator() == 1) 
+            return new BigDecimal128Field(value.pow((exponent.numerator())));
+        if (exponent.denominator() % 2 != 0) 
+            throw new UnsupportedOperationException();
+        int n = exponent.denominator() / 2;
+        BigDecimal v = value;
+        for (int i=0; i < n; i++)
+            v = v.sqrt(MATH_CONTEXT);
+        if (exponent.numerator() != 1)
+            v = v.pow(exponent.numerator());
+        return new BigDecimal128Field(v);
     }
     
     @Override

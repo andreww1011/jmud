@@ -52,11 +52,14 @@ public abstract class Units {
     private static final String ZEPTO   = "0.000000000000000000001";
     private static final String YOCTO   = "0.000000000000000000000001";
     
+    static final String PI = "3.141592653589793238462643383279";
+    static final String E = "2.718281828459045235360287471352";
+    
     /**
      * Fundamental unit for measurements of {@link Dimensions#DIMENSIONLESS no dimension}.
      * Denoted as <i>"-"</i>.
      */
-    public static final FundamentalUnit UNITLESS = FundamentalUnit.UNITLESS;
+    public static final FundamentalUnit UNITLESS = Units.newFundamentalUnit(Dimensions.DIMENSIONLESS,"UNITLESS","-");
     /**
      * Fundamental unit for measurements of {@link Dimensions#LENGTH length}, defined as the distance
      * traveled by light in a vacuum in 1/299 792 458 {@link #SECOND second}.
@@ -629,7 +632,7 @@ public abstract class Units {
     static {
         //DIMENSIONLESS
         RADIAN          = newUnit().ofDimension(Dimensions.ANGLE).as(UNITLESS).withName("RADIAN").withSymbol("rad").create();
-        DEGREE          = newUnit().ofDimension(Dimensions.ANGLE).asTheRatio(Constants.pi).over(180).ofA(RADIAN).withName("DEGREE").withSymbol("\u00B0").create();
+        DEGREE          = newUnit().ofDimension(Dimensions.ANGLE).asTheRatio(PI).over(180).ofA(RADIAN).withName("DEGREE").withSymbol("\u00B0").create();
         STERADIAN       = newUnit().ofDimension(Dimensions.SOLID_ANGLE).as(UNITLESS).withName("STERADIAN").withSymbol("sr").create();
         STRAIN          = newUnit().ofDimension(Dimensions.STRAIN).as(UNITLESS).withName("STRAIN").create();
         PERCENT         = newUnit().ofDimension(Dimensions.DIMENSIONLESS).asTheRatio(1).over(100).ofA(UNITLESS).withName("PERCENT").withSymbol("%").create();
@@ -1349,7 +1352,7 @@ public abstract class Units {
         
         @Override
         public final Scalar getScale() {
-            return Measures.ONE;
+            return Expressions.ONE;
         }
     }
     
@@ -1478,8 +1481,8 @@ public abstract class Units {
         private Unit createCompoundUnit() {
             Map<Unit,Exponent> map = new HashMap<>(compoundMap);
             cleanCompoundMap(map);
-            Scalar n = Measures.ONE; //magic number
-            Scalar d = Measures.ONE; //magic number
+            Scalar n = Expressions.ONE; //magic number
+            Scalar d = Expressions.ONE; //magic number
             DimensionBuilder db = Dimensions.newDimension();
             for (Entry<Unit,Exponent> en : map.entrySet()) {
                 Unit u = en.getKey();
@@ -1495,11 +1498,12 @@ public abstract class Units {
                 if (ex.isEqualTo(Exponents.ONE)) {
                     c = u.getScale();
                 } else {
-                    if (ex.denominator() == 1) {
-                        c = u.getScale().power(ex.numerator());
-                    } else {
-                        c = u.getScale().power(Measures.take(ex.numerator()).divide(ex.denominator()));
-                    }
+                    c = u.getScale().power(ex);
+//                    if (ex.denominator() == 1) {
+//                        c = u.getScale().power(ex.numerator());
+//                    } else {
+//                        c = u.getScale().power(Expressions.take(ex.numerator()).divide(ex.denominator()));
+//                    }
                 }
                 if (e.isGreaterThan(Exponents.ZERO)) {
                     n = n.multiply(c);
@@ -1670,12 +1674,12 @@ public abstract class Units {
 
         @Override
         public RatioUnitBuilder asTheRatio(int numerator) {
-            return asTheRatio(Measures.take(numerator));
+            return asTheRatio(Expressions.take(numerator));
         }
 
         @Override
         public RatioUnitBuilder asTheRatio(String numerator) {
-            return asTheRatio(Measures.take(numerator));
+            return asTheRatio(Expressions.take(numerator));
         }
         
         @Override
@@ -1685,12 +1689,12 @@ public abstract class Units {
 
         @Override
         public TransformationUnitBuilder asExactly(int scalar) {
-            return asExactly(Measures.take(scalar));
+            return asExactly(Expressions.take(scalar));
         }
 
         @Override
         public TransformationUnitBuilder asExactly(String scalar) {
-            return asExactly(Measures.take(scalar));
+            return asExactly(Expressions.take(scalar));
         }
         
         @Override
@@ -1803,12 +1807,12 @@ public abstract class Units {
 
         @Override
         public UnitBuilder.TransformationUnitBuilder over(int denominator) {
-            return over(Measures.take(denominator));
+            return over(Expressions.take(denominator));
         }
 
         @Override
         public UnitBuilder.TransformationUnitBuilder over(String denominator) {
-            return over(Measures.take(denominator));
+            return over(Expressions.take(denominator));
         }
         
         @Override
@@ -1885,12 +1889,12 @@ public abstract class Units {
 
         @Override
         public UnitBuilder.RatioDimensionedUnitBuilder asTheRatio(int numerator) {
-            return asTheRatio(Measures.take(numerator));
+            return asTheRatio(Expressions.take(numerator));
         }
 
         @Override
         public UnitBuilder.RatioDimensionedUnitBuilder asTheRatio(String numerator) {
-            return asTheRatio(Measures.take(numerator));
+            return asTheRatio(Expressions.take(numerator));
         }
         
         @Override
@@ -1900,12 +1904,12 @@ public abstract class Units {
 
         @Override
         public UnitBuilder.TransformationDimensionedUnitBuilder asExactly(int scalar) {
-            return asExactly(Measures.take(scalar));
+            return asExactly(Expressions.take(scalar));
         }
 
         @Override
         public UnitBuilder.TransformationDimensionedUnitBuilder asExactly(String scalar) {
-            return asExactly(Measures.take(scalar));
+            return asExactly(Expressions.take(scalar));
         }
         
         @Override
@@ -2018,12 +2022,12 @@ public abstract class Units {
 
         @Override
         public UnitBuilder.TransformationDimensionedUnitBuilder over(int denominator) {
-            return over(Measures.take(denominator));
+            return over(Expressions.take(denominator));
         }
 
         @Override
         public UnitBuilder.TransformationDimensionedUnitBuilder over(String denominator) {
-            return over(Measures.take(denominator));
+            return over(Expressions.take(denominator));
         }
         
         @Override

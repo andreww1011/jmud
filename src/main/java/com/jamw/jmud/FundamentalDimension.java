@@ -23,12 +23,4 @@ package com.jamw.jmud;
  */
 public interface FundamentalDimension extends Dimension {
     
-    /**
-     * Fundamental dimension representing the special null-value dimension.
-     * <p>
-     * Denoted as <i>[-]</i>
-     */
-    public static final FundamentalDimension DIMENSIONLESS 
-    = Dimensions.newFundamentalDimension("DIMENSIONLESS","-");
-    
 }
