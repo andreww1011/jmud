@@ -21,7 +21,9 @@ package com.jamw.jmud;
  *
  * @author andreww1011
  */
-public interface FundamentalDimension extends Dimension {
+public interface FundamentalPair {
+    
+    FundamentalDimension getFundamentalDimension();
     
     FundamentalUnit getFundamentalUnit();
 }

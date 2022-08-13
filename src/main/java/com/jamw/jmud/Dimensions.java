@@ -20,7 +20,6 @@ package com.jamw.jmud;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -37,7 +36,7 @@ public abstract class Dimensions {
      * <p>
      * Denoted as <i>[-]</i>
      */
-    public static final FundamentalDimension DIMENSIONLESS = FundamentalDimension.DIMENSIONLESS;
+    public static final FundamentalDimension DIMENSIONLESS = Universe.DIMENSIONLESS;
     
     /**
      * Fundamental dimension of <i>mass</i>, the abstraction of the 
@@ -46,8 +45,7 @@ public abstract class Dimensions {
      * <p>
      * Denoted as <i>[M]</i>
      */
-    public static final FundamentalDimension MASS                    
-    = newFundamentalDimension("MASS","M");
+    public static final FundamentalDimension MASS = Universe.MASS;
     
     /**
      * Fundamental dimension of <i>length</i>, the abstraction of the
@@ -55,8 +53,7 @@ public abstract class Dimensions {
      * <p>
      * Denoted as <i>[L]</i>
      */
-    public static final FundamentalDimension LENGTH                  
-    = newFundamentalDimension("LENGTH","L");
+    public static final FundamentalDimension LENGTH = Universe.LENGTH;
     
     /**
      * Fundamental dimension of <i>time</i>, the abstraction of the perception
@@ -65,8 +62,7 @@ public abstract class Dimensions {
      * <p>
      * Denoted as <i>[T]</i>
      */
-    public static final FundamentalDimension TIME                    
-    = newFundamentalDimension("TIME","T");
+    public static final FundamentalDimension TIME = Universe.TIME;
     
     /**
      * Fundamental dimension of <i>electric current</i>, the abstraction of the
@@ -74,8 +70,7 @@ public abstract class Dimensions {
      * <p>
      * Denoted as <i>[I]</i>
      */
-    public static final FundamentalDimension ELECTRIC_CURRENT        
-    = newFundamentalDimension("ELECTRIC CURRENT","I");
+    public static final FundamentalDimension ELECTRIC_CURRENT = Universe.ELECTRIC_CURRENT;
     
     /**
      * Fundamental dimension of <i>thermodynamic temperature</i>, the 
@@ -84,8 +79,7 @@ public abstract class Dimensions {
      * <p>
      * Denoted as <i>[θ]</i>
      */
-    public static final FundamentalDimension THERMODYNAMIC_TEMPERATURE
-    = newFundamentalDimension("THERMODYNAMIC TEMPERATURE","θ");
+    public static final FundamentalDimension THERMODYNAMIC_TEMPERATURE = Universe.THERMODYNAMIC_TEMPERATURE;
     
     /**
      * Fundamental dimension of <i>amount of substance</i>, the abstraction
@@ -93,8 +87,7 @@ public abstract class Dimensions {
      * <p>
      * Denoted as <i>[N]</i>
      */
-    public static final FundamentalDimension AMOUNT_OF_SUBSTANCE
-    = newFundamentalDimension("AMOUNT OF SUBSTANCE","N");
+    public static final FundamentalDimension AMOUNT_OF_SUBSTANCE = Universe.AMOUNT_OF_SUBSTANCE;
     
     /**
      * Fundamental dimension of <i>luminous intensity</i>, the abstraction
@@ -102,21 +95,15 @@ public abstract class Dimensions {
      * <p>
      * Denoted as <i>[J]</i>
      */
-    public static final FundamentalDimension LUMINOUS_INTENSITY
-    = newFundamentalDimension("LUMINOUS INTENSITY","J");
+    public static final FundamentalDimension LUMINOUS_INTENSITY = Universe.LUMINOUS_INTENSITY;
 
-
-    public static final FundamentalDimension newFundamentalDimension(String name, String symbol) {
-        return new FundamentalDimensionImpl(name, symbol);
-    }
-    
-    private static abstract class AbstractComposition implements Composition {
+    static abstract class AbstractComposition implements Composition {
         
         private boolean isHashcodeCalced, isToStringCalced;
         private int hashcode;
         private String toString;
         
-        private AbstractComposition() {
+        AbstractComposition() {
             isHashcodeCalced = false;
             isToStringCalced = false;
         }
@@ -193,9 +180,9 @@ public abstract class Dimensions {
         }
     }
     
-    private static abstract class AbstractCompositionComponent implements CompositionComponent {
+    static abstract class AbstractCompositionComponent implements CompositionComponent {
         
-        private AbstractCompositionComponent() {}
+        AbstractCompositionComponent() {}
         
         @Override
         public final boolean equals(Object o) {
@@ -232,11 +219,11 @@ public abstract class Dimensions {
         }
     }
     
-    private static abstract class AbstractDimension implements Dimension {
+    static abstract class AbstractDimension implements Dimension {
 
         private final String name, symbol;
         
-        private AbstractDimension(String name, String symbol) {
+        AbstractDimension(String name, String symbol) {
             this.name = name;
             this.symbol = symbol;
         }
@@ -259,80 +246,6 @@ public abstract class Dimensions {
         @Override
         public final int hashCode() {
             return super.hashCode();
-        }
-    }
-    
-    private static final class FundamentalDimensionImpl 
-            extends AbstractDimension
-            implements FundamentalDimension {
-        
-        private final Composition composition;
-        
-        private FundamentalDimensionImpl(String name, String symbol) {
-            super(name,symbol);
-            this.composition = new FundamentalDimensionCompositionImpl();
-        }
-        
-        private final class FundamentalDimensionCompositionImpl extends AbstractComposition {
-            
-            private final CompositionComponent cc;
-            
-            private FundamentalDimensionCompositionImpl() {
-                super();
-                cc = new FundamentalDimensionCompositionComponentImpl();
-            }
-            
-            private final class FundamentalDimensionCompositionComponentImpl extends AbstractCompositionComponent {
-                @Override
-                public FundamentalDimension getFundamentalDimension() {
-                    return FundamentalDimensionImpl.this;
-                }
-                @Override
-                public Exponent getExponent() {
-                    return Exponents.ONE;
-                }
-            }
-            
-            @Override
-            public Exponent getExponent(FundamentalDimension d) {
-                return FundamentalDimensionImpl.this.equals(d) ? Exponents.ONE : Exponents.ZERO;
-            }
-
-            @Override
-            public Iterator<CompositionComponent> iterator() {
-                return new FundamentalDimensionComponentIteratorImpl();
-            }
-            
-            private final class FundamentalDimensionComponentIteratorImpl 
-                    implements Iterator<CompositionComponent> {
-                private boolean hasNext;
-                private FundamentalDimensionComponentIteratorImpl() {
-                    hasNext = true;
-                }
-                @Override
-                public boolean hasNext() {
-                    return hasNext;
-                }
-                @Override
-                public CompositionComponent next() {
-                    if (hasNext()) {
-                        hasNext = false;
-                        return cc;
-                    }
-                    else
-                        throw new NoSuchElementException();
-                }
-            }
-        }
-        
-        @Override
-        public Composition getComposition() {
-            return composition;
-        }
-        
-        @Override
-        public final String toString() {
-            return "Fundamental Dimension: " + getName() + " [" + getSymbol() + "]";
         }
     }
     

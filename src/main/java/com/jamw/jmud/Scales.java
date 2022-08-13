@@ -66,8 +66,8 @@ public abstract class Scales {
         return new ScaleImpl(referenceUnit,name,symbol,BEL_FUNCTION,BEL_INVERSE_FUNCTION);
     }
     
-    private static UnaryOperator<Field> DECIBEL_FUNCTION = (f) -> BEL_FUNCTION.apply(f).divide(f.getFactory().of(10));
-    private static UnaryOperator<Field> DECIBEL_INVERSE_FUNCTION = (f) -> BEL_INVERSE_FUNCTION.apply(f.multiply(f.getFactory().of(10)));
+    private static UnaryOperator<Field> DECIBEL_FUNCTION = (f) -> BEL_FUNCTION.apply(f).multiply(f.getFactory().of(10));
+    private static UnaryOperator<Field> DECIBEL_INVERSE_FUNCTION = (f) -> BEL_INVERSE_FUNCTION.apply(f.divide(f.getFactory().of(10)));
     
     public static final Scale decibel(Unit referenceUnit) {
         return bel(referenceUnit,"DECIBEL-" + referenceUnit.getName(),"dB" + referenceUnit.getSymbol());
@@ -81,8 +81,8 @@ public abstract class Scales {
         return bel(referenceUnit,"NEPER-" + referenceUnit.getName(),"Np" + referenceUnit.getSymbol());
     }
     
-    private static UnaryOperator<Field> NEPER_FUNCTION = (f) -> f.logarithm(f.getFactory().of(Constants.euler));
-    private static UnaryOperator<Field> NEPER_INVERSE_FUNCTION = (f) -> f.getFactory().of(Constants.euler).power(f);
+    private static UnaryOperator<Field> NEPER_FUNCTION = (f) -> f.logarithm(Constants.euler.using(f.getFactory()));
+    private static UnaryOperator<Field> NEPER_INVERSE_FUNCTION = (f) -> Constants.euler.using(f.getFactory()).power(f);
     
     public static final Scale neper(Unit referenceUnit, String name, String symbol) {
         return new ScaleImpl(referenceUnit,name,symbol,NEPER_FUNCTION,NEPER_INVERSE_FUNCTION);
@@ -143,7 +143,7 @@ public abstract class Scales {
         @Override
         public <T extends Field<T>> Magnitude<T> of(T value) {
             T measureValue = (T)inverseFunction.apply(value);
-            Measure<T> measure = Measures.take(measureValue,refUnit);
+            Measure<T> measure = Expressions.take(measureValue,refUnit);
             return new MagnitudeImpl<>(value,this,measure);
         }
     }

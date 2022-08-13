@@ -168,7 +168,7 @@ public abstract class Exponents {
      * @param b exponent
      * @return the rational number exponent a+b in lowest terms
      */
-    public static Exponent product(Exponent a, Exponent b) {
+    static Exponent product(Exponent a, Exponent b) {
         if (ZERO.isEqualTo(a))
             return b;
         if (ZERO.isEqualTo(b))
@@ -201,7 +201,7 @@ public abstract class Exponents {
      * @param b exponent
      * @return the rational number exponent a*b in lowest terms
      */
-    public static Exponent power(Exponent a, Exponent b) {
+    static Exponent power(Exponent a, Exponent b) {
         if (ZERO.isEqualTo(a) || ZERO.isEqualTo(b))
             return ZERO;
         if (ONE.isEqualTo(a))
@@ -218,7 +218,7 @@ public abstract class Exponents {
      * @param a exponent
      * @return 
      */
-    public static Exponent negate(Exponent a) {
+    static Exponent negate(Exponent a) {
         return new ExponentImpl(-a.numerator(),a.denominator(), true);
     }
 }

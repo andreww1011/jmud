@@ -52,23 +52,26 @@ public abstract class Units {
     private static final String ZEPTO   = "0.000000000000000000001";
     private static final String YOCTO   = "0.000000000000000000000001";
     
+    static final String PI = "3.141592653589793238462643383279";
+    static final String E = "2.718281828459045235360287471352";
+    
     /**
      * Fundamental unit for measurements of {@link Dimensions#DIMENSIONLESS no dimension}.
      * Denoted as <i>"-"</i>.
      */
-    public static final FundamentalUnit UNITLESS = FundamentalUnit.UNITLESS;
+    public static final FundamentalUnit UNITLESS = Universe.UNITLESS;
     /**
      * Fundamental unit for measurements of {@link Dimensions#LENGTH length}, defined as the distance
      * traveled by light in a vacuum in 1/299 792 458 {@link #SECOND second}.
      * Denoted as <i>"m"</i>.
      */
-    public static final FundamentalUnit METER = newFundamentalUnit(Dimensions.LENGTH,"METER","m");
+    public static final FundamentalUnit METER = Universe.METER;
     /**
      * Fundamental unit for measurements of {@link Dimensions#MASS mass}, defined as the mass of a reference
      * platinum-iridium alloy kept in France.
      * Denoted as <i>"kg"</i>.
      */
-    public static final FundamentalUnit KILOGRAM = newFundamentalUnit(Dimensions.MASS,"KILOGRAM","kg");
+    public static final FundamentalUnit KILOGRAM = Universe.KILOGRAM;
     /**
      * Fundamental unit for measurements of {@link Dimensions#TIME time}, defined as the duration 
      * of 9 192 631 770 periods of the radiation corresponding to the 
@@ -76,7 +79,7 @@ public abstract class Units {
      * of the cesium-133 atom.
      * Denoted as <i>"s"</i>.
      */
-    public static final FundamentalUnit SECOND = newFundamentalUnit(Dimensions.TIME,"SECOND","s");
+    public static final FundamentalUnit SECOND = Universe.SECOND;
     /**
      * Fundamental unit for measurements of {@link Dimensions#ELECTRIC_CURRENT electric current}, defined as the 
      * constant current which produces a force of 2 * 10<sup>-7</sup> {@link #NEWTON newton} per {@link #METER meter}
@@ -84,28 +87,28 @@ public abstract class Units {
      * negligible cross-sectional area, placed 1 {@link #METER meter} apart in a vacuum.
      * Denoted as <i>"A"</i>.
      */
-    public static final FundamentalUnit AMPERE = newFundamentalUnit(Dimensions.ELECTRIC_CURRENT,"AMPERE","A");
+    public static final FundamentalUnit AMPERE = Universe.AMPERE;
     /**
      * Fundamental unit for measurements of {@link Dimensions#THERMODYNAMIC_TEMPERATURE thermodynamic temperature}, defined
      * such that the {@link Constants#k_B Boltzmann constant} takes the value
      * 1.380 649 × 10<sup>−23</sup> {@link #JOULE joule}/{@link #KELVIN kelvin} exactly.  
      * Denoted as <i>"K"</i>.
      */
-    public static final FundamentalUnit KELVIN = newFundamentalUnit(Dimensions.THERMODYNAMIC_TEMPERATURE,"KELVIN","K");
+    public static final FundamentalUnit KELVIN = Universe.KELVIN;
     /**
      * Fundamental unit for measurements of the {@link Dimensions#AMOUNT_OF_SUBSTANCE amount of substance} in a body 
      * or system, defined as the number of atoms in 0.012 {@link #KILOGRAM kilogram} 
      * of the carbon-12 element.
      * Denoted as <i>"mol"</i>.
      */
-    public static final FundamentalUnit MOLE = newFundamentalUnit(Dimensions.AMOUNT_OF_SUBSTANCE,"MOLE","mol");
+    public static final FundamentalUnit MOLE = Universe.MOLE;
     /**
      * Fundamental unit for measurements of {@link Dimensions#LUMINOUS_INTENSITY luminous intensity}, defined as 
      * the radiant intensity of 1/683 {@link #WATT watt} per {@link #STERADIAN steradian} from a source
      * that emits monochromatic radiation of frequency 5.4 * 10<sup>14</sup> {@link #HERTZ hertz}.
      * Denoted as <i>"cd"</i>.
      */
-    public static final FundamentalUnit CANDELA = newFundamentalUnit(Dimensions.LUMINOUS_INTENSITY,"CANDELA","cd");
+    public static final FundamentalUnit CANDELA = Universe.CANDELA;
     
     //SI and Common Units
     //DIMENSIONLESS
@@ -629,7 +632,7 @@ public abstract class Units {
     static {
         //DIMENSIONLESS
         RADIAN          = newUnit().ofDimension(Dimensions.ANGLE).as(UNITLESS).withName("RADIAN").withSymbol("rad").create();
-        DEGREE          = newUnit().ofDimension(Dimensions.ANGLE).asTheRatio(Constants.pi).over(180).ofA(RADIAN).withName("DEGREE").withSymbol("\u00B0").create();
+        DEGREE          = newUnit().ofDimension(Dimensions.ANGLE).asTheRatio(PI).over(180).ofA(RADIAN).withName("DEGREE").withSymbol("\u00B0").create();
         STERADIAN       = newUnit().ofDimension(Dimensions.SOLID_ANGLE).as(UNITLESS).withName("STERADIAN").withSymbol("sr").create();
         STRAIN          = newUnit().ofDimension(Dimensions.STRAIN).as(UNITLESS).withName("STRAIN").create();
         PERCENT         = newUnit().ofDimension(Dimensions.DIMENSIONLESS).asTheRatio(1).over(100).ofA(UNITLESS).withName("PERCENT").withSymbol("%").create();
@@ -1288,17 +1291,11 @@ public abstract class Units {
         POUND_PER_CUBIC_YARD    = newUnit().ofDimension(Dimensions.WEIGHT_DENSITY).as(POUND).divide(CUBIC_YARD).create();
     }
     
-    public static final FundamentalUnit newFundamentalUnit(FundamentalDimension fd,
-                                                           String name,
-                                                           String symbol) {
-        return new FundamentalUnitImpl(fd,name,symbol);
-    }
-    
-    private static abstract class AbstractUnit implements Unit {
+    static abstract class AbstractUnit implements Unit {
             
         private final String name,symbol;
 
-        private AbstractUnit(String name, String symbol) {
+        AbstractUnit(String name, String symbol) {
             this.name = name;
             this.symbol = symbol;
         }
@@ -1323,35 +1320,6 @@ public abstract class Units {
             return super.hashCode();
         }
     }
-
-    private static final class FundamentalUnitImpl 
-            extends AbstractUnit
-            implements FundamentalUnit {
-        
-        private final FundamentalDimension fd;
-
-        private FundamentalUnitImpl(FundamentalDimension fd,
-                                    String name,
-                                    String symbol) {
-            super(name,symbol);
-            this.fd = fd;
-        }
-
-        @Override
-        public FundamentalDimension getDimension() {
-            return fd;
-        }
-        
-        @Override
-        public final String toString() {
-            return "Fundamental Unit: " + getName() + " (" + getSymbol() + ")";
-        }
-        
-        @Override
-        public final Scalar getScale() {
-            return Measures.ONE;
-        }
-    }
     
     public static final UnitBuilder newUnit() {
         return new UnitBuilderImpl(UnitBuilderHelper.NULL_HELPER);
@@ -1360,10 +1328,10 @@ public abstract class Units {
     private static final class UnitBuilderHelper {
         
         private static final UnitBuilderHelper NULL_HELPER 
-        = new UnitBuilderHelper(null,new HashMap<>(),null,null,null,null/*,null*/);
+        = new UnitBuilderHelper(null,new HashMap<>(),null,null,null,null);
         
         private final Dimension dimension;
-        private final Scalar scale;//, offsetFunction;
+        private final Scalar scale;
         private final Unit refUnit;
         private final String name,symbol;
         private final Map<Unit,Exponent> compoundMap;
@@ -1478,8 +1446,8 @@ public abstract class Units {
         private Unit createCompoundUnit() {
             Map<Unit,Exponent> map = new HashMap<>(compoundMap);
             cleanCompoundMap(map);
-            Scalar n = Measures.ONE; //magic number
-            Scalar d = Measures.ONE; //magic number
+            Scalar n = Expressions.ONE; //magic number
+            Scalar d = Expressions.ONE; //magic number
             DimensionBuilder db = Dimensions.newDimension();
             for (Entry<Unit,Exponent> en : map.entrySet()) {
                 Unit u = en.getKey();
@@ -1495,11 +1463,7 @@ public abstract class Units {
                 if (ex.isEqualTo(Exponents.ONE)) {
                     c = u.getScale();
                 } else {
-                    if (ex.denominator() == 1) {
-                        c = u.getScale().power(ex.numerator());
-                    } else {
-                        c = u.getScale().power(Measures.take(ex.numerator()).divide(ex.denominator()));
-                    }
+                    c = u.getScale().power(ex);
                 }
                 if (e.isGreaterThan(Exponents.ZERO)) {
                     n = n.multiply(c);
@@ -1670,12 +1634,12 @@ public abstract class Units {
 
         @Override
         public RatioUnitBuilder asTheRatio(int numerator) {
-            return asTheRatio(Measures.take(numerator));
+            return asTheRatio(Expressions.take(numerator));
         }
 
         @Override
         public RatioUnitBuilder asTheRatio(String numerator) {
-            return asTheRatio(Measures.take(numerator));
+            return asTheRatio(Expressions.take(numerator));
         }
         
         @Override
@@ -1685,12 +1649,12 @@ public abstract class Units {
 
         @Override
         public TransformationUnitBuilder asExactly(int scalar) {
-            return asExactly(Measures.take(scalar));
+            return asExactly(Expressions.take(scalar));
         }
 
         @Override
         public TransformationUnitBuilder asExactly(String scalar) {
-            return asExactly(Measures.take(scalar));
+            return asExactly(Expressions.take(scalar));
         }
         
         @Override
@@ -1803,12 +1767,12 @@ public abstract class Units {
 
         @Override
         public UnitBuilder.TransformationUnitBuilder over(int denominator) {
-            return over(Measures.take(denominator));
+            return over(Expressions.take(denominator));
         }
 
         @Override
         public UnitBuilder.TransformationUnitBuilder over(String denominator) {
-            return over(Measures.take(denominator));
+            return over(Expressions.take(denominator));
         }
         
         @Override
@@ -1885,12 +1849,12 @@ public abstract class Units {
 
         @Override
         public UnitBuilder.RatioDimensionedUnitBuilder asTheRatio(int numerator) {
-            return asTheRatio(Measures.take(numerator));
+            return asTheRatio(Expressions.take(numerator));
         }
 
         @Override
         public UnitBuilder.RatioDimensionedUnitBuilder asTheRatio(String numerator) {
-            return asTheRatio(Measures.take(numerator));
+            return asTheRatio(Expressions.take(numerator));
         }
         
         @Override
@@ -1900,12 +1864,12 @@ public abstract class Units {
 
         @Override
         public UnitBuilder.TransformationDimensionedUnitBuilder asExactly(int scalar) {
-            return asExactly(Measures.take(scalar));
+            return asExactly(Expressions.take(scalar));
         }
 
         @Override
         public UnitBuilder.TransformationDimensionedUnitBuilder asExactly(String scalar) {
-            return asExactly(Measures.take(scalar));
+            return asExactly(Expressions.take(scalar));
         }
         
         @Override
@@ -2018,12 +1982,12 @@ public abstract class Units {
 
         @Override
         public UnitBuilder.TransformationDimensionedUnitBuilder over(int denominator) {
-            return over(Measures.take(denominator));
+            return over(Expressions.take(denominator));
         }
 
         @Override
         public UnitBuilder.TransformationDimensionedUnitBuilder over(String denominator) {
-            return over(Measures.take(denominator));
+            return over(Expressions.take(denominator));
         }
         
         @Override

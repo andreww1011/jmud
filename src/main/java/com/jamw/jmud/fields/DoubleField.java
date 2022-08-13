@@ -29,8 +29,8 @@ public final class DoubleField implements Field<DoubleField>, Field.Factory<Doub
     public static final DoubleField ZERO = new DoubleField(0);
     public static final DoubleField ONE = new DoubleField(1);
     public static final DoubleField TEN = new DoubleField(10);
-    public static final DoubleField PI = factory().of(Constants.pi);
-    public static final DoubleField E = factory().of(Constants.euler);
+
+    private static final DoubleField E = Constants.euler.using(factory());
     
     
     public static final Field.Factory<DoubleField> factory() {

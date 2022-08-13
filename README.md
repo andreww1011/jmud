@@ -1,6 +1,9 @@
 # jmud
 Java library for creating and manipulating dimensional units of measurement.
 
+# BETA
+This project is in development stage and is not for use in production.  FOR EVALUATION USE ONLY.
+
 ## Usage
 
 ```java
