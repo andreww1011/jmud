@@ -1,6 +1,9 @@
 # jmud
 Java library for creating and manipulating dimensional units of measurement.
 
+# BETA
+This project is in development stage and is not for use in production.  FOR EVALUATION USE ONLY.
+
 ## Usage
 
 ```java
@@ -35,9 +38,9 @@ System.out.println(speed.toString());  //prints "42.0 kph"
 
 | how to: | code: |
 ---|---
-| create dimension | `Dimensions.newFundamentalDimension()`<br>`Dimensions.newDimension()` |
+| create dimension | `Dimensions.newDimension()` |
 | create unit | `Units.newUnit()` |
-| create measurement | `Measures.take(...)` |
+| create measurement/expression | `Expressions.take(...)` |
 | manipulate measurement | `Measure<?> m;`<br>`m.add(...)`<br>`m.subtract(...)`<br>`m.multiply(...)`<br>`m.divide(...)`|
 | convert unit | `m.as(unit)` |
 

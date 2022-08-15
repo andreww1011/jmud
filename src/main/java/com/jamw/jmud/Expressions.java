@@ -81,7 +81,7 @@ public abstract class Expressions {
         @Override
         public Scalar negate() {
             Function<Field.Factory,Field> g = (factory) -> using(factory).negate();
-            StringBuilder sb = new StringBuilder(toString.length()+3); //magic numer
+            StringBuilder sb = new StringBuilder(toString.length()+3); //magic number
             sb.append("-(").append(toString).append(")");
             return new ScalarImpl(g,sb.toString());
         }
@@ -89,7 +89,7 @@ public abstract class Expressions {
         @Override
         public Scalar reciprocal() throws ArithmeticException {
             Function<Field.Factory,Field> g = (factory) -> using(factory).reciprocal();
-            StringBuilder sb = new StringBuilder(toString.length()+6); //magic numer
+            StringBuilder sb = new StringBuilder(toString.length()+6); //magic number
             sb.append("(1/(").append(toString).append("))");
             return new ScalarImpl(g,sb.toString());
         }

@@ -59,19 +59,19 @@ public abstract class Units {
      * Fundamental unit for measurements of {@link Dimensions#DIMENSIONLESS no dimension}.
      * Denoted as <i>"-"</i>.
      */
-    public static final FundamentalUnit UNITLESS = Units.newFundamentalUnit(Dimensions.DIMENSIONLESS,"UNITLESS","-");
+    public static final FundamentalUnit UNITLESS = Universe.UNITLESS;
     /**
      * Fundamental unit for measurements of {@link Dimensions#LENGTH length}, defined as the distance
      * traveled by light in a vacuum in 1/299 792 458 {@link #SECOND second}.
      * Denoted as <i>"m"</i>.
      */
-    public static final FundamentalUnit METER = newFundamentalUnit(Dimensions.LENGTH,"METER","m");
+    public static final FundamentalUnit METER = Universe.METER;
     /**
      * Fundamental unit for measurements of {@link Dimensions#MASS mass}, defined as the mass of a reference
      * platinum-iridium alloy kept in France.
      * Denoted as <i>"kg"</i>.
      */
-    public static final FundamentalUnit KILOGRAM = newFundamentalUnit(Dimensions.MASS,"KILOGRAM","kg");
+    public static final FundamentalUnit KILOGRAM = Universe.KILOGRAM;
     /**
      * Fundamental unit for measurements of {@link Dimensions#TIME time}, defined as the duration 
      * of 9 192 631 770 periods of the radiation corresponding to the 
@@ -79,7 +79,7 @@ public abstract class Units {
      * of the cesium-133 atom.
      * Denoted as <i>"s"</i>.
      */
-    public static final FundamentalUnit SECOND = newFundamentalUnit(Dimensions.TIME,"SECOND","s");
+    public static final FundamentalUnit SECOND = Universe.SECOND;
     /**
      * Fundamental unit for measurements of {@link Dimensions#ELECTRIC_CURRENT electric current}, defined as the 
      * constant current which produces a force of 2 * 10<sup>-7</sup> {@link #NEWTON newton} per {@link #METER meter}
@@ -87,28 +87,28 @@ public abstract class Units {
      * negligible cross-sectional area, placed 1 {@link #METER meter} apart in a vacuum.
      * Denoted as <i>"A"</i>.
      */
-    public static final FundamentalUnit AMPERE = newFundamentalUnit(Dimensions.ELECTRIC_CURRENT,"AMPERE","A");
+    public static final FundamentalUnit AMPERE = Universe.AMPERE;
     /**
      * Fundamental unit for measurements of {@link Dimensions#THERMODYNAMIC_TEMPERATURE thermodynamic temperature}, defined
      * such that the {@link Constants#k_B Boltzmann constant} takes the value
      * 1.380 649 × 10<sup>−23</sup> {@link #JOULE joule}/{@link #KELVIN kelvin} exactly.  
      * Denoted as <i>"K"</i>.
      */
-    public static final FundamentalUnit KELVIN = newFundamentalUnit(Dimensions.THERMODYNAMIC_TEMPERATURE,"KELVIN","K");
+    public static final FundamentalUnit KELVIN = Universe.KELVIN;
     /**
      * Fundamental unit for measurements of the {@link Dimensions#AMOUNT_OF_SUBSTANCE amount of substance} in a body 
      * or system, defined as the number of atoms in 0.012 {@link #KILOGRAM kilogram} 
      * of the carbon-12 element.
      * Denoted as <i>"mol"</i>.
      */
-    public static final FundamentalUnit MOLE = newFundamentalUnit(Dimensions.AMOUNT_OF_SUBSTANCE,"MOLE","mol");
+    public static final FundamentalUnit MOLE = Universe.MOLE;
     /**
      * Fundamental unit for measurements of {@link Dimensions#LUMINOUS_INTENSITY luminous intensity}, defined as 
      * the radiant intensity of 1/683 {@link #WATT watt} per {@link #STERADIAN steradian} from a source
      * that emits monochromatic radiation of frequency 5.4 * 10<sup>14</sup> {@link #HERTZ hertz}.
      * Denoted as <i>"cd"</i>.
      */
-    public static final FundamentalUnit CANDELA = newFundamentalUnit(Dimensions.LUMINOUS_INTENSITY,"CANDELA","cd");
+    public static final FundamentalUnit CANDELA = Universe.CANDELA;
     
     //SI and Common Units
     //DIMENSIONLESS
@@ -1291,17 +1291,11 @@ public abstract class Units {
         POUND_PER_CUBIC_YARD    = newUnit().ofDimension(Dimensions.WEIGHT_DENSITY).as(POUND).divide(CUBIC_YARD).create();
     }
     
-    public static final FundamentalUnit newFundamentalUnit(FundamentalDimension fd,
-                                                           String name,
-                                                           String symbol) {
-        return new FundamentalUnitImpl(fd,name,symbol);
-    }
-    
-    private static abstract class AbstractUnit implements Unit {
+    static abstract class AbstractUnit implements Unit {
             
         private final String name,symbol;
 
-        private AbstractUnit(String name, String symbol) {
+        AbstractUnit(String name, String symbol) {
             this.name = name;
             this.symbol = symbol;
         }
@@ -1326,35 +1320,6 @@ public abstract class Units {
             return super.hashCode();
         }
     }
-
-    private static final class FundamentalUnitImpl 
-            extends AbstractUnit
-            implements FundamentalUnit {
-        
-        private final FundamentalDimension fd;
-
-        private FundamentalUnitImpl(FundamentalDimension fd,
-                                    String name,
-                                    String symbol) {
-            super(name,symbol);
-            this.fd = fd;
-        }
-
-        @Override
-        public FundamentalDimension getDimension() {
-            return fd;
-        }
-        
-        @Override
-        public final String toString() {
-            return "Fundamental Unit: " + getName() + " (" + getSymbol() + ")";
-        }
-        
-        @Override
-        public final Scalar getScale() {
-            return Expressions.ONE;
-        }
-    }
     
     public static final UnitBuilder newUnit() {
         return new UnitBuilderImpl(UnitBuilderHelper.NULL_HELPER);
@@ -1363,10 +1328,10 @@ public abstract class Units {
     private static final class UnitBuilderHelper {
         
         private static final UnitBuilderHelper NULL_HELPER 
-        = new UnitBuilderHelper(null,new HashMap<>(),null,null,null,null/*,null*/);
+        = new UnitBuilderHelper(null,new HashMap<>(),null,null,null,null);
         
         private final Dimension dimension;
-        private final Scalar scale;//, offsetFunction;
+        private final Scalar scale;
         private final Unit refUnit;
         private final String name,symbol;
         private final Map<Unit,Exponent> compoundMap;
@@ -1499,11 +1464,6 @@ public abstract class Units {
                     c = u.getScale();
                 } else {
                     c = u.getScale().power(ex);
-//                    if (ex.denominator() == 1) {
-//                        c = u.getScale().power(ex.numerator());
-//                    } else {
-//                        c = u.getScale().power(Expressions.take(ex.numerator()).divide(ex.denominator()));
-//                    }
                 }
                 if (e.isGreaterThan(Exponents.ZERO)) {
                     n = n.multiply(c);
