@@ -29,9 +29,9 @@ public interface Scale {
     
     Unit getReferenceUnit();
     
-    <T extends Field<T>> Magnitude<T> of(T value);
+    <T extends Field<T>> Level<T> of(T value);
         
-    <T extends Field<T>> Magnitude<T> magnitude(Measure<T> measure);
+    <T extends Field<T>> Level<T> level(Measure<T> measure);
         
     @Override
     String toString();

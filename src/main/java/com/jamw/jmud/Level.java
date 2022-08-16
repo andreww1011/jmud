@@ -21,7 +21,7 @@ package com.jamw.jmud;
  *
  * @author andreww1011
  */
-public interface Magnitude<F extends Field<F>> extends Comparable<Magnitude<F>>{
+public interface Level<F extends Field<F>> extends Comparable<Level<F>>{
     
     F getValue();
     
@@ -36,20 +36,20 @@ public interface Magnitude<F extends Field<F>> extends Comparable<Magnitude<F>>{
     String toString();
     
     @Override
-    public int compareTo(Magnitude<F> o) throws IncommensurableDimensionException;
+    public int compareTo(Level<F> o) throws IncommensurableDimensionException;
     
     @Override
-    default boolean isEqualTo(Magnitude<F> o) throws IncommensurableDimensionException {
+    default boolean isEqualTo(Level<F> o) throws IncommensurableDimensionException {
         return this.compareTo(o) == 0;
     }
     
     @Override
-    default boolean isLessThan(Magnitude<F> o) throws IncommensurableDimensionException {
+    default boolean isLessThan(Level<F> o) throws IncommensurableDimensionException {
         return this.compareTo(o) < 0;
     }
     
     @Override
-    default boolean isGreaterThan(Magnitude<F> o) throws IncommensurableDimensionException {
+    default boolean isGreaterThan(Level<F> o) throws IncommensurableDimensionException {
         return this.compareTo(o) > 0;
     }
 }
