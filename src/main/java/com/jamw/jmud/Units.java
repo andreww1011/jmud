@@ -1543,9 +1543,6 @@ public abstract class Units {
                         }
                     }
                     sb.append("]");
-                    if (iter.hasNext()) {
-                        sb.append(" ");
-                    }
                 }
             }
             return sb.toString();
