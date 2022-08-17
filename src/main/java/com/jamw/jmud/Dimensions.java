@@ -335,7 +335,7 @@ public abstract class Dimensions {
                 Map<FundamentalDimension,Exponent> map,
                 String name,
                 String symbol) {
-            cleanCompositionMap(map);
+            map = cleanCompositionMap(map);
             Composition composition = new CompositionImpl(map);
             Dimension d = new DimensionImpl(composition,name,symbol);
             String n = formatName(name,composition);
@@ -344,14 +344,14 @@ public abstract class Dimensions {
         }
         
         private static Map<FundamentalDimension,Exponent> cleanCompositionMap(Map<FundamentalDimension,Exponent> map) {
-            removeZeroExponents(map);
+            map = removeZeroExponents(map);
             if (map.isEmpty())
                 map.put(Dimensions.DIMENSIONLESS, Exponents.ONE);
             return map;
         }
         
-        private static void removeZeroExponents(Map<FundamentalDimension,Exponent> map) {
-            map.entrySet().stream()
+        private static Map<FundamentalDimension,Exponent> removeZeroExponents(Map<FundamentalDimension,Exponent> map) {
+            return map.entrySet().stream()
                     .filter((e) -> !e.getKey().equals(Dimensions.DIMENSIONLESS) && !e.getValue().isEqualTo(Exponents.ZERO))
                     .collect(Collectors.toMap((e) -> e.getKey(),(e) -> e.getValue()));
         }

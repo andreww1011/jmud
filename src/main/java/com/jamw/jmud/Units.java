@@ -1445,7 +1445,7 @@ public abstract class Units {
         
         private Unit createCompoundUnit() {
             Map<Unit,Exponent> map = new HashMap<>(compoundMap);
-            cleanCompoundMap(map);
+            map = cleanCompoundMap(map);
             Scalar n = Expressions.ONE; //magic number
             Scalar d = Expressions.ONE; //magic number
             DimensionBuilder db = Dimensions.newDimension();
@@ -1480,14 +1480,15 @@ public abstract class Units {
             return new UnitImpl(dim,scal,nn,ss);
         }
         
-        private static void cleanCompoundMap(Map<Unit,Exponent> map) {
-            removeZeroExponents(map);
+        private static Map<Unit,Exponent> cleanCompoundMap(Map<Unit,Exponent> map) {
+            map = removeZeroExponents(map);
             if (map.isEmpty())
                 map.put(Units.UNITLESS, Exponents.ONE);
+            return map;
         }
         
-        private static void removeZeroExponents(Map<Unit,Exponent> map) {
-            map.entrySet().stream()
+        private static Map<Unit,Exponent> removeZeroExponents(Map<Unit,Exponent> map) {
+            return map.entrySet().stream()
                     .filter((e) -> !e.getKey().equals(Units.UNITLESS) && !e.getValue().isEqualTo(Exponents.ZERO))
                     .collect(Collectors.toMap((e) -> e.getKey(),(e) -> e.getValue()));
         }
