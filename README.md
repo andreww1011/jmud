@@ -17,8 +17,8 @@ Unit mile = Units.newUnit()
     .asExactly(5280).ofA(Units.FOOT)  
     .create();
 
-Expression distance = Measures.take(7, mile);
-Expression time = Measures.take("16.09344", Units.MINUTE);
+Expression distance = Expressions.take(7, mile);
+Expression time = Expressions.take("16.09344", Units.MINUTE);
 
 Measure<DoubleField> speed = distance.divide(time)  
     .using(DoubleField.factory())  
@@ -46,6 +46,6 @@ System.out.println(speed.toString());  //prints "42.0 kph"
 
 ## Advanced Features
 
-- Make your code precision agnostic using the `Scalar` and `Expression` classes.
-- Represent measurements in alternative scales (e.g. °F, dB)  using `Scales`.
+- Make your code numerical implementation agnostic using the `Scalar` and `Expression` classes.
+- Represent measurements in alternative scales (e.g. °F, dB) using `Scales`.
 - Implement your own number type by implementing `Field`, and use it in concrete calculations of measurements.
