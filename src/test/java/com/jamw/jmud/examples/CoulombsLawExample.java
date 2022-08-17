@@ -41,7 +41,7 @@ public class CoulombsLawExample {
     private static final Expression ONE_OVER_k_e = 
             Expressions.take(4).multiply(Constants.pi).multiply(Constants.eps_0);
     
-    private Expression solveForCharge(Expression force, Expression distance) {
+    private static Expression solveForCharge(Expression force, Expression distance) {
         return  force
                 .multiply(distance).multiply(distance)
                 .multiply(ONE_OVER_k_e)

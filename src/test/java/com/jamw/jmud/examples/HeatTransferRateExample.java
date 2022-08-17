@@ -37,7 +37,7 @@ import org.junit.jupiter.api.Test;
  */
 public class HeatTransferRateExample {
     
-    static Expression rateOfHeatTransfer(Expression area, 
+    private static Expression rateOfHeatTransfer(Expression area, 
                                   Expression thermalConductivity,
                                   Expression deltaT, 
                                   Expression materialThickness) {
