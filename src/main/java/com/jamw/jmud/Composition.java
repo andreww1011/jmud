@@ -17,15 +17,60 @@
  */
 package com.jamw.jmud;
 
+import java.util.Iterator;
+
 /**
- * The set of fundamental dimension-exponent pairs comprising a dimension's
- * constitution.
+ * The set of pairs of {@link FundamentalDimension fundamental dimensions} and
+ * rational number {@link Exponent exponents} comprising a dimension's
+ * composition.
+ * 
+ * <p>Two dimensions are commensurable if the sets of fundamental dimension - 
+ * non-zero exponent pairs comprising the composition of each dimension are the
+ * same, exclusive of the pair containing the special  
+ * {@link Universe#getDimensionless dimensionless} fundamental dimension.
+ * 
+ * <p>A dimension whose composition is the null set, or whose composition comprises
+ * only of exponents with a value of zero, is equivalent to the dimensionless
+ * fundamental dimension.  The composition of the dimensionless fundamental 
+ * dimension is itself with an exponent value of one.
  * 
  * @author andreww1011
  */
 public interface Composition extends Iterable<CompositionComponent> {
     
-    Exponent getExponent(FundamentalDimension d);
+    /**
+     * Returns the exponent of the specified fundamental dimension of this
+     * composition.
+     * @param fd Fundamental dimension in composition.
+     * @return Exponent corresponding to the specified fundamental dimension.
+     */
+    Exponent getExponent(FundamentalDimension fd);
     
+    /**
+     * Returns an iterator of composition components comprising this composition.
+     *  
+     * Fundamental dimensions with an exponent value of zero may or may not be
+     * traversed by this iterator.  Implementations should not rely on this method
+     * to return all possible fundamental dimensions.  Modifying this composition 
+     * via the iterator is not permitted.
+     * @return An iterator of composition components of this composition.
+     */
+    @Override
+    Iterator<CompositionComponent> iterator();
+    
+    /**
+     * Compares the specified object with this composition for equality. 
+     * Returns true if the given object is also a composition and the two 
+     * compositions have the same set of mapped fundamental dimension-to-exponent
+     * pairs for all non-zero valued exponents.
+     * Fundamental dimensions with an exponent of zero are explicitly 
+     * not considered in the equality test.  For 
+     * instance, the compositions <i>Q1 = [L<sup>2</sup>]</i> and 
+     * <i>Q2 = [L<sup>2</sup>T<sup>0</sup>]</i> are, in fact, equal.
+     * 
+     * @param o Object to be compared for equality to this composition.
+     * 
+     * @return True if the specified object is equal to this composition.
+     */
     boolean equals(Object o);
 }

@@ -122,7 +122,7 @@ public abstract class Dimensions {
         private int calcHashcode() {
             int hash = i;
             for (CompositionComponent cc : this) {
-                if (!cc.getExponent().isEqualTo(Exponents.ZERO)) {
+                if (!cc.exponent().isEqualTo(Exponents.ZERO)) {
                     hash = j * hash + Objects.hashCode(cc);
                 }
             }
@@ -137,11 +137,11 @@ public abstract class Dimensions {
                 return false;
             Composition co = (Composition)o;
             for (CompositionComponent cc : this) {
-                if (!cc.getExponent().isEqualTo(co.getExponent(cc.getFundamentalDimension())))
+                if (!cc.exponent().isEqualTo(co.getExponent(cc.fundamentalDimension())))
                     return false;
             }
             for (CompositionComponent cc : co) {
-                if (!cc.getExponent().isEqualTo(this.getExponent(cc.getFundamentalDimension())))
+                if (!cc.exponent().isEqualTo(this.getExponent(cc.fundamentalDimension())))
                     return false;
             }
             return true;
@@ -161,8 +161,8 @@ public abstract class Dimensions {
             Iterator<CompositionComponent> iter = c.iterator();
             while (iter.hasNext()) {
                 CompositionComponent cc = iter.next();
-                FundamentalDimension fd = cc.getFundamentalDimension();
-                Exponent e = cc.getExponent();
+                FundamentalDimension fd = cc.fundamentalDimension();
+                Exponent e = cc.exponent();
                 if (!e.equals(Exponents.ZERO)) {
                     sb.append(fd.getSymbol());
                     if (!e.isEqualTo(Exponents.ONE)) {
@@ -191,8 +191,8 @@ public abstract class Dimensions {
             if (!(o instanceof CompositionComponent))
                 return false;
             CompositionComponent c = (CompositionComponent)o;
-            return this.getFundamentalDimension().equals(c.getFundamentalDimension())
-                    && this.getExponent().isEqualTo(c.getExponent());
+            return this.fundamentalDimension().equals(c.fundamentalDimension())
+                    && this.exponent().isEqualTo(c.exponent());
         }
         
         private static final int i = 5, j = 23; //magic number
@@ -200,8 +200,8 @@ public abstract class Dimensions {
         @Override
         public final int hashCode() {
             int hash = i;
-            hash = j * hash + Objects.hashCode(getFundamentalDimension());
-            hash = j * hash + Objects.hashCode(getExponent());
+            hash = j * hash + Objects.hashCode(fundamentalDimension());
+            hash = j * hash + Objects.hashCode(exponent());
             return hash;
         }
         
@@ -209,12 +209,12 @@ public abstract class Dimensions {
         public final String toString() {
             return new StringBuilder()
                 .append("Fundamental Dimension: ")
-                .append(getFundamentalDimension().getName())
+                .append(fundamentalDimension().getName())
                 .append(" (")
-                .append(getFundamentalDimension().getSymbol())
+                .append(fundamentalDimension().getSymbol())
                 .append(") , ")
                 .append("Exponent: ")
-                .append(getExponent().toString())
+                .append(exponent().toString())
                 .toString();
         }
     }
@@ -299,9 +299,9 @@ public abstract class Dimensions {
             FundamentalDimension fd;
             Exponent fe;
             for (CompositionComponent c : d.getComposition()) {
-                fd = c.getFundamentalDimension();
+                fd = c.fundamentalDimension();
                 if (!fd.equals(Dimensions.DIMENSIONLESS)) {
-                    fe = c.getExponent();
+                    fe = c.exponent();
                     dPow = Exponents.power(fe, e);
                     if (m.containsKey(fd))
                         m.put(fd, Exponents.product(m.get(fd), dPow));
@@ -335,7 +335,7 @@ public abstract class Dimensions {
                 Map<FundamentalDimension,Exponent> map,
                 String name,
                 String symbol) {
-            cleanCompositionMap(map);
+            map = cleanCompositionMap(map);
             Composition composition = new CompositionImpl(map);
             Dimension d = new DimensionImpl(composition,name,symbol);
             String n = formatName(name,composition);
@@ -344,14 +344,14 @@ public abstract class Dimensions {
         }
         
         private static Map<FundamentalDimension,Exponent> cleanCompositionMap(Map<FundamentalDimension,Exponent> map) {
-            removeZeroExponents(map);
+            map = removeZeroExponents(map);
             if (map.isEmpty())
                 map.put(Dimensions.DIMENSIONLESS, Exponents.ONE);
             return map;
         }
         
-        private static void removeZeroExponents(Map<FundamentalDimension,Exponent> map) {
-            map.entrySet().stream()
+        private static Map<FundamentalDimension,Exponent> removeZeroExponents(Map<FundamentalDimension,Exponent> map) {
+            return map.entrySet().stream()
                     .filter((e) -> !e.getKey().equals(Dimensions.DIMENSIONLESS) && !e.getValue().isEqualTo(Exponents.ZERO))
                     .collect(Collectors.toMap((e) -> e.getKey(),(e) -> e.getValue()));
         }
@@ -379,8 +379,8 @@ public abstract class Dimensions {
             Iterator<CompositionComponent> iter = c.iterator();
             while (iter.hasNext()) {
                 CompositionComponent cc = iter.next();
-                FundamentalDimension fd = cc.getFundamentalDimension();
-                Exponent e = cc.getExponent();
+                FundamentalDimension fd = cc.fundamentalDimension();
+                Exponent e = cc.exponent();
                 if (!e.equals(Exponents.ZERO)) {
                     sb.append(fd.getName()).append(": ").append(e.numerator());
                     if (e.denominator() != 1) {
@@ -457,12 +457,12 @@ public abstract class Dimensions {
         }
 
         @Override
-        public FundamentalDimension getFundamentalDimension() {
+        public FundamentalDimension fundamentalDimension() {
             return fd;
         }
 
         @Override
-        public Exponent getExponent() {
+        public Exponent exponent() {
             return e;
         }
     }

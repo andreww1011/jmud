@@ -70,6 +70,10 @@ public abstract class Universe {
         CANDELA         = LUMINOUS_INTENSITY.getFundamentalUnit();
     }
     
+    public static final FundamentalDimension getDimensionless() {
+        return DIMENSIONLESS;
+    }
+    
     private Universe() {}
     
     public static final FundamentalPair newFundamentalPair(String FundamentalDimensionName,
@@ -138,11 +142,11 @@ public abstract class Universe {
             
             private final class FundamentalDimensionCompositionComponentImpl extends Dimensions.AbstractCompositionComponent {
                 @Override
-                public FundamentalDimension getFundamentalDimension() {
+                public FundamentalDimension fundamentalDimension() {
                     return FundamentalDimensionImpl.this;
                 }
                 @Override
-                public Exponent getExponent() {
+                public Exponent exponent() {
                     return Exponents.ONE;
                 }
             }

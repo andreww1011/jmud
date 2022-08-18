@@ -17,6 +17,8 @@
  */
 package com.jamw.jmud;
 
+import java.util.List;
+import java.util.Set;
 import java.util.function.UnaryOperator;
 
 /**
@@ -45,10 +47,10 @@ public abstract class Scales {
     public static final Scale FAHRENHEIT;
     
     static {
-        CELSIUS         = new ScaleImpl(Units.KELVIN,"CELSIUS","C",
+        CELSIUS         = new ScaleImpl("CELSIUS","C",Units.KELVIN,
                                 (Field k) -> k.subtract(k.getFactory().of("273.15")),
                                 (Field c) -> c.add(c.getFactory().of("273.15")));
-        FAHRENHEIT       = new ScaleImpl(Units.RANKINE,"FAHRENHEIT","F",
+        FAHRENHEIT       = new ScaleImpl("FAHRENHEIT","F",Units.RANKINE,
                                 (Field r) -> r.subtract(r.getFactory().of("459.67")),
                                 (Field f) -> f.add(f.getFactory().of("459.67")));
     }
@@ -63,7 +65,7 @@ public abstract class Scales {
     private static UnaryOperator<Field> BEL_INVERSE_FUNCTION = (f) -> f.getFactory().of(10).power(f);
     
     public static final Scale bel(Unit referenceUnit, String name, String symbol) {
-        return new ScaleImpl(referenceUnit,name,symbol,BEL_FUNCTION,BEL_INVERSE_FUNCTION);
+        return new ScaleImpl(name,symbol,referenceUnit,BEL_FUNCTION,BEL_INVERSE_FUNCTION);
     }
     
     private static UnaryOperator<Field> DECIBEL_FUNCTION = (f) -> BEL_FUNCTION.apply(f).multiply(f.getFactory().of(10));
@@ -74,7 +76,7 @@ public abstract class Scales {
     }
     
     public static final Scale decibel(Unit referenceUnit, String name, String symbol) {
-        return new ScaleImpl(referenceUnit,name,symbol,DECIBEL_FUNCTION,DECIBEL_INVERSE_FUNCTION);
+        return new ScaleImpl(name,symbol,referenceUnit,DECIBEL_FUNCTION,DECIBEL_INVERSE_FUNCTION);
     }
     
     public static final Scale neper(Unit referenceUnit) {
@@ -85,32 +87,48 @@ public abstract class Scales {
     private static UnaryOperator<Field> NEPER_INVERSE_FUNCTION = (f) -> Constants.euler.using(f.getFactory()).power(f);
     
     public static final Scale neper(Unit referenceUnit, String name, String symbol) {
-        return new ScaleImpl(referenceUnit,name,symbol,NEPER_FUNCTION,NEPER_INVERSE_FUNCTION);
+        return new ScaleImpl(name,symbol,referenceUnit,NEPER_FUNCTION,NEPER_INVERSE_FUNCTION);
     }
     
-    private static final class ScaleImpl implements Scale {
+    private static abstract class AbstractScale {
+        
+        private final String name,symbol;
+        
+        protected AbstractScale(String name, String symbol) {
+            this.name = name;
+            this.symbol = symbol;
+        }
+        
+        public final String getName() {
+            return name;
+        }
 
-        private final String name, symbol;
+        public final String getSymbol() {
+            return symbol;
+        }
+        
+        @Override
+        public final boolean equals(Object o) {
+            return super.equals(o);
+        }
+        
+        @Override
+        public final int hashCode() {
+            return super.hashCode();
+        }
+    }
+    
+    private static final class ScaleImpl extends AbstractScale implements Scale {
+
         private final Unit refUnit;
         private final UnaryOperator<Field> function;
         private final UnaryOperator<Field> inverseFunction;
         
-        private ScaleImpl(Unit refUnit, String name, String symbol,UnaryOperator<Field> function, UnaryOperator<Field> inverseFunction) {
+        private ScaleImpl(String name,String symbol,Unit refUnit,UnaryOperator<Field> function,UnaryOperator<Field> inverseFunction) {
+            super(name,symbol);
             this.refUnit = refUnit;
-            this.name = name;
-            this.symbol = symbol;
             this.function = function;
             this.inverseFunction = inverseFunction;
-        }
-        
-        @Override
-        public String getName() {
-            return name;
-        }
-
-        @Override
-        public String getSymbol() {
-            return symbol;
         }
 
         @Override
@@ -124,37 +142,27 @@ public abstract class Scales {
         }
         
         @Override
-        public boolean equals(Object o) {
-            return super.equals(o);
-        }
-        
-        @Override
-        public int hashCode() {
-            return super.hashCode();
-        }
-
-        @Override
-        public <T extends Field<T>> Magnitude<T> magnitude(Measure<T> measure) {
+        public <T extends Field<T>> Level<T> level(Measure<T> measure) {
             Measure<T> m = measure.as(refUnit);
-            T magnitudeValue = (T)function.apply(m.getField());
-            return new MagnitudeImpl<>(magnitudeValue,this,m);
+            T levelValue = (T)function.apply(m.getField());
+            return new LevelImpl<>(levelValue,this,m);
         }
         
         @Override
-        public <T extends Field<T>> Magnitude<T> of(T value) {
+        public <T extends Field<T>> Level<T> of(T value) {
             T measureValue = (T)inverseFunction.apply(value);
             Measure<T> measure = Expressions.take(measureValue,refUnit);
-            return new MagnitudeImpl<>(value,this,measure);
+            return new LevelImpl<>(value,this,measure);
         }
     }
     
-    private static final class MagnitudeImpl<F extends Field<F>> implements Magnitude<F> {
+    private static final class LevelImpl<F extends Field<F>> implements Level<F> {
 
         private final F value;
         private final Scale scale;
         private final Measure<F> measure;
         
-        private MagnitudeImpl(F value, Scale scale, Measure<F> measure) {
+        private LevelImpl(F value, Scale scale, Measure<F> measure) {
             this.value = value;
             this.scale = scale;
             this.measure = measure;
@@ -176,7 +184,7 @@ public abstract class Scales {
         }
 
         @Override
-        public int compareTo(Magnitude<F> o) 
+        public int compareTo(Level<F> o) 
                 throws IncommensurableDimensionException {
             if (getScale().equals(o.getScale()))
                 return value.compareTo(o.getValue());

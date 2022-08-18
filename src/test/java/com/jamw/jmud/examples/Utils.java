@@ -15,24 +15,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.jamw.jmud;
+package com.jamw.jmud.examples;
 
 /**
  *
  * @author andreww1011
  */
-public interface Scale {
+class Utils {
     
-    String getName();
-    
-    String getSymbol();
-    
-    Unit getReferenceUnit();
-    
-    <T extends Field<T>> Level<T> of(T value);
+    static boolean equalsWithinUlp(double d1, double d2) {
+        double ulp = Math.ulp(d2);
+        return d1 >= d2 - ulp && d1 <= d2 + ulp;
         
-    <T extends Field<T>> Level<T> level(Measure<T> measure);
-        
-    @Override
-    String toString();
+    }
+    
 }
