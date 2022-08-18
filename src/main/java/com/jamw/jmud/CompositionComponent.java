@@ -18,12 +18,33 @@
 package com.jamw.jmud;
 
 /**
- *
+ * One {@link FundamentalDimension fundamental dimension}-{@link Exponent exponent} 
+ * pair contained in the set of pairs comprising a dimension's composition.
  * @author andreww1011
  */
 public interface CompositionComponent {
     
-    FundamentalDimension getFundamentalDimension();
+    /**
+     * The fundamental dimension of this composition component.
+     */
+    FundamentalDimension fundamentalDimension();
     
-    Exponent getExponent();
+    /**
+     * The exponent associated with the fundamental dimension
+     * of this composition component.
+     */
+    Exponent exponent();
+    
+    /**
+     * Compares the specified object with this composition component for equality. 
+     * Returns true if the specified object is also a composition component and the two 
+     * composition components contain the same fundamental dimension
+     * and exponent.
+     * 
+     * @param o Object to be compared for equality to this composition component.
+     * 
+     * @return True if the specified object is equal to this composition component.
+     */
+    @Override
+    public boolean equals(Object o);
 }
