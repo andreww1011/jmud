@@ -1448,7 +1448,7 @@ public abstract class Units {
             map = cleanCompoundMap(map);
             Scalar n = Expressions.ONE; //magic number
             Scalar d = Expressions.ONE; //magic number
-            DimensionBuilder db = Dimensions.newDimension();
+            Dimensions.Builder db = Dimensions.newDimension();
             for (Entry<Unit,Exponent> en : map.entrySet()) {
                 Unit u = en.getKey();
                 Exponent e = en.getValue();

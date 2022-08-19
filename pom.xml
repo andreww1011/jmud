@@ -4,7 +4,7 @@
     <groupId>com.jamw.jmud</groupId>
     <artifactId>jmud</artifactId>
     <name>jmud</name>
-    <version>1.0.0-beta</version>
+    <version>1.1.0-beta</version>
     <packaging>jar</packaging>
     <build>
         <plugins>
