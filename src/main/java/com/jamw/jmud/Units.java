@@ -1322,7 +1322,7 @@ public abstract class Units {
     }
     
     public static final UnitBuilder newUnit() {
-        return new UnitBuilderImpl(UnitBuilderHelper.NULL_HELPER);
+        return UnitBuilder.NULL_BUILDER;
     }
         
     private static final class UnitBuilderHelper {
@@ -1448,7 +1448,7 @@ public abstract class Units {
             map = cleanCompoundMap(map);
             Scalar n = Expressions.ONE; //magic number
             Scalar d = Expressions.ONE; //magic number
-            Dimensions.Builder db = Dimensions.newDimension();
+            Dimensions.DimensionBuilder db = Dimensions.newDimension();
             for (Entry<Unit,Exponent> en : map.entrySet()) {
                 Unit u = en.getKey();
                 Exponent e = en.getValue();
@@ -1571,464 +1571,217 @@ public abstract class Units {
         }
     }
     
-    private static abstract class AbstractUnitBuilder 
-            implements UnitBuilder.Dimensioned,
-                       UnitBuilder.Referenced,
-                       UnitBuilder.Scaled
-    {
+    private static abstract class AbstractUnitBuilder {
+        
         protected final UnitBuilderHelper ubh;
+        
         protected AbstractUnitBuilder(UnitBuilderHelper ubh) {
             this.ubh = ubh;
         }
-
-        @Override
-        public final Dimension getDimension() {
-            return ubh.dimension;
-        }
-
-        @Override
-        public Unit getReferencedUnit() {
-            return ubh.refUnit;
-        }
-
-        @Override
-        public Scalar getScale() {
-            return ubh.scale;
-        }
     }
     
-    private static final class UnitBuilderImpl
-            extends AbstractUnitBuilder
-            implements UnitBuilder 
-    {   
-        private UnitBuilderImpl(UnitBuilderHelper ubh) {
+    public static final class UnitBuilder extends AbstractUnitBuilder {
+        
+        private static final UnitBuilder NULL_BUILDER = new UnitBuilder(UnitBuilderHelper.NULL_HELPER);
+        
+        private UnitBuilder(UnitBuilderHelper ubh) {
             super(ubh);
         }
 
-        @Override
-        public DimensionedInitialUnitBuilder ofDimension(Dimension d) {
-            return new DimensionedInitialUnitBuilderImpl(ubh.setDimension(d));
+        public DimensionedUnitBuilder ofDimension(Dimension d) {
+            return new DimensionedUnitBuilder(ubh.setDimension(d));
         }
 
-        @Override
         public CompoundUnitBuilder as(Unit u) {
             return as(u,1); //magic number
         }
 
-        @Override
         public CompoundUnitBuilder as(Unit u,int exponentNumerator) {
             return as(u,exponentNumerator,1); //magic numver
         }
 
-        @Override
         public CompoundUnitBuilder as(Unit u,int exponentNumerator, int exponentDenominator) {
             return as(u,Exponents.of(exponentNumerator,exponentDenominator));
         }
         
-        @Override
         public CompoundUnitBuilder as(Unit u,Exponent e) {
-            return new CompoundUnitBuilderImpl(ubh.put(u,e));
+            return new CompoundUnitBuilder(ubh.put(u,e));
         }
 
-        @Override
         public RatioUnitBuilder asTheRatio(int numerator) {
             return asTheRatio(Expressions.take(numerator));
         }
 
-        @Override
         public RatioUnitBuilder asTheRatio(String numerator) {
             return asTheRatio(Expressions.take(numerator));
         }
         
-        @Override
         public RatioUnitBuilder asTheRatio(Scalar numerator) {
-            return new RatioUnitBuilderImpl(ubh.duplicate(), numerator);
+            return new RatioUnitBuilder(ubh.duplicate(), numerator);
         }
 
-        @Override
-        public TransformationUnitBuilder asExactly(int scalar) {
+        public ScaledUnitBuilder asExactly(int scalar) {
             return asExactly(Expressions.take(scalar));
         }
 
-        @Override
-        public TransformationUnitBuilder asExactly(String scalar) {
+        public ScaledUnitBuilder asExactly(String scalar) {
             return asExactly(Expressions.take(scalar));
         }
         
-        @Override
-        public TransformationUnitBuilder asExactly(Scalar scalar) {
-            return new TransformationUnitBuilderImpl(ubh.setScale(scalar));
+        public ScaledUnitBuilder asExactly(Scalar scalar) {
+            return new ScaledUnitBuilder(ubh.setScale(scalar));
         }
     }
     
-    private static final class CompoundUnitBuilderImpl
-            extends AbstractUnitBuilder
-            implements UnitBuilder.CompoundUnitBuilder {
+    public static final class CompoundUnitBuilder
+            extends AbstractUnitBuilder {
 
-        private CompoundUnitBuilderImpl(UnitBuilderHelper ubh) {
+        private CompoundUnitBuilder(UnitBuilderHelper ubh) {
             super(ubh);
         }
         
-        @Override
-        public UnitBuilder.CompoundUnitBuilder multiply(Unit u) {
+        public CompoundUnitBuilder multiply(Unit u) {
             return multiply(u,1); //magic number
         }
 
-        @Override
-        public UnitBuilder.CompoundUnitBuilder multiply(Unit u,int exponentNumerator) {
+        public CompoundUnitBuilder multiply(Unit u,int exponentNumerator) {
             return multiply(u,exponentNumerator,1); //magic number
         }
         
-        @Override
-        public UnitBuilder.CompoundUnitBuilder multiply(Unit u,int exponentNumerator, int exponentDenominator) {
+        public CompoundUnitBuilder multiply(Unit u,int exponentNumerator,int exponentDenominator) {
             return multiply(u,Exponents.of(exponentNumerator,exponentDenominator));
         }
 
-        @Override
-        public UnitBuilder.CompoundUnitBuilder multiply(Unit u,Exponent e) {
-            return new CompoundUnitBuilderImpl(ubh.put(u,e));
+        public CompoundUnitBuilder multiply(Unit u,Exponent e) {
+            return new CompoundUnitBuilder(ubh.put(u,e));
         }
 
-        @Override
-        public UnitBuilder.CompoundUnitBuilder divide(Unit u) {
+        public CompoundUnitBuilder divide(Unit u) {
             return divide(u,1); //magic number
         }
 
-        @Override
-        public UnitBuilder.CompoundUnitBuilder divide(Unit u,
-                                                      int exponentNumerator) {
+        public CompoundUnitBuilder divide(Unit u,int exponentNumerator) {
             return divide(u,exponentNumerator,1); //magic number
         }
         
-        @Override
-        public UnitBuilder.CompoundUnitBuilder divide(Unit u,
-                                                      int exponentNumerator,
-                                                      int exponentDenominator) {
+        public CompoundUnitBuilder divide(Unit u,int exponentNumerator,int exponentDenominator) {
             return divide(u,Exponents.of(exponentNumerator,exponentDenominator));
         }
 
-        @Override
-        public UnitBuilder.CompoundUnitBuilder divide(Unit u,Exponent e) {
+        public CompoundUnitBuilder divide(Unit u,Exponent e) {
             return multiply(u,Exponents.negate(e));
         }
 
-        @Override
-        public UnitBuilder.CreateableUnitBuilder withName(String name) {
-            return new CreateableUnitBuilderImpl(ubh.setName(name));
+        public CreateableUnitBuilder withName(String name) {
+            return new CreateableUnitBuilder(ubh.setName(name));
         }
 
-        @Override
-        public UnitBuilder.CreateableUnitBuilder withSymbol(String symbol) {
-            return new CreateableUnitBuilderImpl(ubh.setSymbol(symbol));
+        public CreateableUnitBuilder withSymbol(String symbol) {
+            return new CreateableUnitBuilder(ubh.setSymbol(symbol));
         }
 
-        @Override
         public Unit create() throws IncommensurableDimensionException {
             return ubh.create();
         }
     }
     
-    private static final class CreateableUnitBuilderImpl
-            extends AbstractUnitBuilder
-            implements UnitBuilder.CreateableUnitBuilder {
+    public static final class CreateableUnitBuilder extends AbstractUnitBuilder {
         
-        private CreateableUnitBuilderImpl(UnitBuilderHelper ubh) {
+        private CreateableUnitBuilder(UnitBuilderHelper ubh) {
             super(ubh);
         }
 
-        @Override
-        public UnitBuilder.CreateableUnitBuilder withName(String name) {
-            return new CreateableUnitBuilderImpl(ubh.setName(name));
+        public CreateableUnitBuilder withName(String name) {
+            return new CreateableUnitBuilder(ubh.setName(name));
         }
 
-        @Override
-        public UnitBuilder.CreateableUnitBuilder withSymbol(String symbol) {
-            return new CreateableUnitBuilderImpl(ubh.setSymbol(symbol));
+        public CreateableUnitBuilder withSymbol(String symbol) {
+            return new CreateableUnitBuilder(ubh.setSymbol(symbol));
         }
 
-        @Override
         public Unit create() throws IncommensurableDimensionException {
             return ubh.create();
         }
     }
     
-    private static final class RatioUnitBuilderImpl
-            extends AbstractUnitBuilder 
-            implements UnitBuilder.RatioUnitBuilder {
+    public static final class RatioUnitBuilder extends AbstractUnitBuilder {
         
         private final Scalar numerator;
         
-        private RatioUnitBuilderImpl(UnitBuilderHelper ubh, Scalar numerator) {
+        private RatioUnitBuilder(UnitBuilderHelper ubh, Scalar numerator) {
             super(ubh);
             this.numerator = numerator;
         }
 
-        @Override
-        public UnitBuilder.TransformationUnitBuilder over(int denominator) {
+        public ScaledUnitBuilder over(int denominator) {
             return over(Expressions.take(denominator));
         }
 
-        @Override
-        public UnitBuilder.TransformationUnitBuilder over(String denominator) {
+        public ScaledUnitBuilder over(String denominator) {
             return over(Expressions.take(denominator));
         }
         
-        @Override
-        public UnitBuilder.TransformationUnitBuilder over(Scalar denominator) {
-            return new TransformationUnitBuilderImpl(ubh.setScale(numerator.divide(denominator)));
+        public ScaledUnitBuilder over(Scalar denominator) {
+            return new ScaledUnitBuilder(ubh.setScale(numerator.divide(denominator)));
         }
     }
     
-    private static final class TransformationUnitBuilderImpl
-            extends AbstractUnitBuilder
-            implements UnitBuilder.TransformationUnitBuilder {
+    public static final class ScaledUnitBuilder
+            extends AbstractUnitBuilder {
         
-        private TransformationUnitBuilderImpl(UnitBuilderHelper ubh) {
+        private ScaledUnitBuilder(UnitBuilderHelper ubh) {
             super(ubh);
         }
 
-        @Override
-        public UnitBuilder.ReferencedTransformationUnitBuilder ofA(Unit u) {
-            return new ReferencedTransformationUnitBuilderImpl(ubh.setUnit(u));
+        public CreateableUnitBuilder ofA(Unit u) {
+            return new CreateableUnitBuilder(ubh.setUnit(u));
         }
     }
     
-    private static final class ReferencedTransformationUnitBuilderImpl
-            extends AbstractUnitBuilder
-            implements UnitBuilder.ReferencedTransformationUnitBuilder {
+    public static final class DimensionedUnitBuilder extends AbstractUnitBuilder {
         
-        private ReferencedTransformationUnitBuilderImpl(UnitBuilderHelper ubh) {
+        private DimensionedUnitBuilder(UnitBuilderHelper ubh) {
             super(ubh);
         }
 
-        @Override
-        public UnitBuilder.ReferencedTransformationUnitBuilder withName(String name) {
-            return new ReferencedTransformationUnitBuilderImpl(ubh.setName(name));
-        }
-
-        @Override
-        public UnitBuilder.ReferencedTransformationUnitBuilder withSymbol(String symbol) {
-            return new ReferencedTransformationUnitBuilderImpl(ubh.setSymbol(symbol));
-        }
-
-        @Override
-        public Unit create() throws IncommensurableDimensionException {
-            return ubh.create();
-        }
-    }
-    
-    private static final class DimensionedInitialUnitBuilderImpl
-            extends AbstractUnitBuilder
-            implements UnitBuilder.DimensionedInitialUnitBuilder 
-    {   
-        private DimensionedInitialUnitBuilderImpl(UnitBuilderHelper ubh) {
-            super(ubh);
-        }
-
-        @Override
-        public UnitBuilder.CompoundDimensionedUnitBuilder as(Unit u) {
+        public CompoundUnitBuilder as(Unit u) {
             return as(u,1); //magic number
         }
 
-        @Override
-        public UnitBuilder.CompoundDimensionedUnitBuilder as(Unit u,int exponentNumerator) {
+        public CompoundUnitBuilder as(Unit u,int exponentNumerator) {
             return as(u,exponentNumerator,1); //magic number
         }
         
-        @Override
-        public UnitBuilder.CompoundDimensionedUnitBuilder as(Unit u,int exponentNumerator, int exponentDenominator) {
+        public CompoundUnitBuilder as(Unit u,int exponentNumerator, int exponentDenominator) {
             return as(u,Exponents.of(exponentNumerator,exponentDenominator));
         }
 
-        @Override
-        public UnitBuilder.CompoundDimensionedUnitBuilder as(Unit u,Exponent e) {
-            return new CompoundDimensionedUnitBuilderImpl(ubh.put(u,e));
+        public CompoundUnitBuilder as(Unit u,Exponent e) {
+            return new CompoundUnitBuilder(ubh.put(u,e));
         }
 
-        @Override
-        public UnitBuilder.RatioDimensionedUnitBuilder asTheRatio(int numerator) {
+        public RatioUnitBuilder asTheRatio(int numerator) {
             return asTheRatio(Expressions.take(numerator));
         }
 
-        @Override
-        public UnitBuilder.RatioDimensionedUnitBuilder asTheRatio(String numerator) {
+        public RatioUnitBuilder asTheRatio(String numerator) {
             return asTheRatio(Expressions.take(numerator));
         }
         
-        @Override
-        public UnitBuilder.RatioDimensionedUnitBuilder asTheRatio(Scalar numerator) {
-            return new RatioDimensionedUnitBuilderImpl(ubh.duplicate(), numerator);
+        public RatioUnitBuilder asTheRatio(Scalar numerator) {
+            return new RatioUnitBuilder(ubh.duplicate(), numerator);
         }
 
-        @Override
-        public UnitBuilder.TransformationDimensionedUnitBuilder asExactly(int scalar) {
+        public ScaledUnitBuilder asExactly(int scalar) {
             return asExactly(Expressions.take(scalar));
         }
 
-        @Override
-        public UnitBuilder.TransformationDimensionedUnitBuilder asExactly(String scalar) {
+        public ScaledUnitBuilder asExactly(String scalar) {
             return asExactly(Expressions.take(scalar));
         }
         
-        @Override
-        public UnitBuilder.TransformationDimensionedUnitBuilder asExactly(Scalar scalar) {
-            return new TransformationDimensionedUnitBuilderImpl(ubh.setScale(scalar));
-        }
-    }
-    
-    private static final class CompoundDimensionedUnitBuilderImpl
-            extends AbstractUnitBuilder
-            implements UnitBuilder.CompoundDimensionedUnitBuilder {
-
-        private CompoundDimensionedUnitBuilderImpl(UnitBuilderHelper ubh) {
-            super(ubh);
-        }
-        
-        @Override
-        public UnitBuilder.CompoundDimensionedUnitBuilder multiply(Unit u) {
-            return multiply(u,1); //magic number
-        }
-
-        @Override
-        public UnitBuilder.CompoundDimensionedUnitBuilder multiply(Unit u,int exponentNumerator) {
-            return multiply(u,exponentNumerator,1); //magic number
-        }
-        
-        @Override
-        public UnitBuilder.CompoundDimensionedUnitBuilder multiply(Unit u,int exponentNumerator, int exponentDenominator) {
-            return multiply(u,Exponents.of(exponentNumerator,exponentDenominator));
-        }
-
-        @Override
-        public UnitBuilder.CompoundDimensionedUnitBuilder multiply(Unit u,Exponent e) {
-            return new CompoundDimensionedUnitBuilderImpl(ubh.put(u,e));
-        }
-
-        @Override
-        public UnitBuilder.CompoundDimensionedUnitBuilder divide(Unit u) {
-            return divide(u,1); //magic number
-        }
-
-        @Override
-        public UnitBuilder.CompoundDimensionedUnitBuilder divide(Unit u,
-                                                      int exponentNumerator) {
-            return divide(u,exponentNumerator,1); //magic number
-        }
-        
-        @Override
-        public UnitBuilder.CompoundDimensionedUnitBuilder divide(Unit u,
-                                                      int exponentNumerator,
-                                                      int exponentDenominator) {
-            return divide(u,Exponents.of(exponentNumerator,exponentDenominator));
-        }
-
-        @Override
-        public UnitBuilder.CompoundDimensionedUnitBuilder divide(Unit u,Exponent e) {
-            return multiply(u,Exponents.negate(e));
-        }
-        
-        @Override
-        public UnitBuilder.CreateableDimensionedUnitBuilder withName(String name) {
-            return new CreateableDimensionedUnitBuilderImpl(ubh.setName(name));
-        }
-
-        @Override
-        public UnitBuilder.CreateableDimensionedUnitBuilder withSymbol(String symbol) {
-            return new CreateableDimensionedUnitBuilderImpl(ubh.setSymbol(symbol));
-        }
-
-        @Override
-        public Unit create() throws IncommensurableDimensionException {
-            return ubh.create();
-        }
-    }
-    
-    private static final class CreateableDimensionedUnitBuilderImpl
-            extends AbstractUnitBuilder
-            implements UnitBuilder.CreateableDimensionedUnitBuilder {
-        
-        private CreateableDimensionedUnitBuilderImpl(UnitBuilderHelper ubh) {
-            super(ubh);
-        }
-
-        @Override
-        public UnitBuilder.CreateableDimensionedUnitBuilder withName(String name) {
-            return new CreateableDimensionedUnitBuilderImpl(ubh.setName(name));
-        }
-
-        @Override
-        public UnitBuilder.CreateableDimensionedUnitBuilder withSymbol(String symbol) {
-            return new CreateableDimensionedUnitBuilderImpl(ubh.setSymbol(symbol));
-        }
-
-        @Override
-        public Unit create() throws IncommensurableDimensionException {
-            return ubh.create();
-        }
-    }
-    
-    private static final class RatioDimensionedUnitBuilderImpl
-            extends AbstractUnitBuilder 
-            implements UnitBuilder.RatioDimensionedUnitBuilder {
-        
-        private final Scalar numerator;
-        
-        private RatioDimensionedUnitBuilderImpl(UnitBuilderHelper ubh, Scalar numerator) {
-            super(ubh);
-            this.numerator = numerator;
-        }
-
-        @Override
-        public UnitBuilder.TransformationDimensionedUnitBuilder over(int denominator) {
-            return over(Expressions.take(denominator));
-        }
-
-        @Override
-        public UnitBuilder.TransformationDimensionedUnitBuilder over(String denominator) {
-            return over(Expressions.take(denominator));
-        }
-        
-        @Override
-        public UnitBuilder.TransformationDimensionedUnitBuilder over(Scalar denominator) {
-            return new TransformationDimensionedUnitBuilderImpl(ubh.setScale(numerator.divide(denominator)));
-        }
-    }
-    
-    private static final class TransformationDimensionedUnitBuilderImpl
-            extends AbstractUnitBuilder
-            implements UnitBuilder.TransformationDimensionedUnitBuilder {
-        
-        private TransformationDimensionedUnitBuilderImpl(UnitBuilderHelper ubh) {
-            super(ubh);
-        }
-
-        @Override
-        public UnitBuilder.ReferencedTransformationDimensionedUnitBuilder ofA(Unit u) {
-            return new ReferencedTransformationDimensionedUnitBuilderImpl(ubh.setUnit(u));
-        }
-    }
-    
-    private static final class ReferencedTransformationDimensionedUnitBuilderImpl
-            extends AbstractUnitBuilder
-            implements UnitBuilder.ReferencedTransformationDimensionedUnitBuilder {
-        
-        private ReferencedTransformationDimensionedUnitBuilderImpl(UnitBuilderHelper ubh) {
-            super(ubh);
-        }
-
-        @Override
-        public UnitBuilder.ReferencedTransformationDimensionedUnitBuilder withName(String name) {
-            return new ReferencedTransformationDimensionedUnitBuilderImpl(ubh.setName(name));
-        }
-
-        @Override
-        public UnitBuilder.ReferencedTransformationDimensionedUnitBuilder withSymbol(String symbol) {
-            return new ReferencedTransformationDimensionedUnitBuilderImpl(ubh.setSymbol(symbol));
-        }
-
-        @Override
-        public Unit create() throws IncommensurableDimensionException {
-            return ubh.create();
+        public ScaledUnitBuilder asExactly(Scalar scalar) {
+            return new ScaledUnitBuilder(ubh.setScale(scalar));
         }
     }
     
