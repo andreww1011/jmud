@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  *
@@ -250,153 +249,7 @@ public abstract class Dimensions {
     }
     
     public static final DimensionBuilder newDimension() {
-        return new DimensionBuilderImpl();
-    }
-    
-    private static final class DimensionBuilderImpl
-            implements DimensionBuilder {
-
-        private final String name, symbol;
-        private final Map<FundamentalDimension,Exponent> compositionMap;
-        
-        DimensionBuilderImpl() {
-            name = "";
-            symbol = "";
-            compositionMap = new HashMap<>();
-        }
-        
-        private DimensionBuilderImpl(Map<FundamentalDimension,Exponent> compositionMap,
-                                     String name,
-                                     String symbol) {
-            this.compositionMap = compositionMap;
-            this.name = name;
-            this.symbol = symbol;
-        }
-        
-        @Override
-        public DimensionBuilder append(Dimension d) {
-            return append(d,1); //magic number
-        }
-
-        @Override
-        public DimensionBuilder append(Dimension d,int exponentNumerator) {
-            return append(d,exponentNumerator,1); //magic number
-        }
-        
-        @Override
-        public DimensionBuilder append(Dimension d,int exponentNumerator, int exponentDenominator) {
-            return append(d,Exponents.of(exponentNumerator,exponentDenominator));
-        }
-
-        @Override
-        public DimensionBuilder append(Dimension d,Exponent e) {
-            return new DimensionBuilderImpl(put(d,e),name,symbol);
-        }
-        
-        private Map<FundamentalDimension,Exponent> put(Dimension d, Exponent e) {
-            Map<FundamentalDimension,Exponent> m = copy(compositionMap);
-            Exponent dPow;
-            FundamentalDimension fd;
-            Exponent fe;
-            for (CompositionComponent c : d.getComposition()) {
-                fd = c.fundamentalDimension();
-                if (!fd.equals(Dimensions.DIMENSIONLESS)) {
-                    fe = c.exponent();
-                    dPow = Exponents.power(fe, e);
-                    if (m.containsKey(fd))
-                        m.put(fd, Exponents.product(m.get(fd), dPow));
-                    else
-                        m.put(fd, dPow);
-                }
-            }
-            return m;
-        }
-        
-        private static Map<FundamentalDimension,Exponent> copy(Map<FundamentalDimension,Exponent> cMap) {
-            return new HashMap<>(cMap);
-        }
-
-        @Override
-        public DimensionBuilder withName(String name) {
-            return new DimensionBuilderImpl(copy(compositionMap),name,symbol);
-        }
-
-        @Override
-        public DimensionBuilder withSymbol(String symbol) {
-            return new DimensionBuilderImpl(copy(compositionMap),name,symbol);
-        }
-
-        @Override
-        public Dimension create() {
-            return createDimension(copy(compositionMap),name,symbol);
-        }
-        
-        private static Dimension createDimension(
-                Map<FundamentalDimension,Exponent> map,
-                String name,
-                String symbol) {
-            map = cleanCompositionMap(map);
-            Composition composition = new CompositionImpl(map);
-            Dimension d = new DimensionImpl(composition,name,symbol);
-            String n = formatName(name,composition);
-            String s = formatSymbol(symbol,composition);
-            return new DimensionImpl(composition,n,s);
-        }
-        
-        private static Map<FundamentalDimension,Exponent> cleanCompositionMap(Map<FundamentalDimension,Exponent> map) {
-            map = removeZeroExponents(map);
-            if (map.isEmpty())
-                map.put(Dimensions.DIMENSIONLESS, Exponents.ONE);
-            return map;
-        }
-        
-        private static Map<FundamentalDimension,Exponent> removeZeroExponents(Map<FundamentalDimension,Exponent> map) {
-            return map.entrySet().stream()
-                    .filter((e) -> !e.getKey().equals(Dimensions.DIMENSIONLESS) && !e.getValue().isEqualTo(Exponents.ZERO))
-                    .collect(Collectors.toMap((e) -> e.getKey(),(e) -> e.getValue()));
-        }
-        
-        private static String formatName(String name, Composition c) {
-            if (isBlank(name)) {
-                return calcName(c);
-            }
-            return name;
-        }
-        
-        private static boolean isBlank(String s) {
-            return s == null || s.isBlank();
-        }
-
-        private static String formatSymbol(String symbol, Composition c) {
-            if (isBlank(symbol)) {
-                return calcSymbol(c);
-            }
-            return symbol;
-        }
-        
-        private static String calcName(Composition c) {
-            StringBuilder sb = new StringBuilder();
-            Iterator<CompositionComponent> iter = c.iterator();
-            while (iter.hasNext()) {
-                CompositionComponent cc = iter.next();
-                FundamentalDimension fd = cc.fundamentalDimension();
-                Exponent e = cc.exponent();
-                if (!e.equals(Exponents.ZERO)) {
-                    sb.append(fd.getName()).append(": ").append(e.numerator());
-                    if (e.denominator() != 1) {
-                        sb.append("/").append(e.denominator());
-                    }
-                    if (iter.hasNext()) {
-                        sb.append("; ");
-                    }
-                }
-            }
-            return sb.toString();
-        }
-        
-        private static String calcSymbol(Composition c) {
-            return AbstractComposition.calcToString(c);
-        }
+        return DimensionBuilder.NULL_BUILDER;
     }
 
     private static final class CompositionImpl extends AbstractComposition {
@@ -692,5 +545,116 @@ public abstract class Dimensions {
         AREA_MAGNETIC_FLUX_DENSITY
                                 = newDimension().append(MAGNETIC_FLUX).append(AREA,-1).withName("AREA MAGNETIC FLUX DENSITY").withSymbol("B").create();
         INDUCTANCE              = newDimension().append(MAGNETIC_FLUX).append(ELECTRIC_CURRENT,-1).withName("INDUCTANCE").withSymbol("L").create();
+    }
+    
+    public static final class DimensionBuilder {
+
+        private static final DimensionBuilder NULL_BUILDER = new DimensionBuilder("","",Map.of());
+        
+        private final String name, symbol;
+        private final Map<FundamentalDimension,Exponent> compositionMap;
+        
+        private DimensionBuilder(String name, String symbol, Map<FundamentalDimension,Exponent> compositionMap) {
+            this.name = name;
+            this.symbol = symbol;
+            this.compositionMap = compositionMap;
+        }
+        
+        public DimensionBuilder append(Dimension d) {
+            return append(d,1); //magic number
+        }
+
+        public DimensionBuilder append(Dimension d,int exponentNumerator) {
+            return append(d,exponentNumerator,1); //magic number
+        }
+        
+        public DimensionBuilder append(Dimension d,int exponentNumerator, int exponentDenominator) {
+            return append(d,Exponents.of(exponentNumerator,exponentDenominator));
+        }
+
+        public DimensionBuilder append(Dimension d,Exponent e) {
+            Map<FundamentalDimension,Exponent> map = new HashMap<>(compositionMap);
+            
+            Exponent dPow;
+            FundamentalDimension fd;
+            Exponent fe;
+            for (CompositionComponent c : d.getComposition()) {
+                fd = c.fundamentalDimension();
+                if (fd.equals(Dimensions.DIMENSIONLESS)) 
+                    continue;
+                fe = c.exponent();
+                dPow = Exponents.power(fe, e);
+                if (map.containsKey(fd))
+                    map.put(fd, Exponents.product(map.get(fd), dPow));
+                else
+                    map.put(fd, dPow);
+            }
+            return new DimensionBuilder(name,symbol,map);
+        }
+
+        public DimensionBuilder withName(String name) {
+            return new DimensionBuilder(name,symbol,compositionMap);   
+        }
+
+        public DimensionBuilder withSymbol(String symbol) {
+            return new DimensionBuilder(name,symbol,compositionMap);   
+        }
+
+        public Dimension create() {
+            Map<FundamentalDimension,Exponent> map = new HashMap<>(compositionMap);
+            cleanCompositionMap(map);
+            Composition composition = new CompositionImpl(map);
+            String n = formatName(name,composition);
+            String s = formatSymbol(symbol,composition);
+            return new DimensionImpl(composition,n,s);
+        }
+        
+        private static void cleanCompositionMap(Map<FundamentalDimension,Exponent> map) {
+            map.entrySet().removeIf((e) -> e.getValue().equals(Exponents.ZERO));
+            if (map.isEmpty())
+                map.put(Dimensions.DIMENSIONLESS, Exponents.ONE);
+        }
+        
+        private static String formatName(String name, Composition c) {
+            if (isBlank(name)) {
+                return calcName(c);
+            }
+            return name;
+        }
+        
+        private static boolean isBlank(String s) {
+            return s == null || s.isBlank();
+        }
+
+        private static String formatSymbol(String symbol, Composition c) {
+            if (isBlank(symbol)) {
+                return calcSymbol(c);
+            }
+            return symbol;
+        }
+        
+        private static String calcName(Composition c) {
+            StringBuilder sb = new StringBuilder();
+            Iterator<CompositionComponent> iter = c.iterator();
+            while (iter.hasNext()) {
+                CompositionComponent cc = iter.next();
+                FundamentalDimension fd = cc.fundamentalDimension();
+                Exponent e = cc.exponent();
+                if (!e.equals(Exponents.ZERO)) {
+                    sb.append(fd.getName()).append(": ").append(e.numerator());
+                    if (e.denominator() != 1) {
+                        sb.append("/").append(e.denominator());
+                    }
+                    if (iter.hasNext()) {
+                        sb.append("; ");
+                    }
+                }
+            }
+            return sb.toString();
+        }
+        
+        private static String calcSymbol(Composition c) {
+            return AbstractComposition.calcToString(c);
+        }
     }
 }
