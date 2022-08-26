@@ -48,6 +48,10 @@ public abstract class Expressions {
         return ExpressionImpl.take(value,unit);
     }
     
+    public static final Expression take(Function<Field.Factory,Measure> function, Dimension dimension) {
+        return new ExpressionImpl(function,dimension);
+    }
+    
     public static final <F extends Field<F>> Measure<F> take(F value, Unit unit) {
         return MeasureImpl.take(value,unit);
     }
@@ -118,6 +122,21 @@ public abstract class Expressions {
             sb.append(toString).append(" + ").append(scalar.toString());
             return new ScalarImpl(g,sb.toString());
         }
+                
+        @Override
+        public Expression add(Expression expression) {
+            return ExpressionImpl.take(this,Units.UNITLESS).add(expression); 
+        }
+
+        @Override
+        public <T extends Field<T>> Measure<T> add(T value) {
+            return ExpressionImpl.take(this,Units.UNITLESS).add(value,Units.UNITLESS); 
+        }
+
+        @Override
+        public <T extends Field<T>> Measure<T> add(Measure<T> measure) {
+            return ExpressionImpl.take(this,Units.UNITLESS).add(measure); 
+        }
 
         @Override
         public Scalar subtract(int scalar) {
@@ -142,6 +161,21 @@ public abstract class Expressions {
             StringBuilder sb = new StringBuilder(toString.length() + scalar.toString().length() + 3); //magic number
             sb.append(toString).append(" - ").append(scalar.toString());
             return new ScalarImpl(g,sb.toString());
+        }
+        
+        @Override
+        public Expression subtract(Expression expression) {
+            return ExpressionImpl.take(this,Units.UNITLESS).subtract(expression); 
+        }
+
+        @Override
+        public <T extends Field<T>> Measure<T> subtract(T value) {
+            return ExpressionImpl.take(this,Units.UNITLESS).subtract(value,Units.UNITLESS); 
+        }
+
+        @Override
+        public <T extends Field<T>> Measure<T> subtract(Measure<T> measure) {
+            return ExpressionImpl.take(this,Units.UNITLESS).subtract(measure); 
         }
         
         @Override
@@ -309,7 +343,7 @@ public abstract class Expressions {
             sb.append("log_").append(base.toString()).append("(").append(toString).append(")");
             return new ScalarImpl(g,sb.toString());
         }
-
+  
         @Override
         public <T extends Field<T>> T using(T.Factory<T> factory) {
             return (T)memo.computeIfAbsent(factory,(x) -> function.apply(x));
@@ -554,7 +588,7 @@ public abstract class Expressions {
             Dimension d = Dimensions.newDimension().append(getDimension(),exponent).create();
             return new ExpressionImpl(g,d);
         }
-
+    
         @Override
         public <T extends Field<T>> Measure<T> using(T.Factory<T> factory) {
             return memo.computeIfAbsent(factory,(x) -> function.apply(x));
