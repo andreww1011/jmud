@@ -111,11 +111,6 @@ public class ConcreteBeamDesignExample {
                     .get();
         return Expressions.take(g,d);
     }
-    
-    private static Measure<DoubleField> ceil(Measure<DoubleField> measure) {
-        double v = Math.ceil(measure.getField().value());
-        return take(DoubleField.of(v),measure.getUnit());
-    }
    
     @Test
     public void example() {
@@ -163,7 +158,7 @@ public class ConcreteBeamDesignExample {
         
         Expression As_req = r.multiply(b).multiply(de); //area of longitudinal steel required
         Unit bar8 = Units.newUnit().asExactly("0.79").ofA(sqin).withSymbol("#8 bar").create();
-        Measure<DoubleField> num8Bars = ceil(As_req.using(factory).as(bar8));
+        Measure<DoubleField> num8Bars = DoubleField.Measure.ceil(As_req.using(factory).as(bar8));
         
         //Check answer
         Measure<DoubleField> answer = take(3,bar8).using(factory);
