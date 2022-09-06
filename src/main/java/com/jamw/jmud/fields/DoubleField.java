@@ -26,6 +26,7 @@ import com.jamw.jmud.IncommensurableDimensionException;
 import com.jamw.jmud.Scalar;
 import com.jamw.jmud.Unit;
 import com.jamw.jmud.Units;
+import java.util.Objects;
 
 /**
  *
@@ -156,15 +157,15 @@ public final class DoubleField implements Field<DoubleField>, Field.Factory<Doub
     
     public static final class Measure implements com.jamw.jmud.Measure<DoubleField> {
 
-        public static final Measure of(double value,Unit unit) {
+        public static final DoubleField.Measure of(double value,Unit unit) {
             return of(DoubleField.of(value),unit);
         }
         
-        public static final Measure of(DoubleField value,Unit unit) {
+        public static final DoubleField.Measure of(DoubleField value,Unit unit) {
             return of(Expressions.take(value,unit));
         }
         
-        public static final Measure of(com.jamw.jmud.Measure<DoubleField> measure) {
+        public static final DoubleField.Measure of(com.jamw.jmud.Measure<DoubleField> measure) {
             return new Measure(measure);
         }
         
@@ -477,6 +478,30 @@ public final class DoubleField implements Field<DoubleField>, Field.Factory<Doub
         public DoubleField.Measure as(Unit unit)
                 throws IncommensurableDimensionException {
             return of(measure.as(unit));
+        }
+        
+        @Override
+        public String toString() {
+            return measure.toString();
+        }
+        
+        @Override
+        public boolean equals(Object o) {
+            if (this == o)
+                return true;
+            if (!(o instanceof DoubleField.Measure))
+                return false;
+            DoubleField.Measure om = (DoubleField.Measure)o;
+            return this.getUnit().equals(om.getUnit())
+                    && this.getField().isEqualTo(om.getField());
+        }
+
+        @Override
+        public int hashCode() {
+            int hash = 3;
+            hash = 37 * hash + Objects.hashCode(measure.getField().value());
+            hash = 37 * hash + Objects.hashCode(measure.getUnit());
+            return hash;
         }
         
         public DoubleField.Measure abs() {
