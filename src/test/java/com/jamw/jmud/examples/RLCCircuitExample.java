@@ -41,12 +41,6 @@ public class RLCCircuitExample {
                 .power(Exponents.SQUARE_ROOT);
     }
     
-    private static Measure<DoubleField> atan(Expression e) {
-        double r = e.using(DoubleField.factory()).as(Units.UNITLESS).getField().value();
-        double rad = Math.atan(r);
-        return Expressions.take(DoubleField.of(rad),Units.RADIAN);
-    }
-    
     @Test
     public void example() {
         Expression X_L = Expressions.take(184,Units.OHM);
@@ -58,7 +52,7 @@ public class RLCCircuitExample {
         assertTrue(Double.toString(Zm.getField().value()).equals(answerOhm));
         
         Expression r = X_L.subtract(X_C).divide(R);
-        Measure<DoubleField> phaseAngle = atan(r).as(Units.DEGREE);
+        Measure<DoubleField> phaseAngle = DoubleField.Measure.atan(r).as(Units.DEGREE);
         String answerPhaseAngleInDegree = "53.1";
         assertTrue(String.format("%.1f",phaseAngle.getField().value()).equals(answerPhaseAngleInDegree));
     }

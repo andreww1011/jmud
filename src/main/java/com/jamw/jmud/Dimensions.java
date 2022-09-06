@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- *
+ * Factory class of common dimensions.
  * @author andreww1011
  */
 public abstract class Dimensions {
@@ -248,6 +248,10 @@ public abstract class Dimensions {
         }
     }
     
+    /**
+     * 
+     * @return 
+     */
     public static final DimensionBuilder newDimension() {
         return DimensionBuilder.NULL_BUILDER;
     }

@@ -33,11 +33,23 @@ public interface Scalar {
     
     Scalar add(Scalar scalar);
     
+    Expression add(Expression expression);
+    
+    <T extends Field<T>> Measure<T> add(T value);
+    
+    <T extends Field<T>> Measure<T> add(Measure<T> measure);
+    
     Scalar subtract(int scalar);
     
     Scalar subtract(String scalar);
     
     Scalar subtract(Scalar scalar);
+    
+    Expression subtract(Expression expression);
+    
+    <T extends Field<T>> Measure<T> subtract(T value);
+    
+    <T extends Field<T>> Measure<T> subtract(Measure<T> measure);
     
     Scalar multiply(int scalar);
     
@@ -84,6 +96,6 @@ public interface Scalar {
     Scalar logarithm(String base) throws ArithmeticException;
     
     Scalar logarithm(Scalar base) throws ArithmeticException;
-    
+
     <T extends Field<T>> T using(T.Factory<T> factory);
 }
