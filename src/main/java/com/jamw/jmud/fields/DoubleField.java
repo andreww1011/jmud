@@ -65,6 +65,16 @@ public final class DoubleField implements Field<DoubleField>, Field.Factory<Doub
     }
     
     @Override
+    public final DoubleField zero() {
+        return ZERO;
+    }
+    
+    @Override
+    public final DoubleField one() {
+        return ONE;
+    }
+    
+    @Override
     public final DoubleField of(int value) {
         return new DoubleField(value);
     }

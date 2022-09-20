@@ -54,6 +54,16 @@ public final class BigDecimal128Field implements Field<BigDecimal128Field>, Fiel
     }
     
     @Override
+    public final BigDecimal128Field zero() {
+        return ZERO;
+    }
+    
+    @Override
+    public final BigDecimal128Field one() {
+        return ONE;
+    }
+    
+    @Override
     public final BigDecimal128Field of(int value) {
         return new BigDecimal128Field(new BigDecimal(value));
     }

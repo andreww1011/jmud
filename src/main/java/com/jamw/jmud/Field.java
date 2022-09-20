@@ -18,12 +18,21 @@
 package com.jamw.jmud;
 
 /**
- *
+ * A field is 
+ * 
+ * @param <F>
+ * 
  * @author andreww1011
  */
 public interface Field<F extends Field<F>> extends Comparable<F> {
     
+    /**
+     * 
+     * @param <T> 
+     */
     interface Factory<T extends Field<T>> {
+        T zero();
+        T one();
         T of(int value);
         T of(String value) throws NumberFormatException;
     }

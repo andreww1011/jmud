@@ -101,6 +101,16 @@ public class UncertaintyExample {
         public double uncertainty() {
             return uncertainty;
         }
+        
+        @Override
+        public UncertainDoubleField zero() {
+            return ZERO;
+        }
+        
+        @Override
+        public UncertainDoubleField one() {
+            return ONE;
+        }
 
         @Override
         public UncertainDoubleField of(int value) {
