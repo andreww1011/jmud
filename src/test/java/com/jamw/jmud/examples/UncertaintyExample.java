@@ -328,7 +328,7 @@ public class UncertaintyExample {
         }
 
         private static DoubleField apply(DoubleField[] values, ToDoubleFunction<double[]> function) {
-            Objects.nonNull(values);
+            Objects.requireNonNull(values);
             if (values.length == 0)
                 throw new IllegalArgumentException();
             return DoubleField.of(function.applyAsDouble(
@@ -389,8 +389,8 @@ public class UncertaintyExample {
         }
 
         private static DoubleField apply(DoubleField[] q, DoubleField[] r, ToDoubleBiFunction<double[],double[]> function) {
-            Objects.nonNull(q);
-            Objects.nonNull(r);
+            Objects.requireNonNull(q);
+            Objects.requireNonNull(r);
             if (!(q.length == r.length && q.length != 0))
                 throw new IllegalArgumentException();
             return DoubleField.of(function.applyAsDouble(
@@ -912,7 +912,7 @@ public class UncertaintyExample {
             }
 
             private static void checkArray(Object[] array) {
-                Objects.nonNull(array);
+                Objects.requireNonNull(array);
                 if (array.length == 0) 
                     throw new IllegalArgumentException();
             }
@@ -928,8 +928,8 @@ public class UncertaintyExample {
             }
 
             private static void checkArray(Object[] a1, Object[] a2) {
-                Objects.nonNull(a1);
-                Objects.nonNull(a2);
+                Objects.requireNonNull(a1);
+                Objects.requireNonNull(a2);
                 if (!(a1.length == a2.length && a1.length != 0))
                     throw new IllegalArgumentException();
             }
