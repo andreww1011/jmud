@@ -19,6 +19,7 @@ package com.jamw.jmud;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 /**
  *
@@ -74,17 +75,31 @@ public abstract class Universe {
         return DIMENSIONLESS;
     }
     
+    public static final FundamentalUnit getUnitless() {
+        return UNITLESS;
+    }
+    
     private Universe() {}
     
     public static final FundamentalPair newFundamentalPair(String FundamentalDimensionName,
                                                     String FundamentalDimensionSymbol,
                                                     String FundamentalUnitName,
                                                     String FundamentalUnitSymbol) {
+        checkString(FundamentalDimensionName);
+        checkString(FundamentalDimensionSymbol);
+        checkString(FundamentalUnitName);
+        checkString(FundamentalUnitSymbol);
         return new FundamentalPairImpl(
                 FundamentalDimensionName, 
                 FundamentalDimensionSymbol,
                 FundamentalUnitName,
                 FundamentalUnitSymbol);
+    }
+    
+    private static void checkString(String s) {
+        Objects.requireNonNull(s);
+        if (s.isBlank())
+            throw new IllegalArgumentException();
     }
     
     private static final class FundamentalPairImpl implements FundamentalPair {
