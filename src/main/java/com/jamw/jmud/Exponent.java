@@ -18,12 +18,40 @@
 package com.jamw.jmud;
 
 /**
- *
+ * Represents a rational number to be used as an exponent
+ * in a power operation.  A rational number is any number where its value can be 
+ * expressed as the quotient of two numbers, <i>p/q</i>, where <i>p</i> is 
+ * an integer numerator and <i>q</i> is a positive integer denominator. 
+ * 
+ * <p>The value of this exponent is equal to <i>p/q</i> exactly, 
+ * but the actual fraction is always reduced to its simplest form and the
+ * denominator is always positive.  The value of zero is represented as "0/1".
+ * 
+ * <p>Two exponents are considered equal if and only if their numerators are
+ * equal and their denominators are equal.
+ * 
  * @author andreww1011
  */
 public interface Exponent extends Comparable<Exponent>{
     
+    /**
+     * Returns the numerator of this rational number exponent.
+     */
     int numerator();
     
+    /**
+     * Returns the denominator of the rational number exponent.  The denominator
+     * must be a positive integer.
+     */
     int denominator();
+    
+    /**
+     * Compares the specified object with this exponent for equality. 
+     * Returns true if the specified object is an exponent and the two 
+     * exponents represent the same value.
+     * @param o object to be compared for equality to this exponent.
+     * @return 
+     */
+    @Override
+    boolean equals(Object o);
 }

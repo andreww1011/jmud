@@ -24,6 +24,7 @@ import java.util.Objects;
 
 /**
  * Factory class of common dimensions.
+ * 
  * @author andreww1011
  */
 public abstract class Dimensions {
@@ -33,7 +34,7 @@ public abstract class Dimensions {
     /**
      * Fundamental dimension representing the special null-value dimension.
      * <p>
-     * Denoted as <i>[-]</i>
+     * Denoted as <i>[-]</i>.
      */
     public static final FundamentalDimension DIMENSIONLESS = Universe.DIMENSIONLESS;
     
@@ -42,7 +43,7 @@ public abstract class Dimensions {
      * notion of a body's resistance to change in motion when a net force
      * is applied.
      * <p>
-     * Denoted as <i>[M]</i>
+     * Denoted as <i>[M]</i>.
      */
     public static final FundamentalDimension MASS = Universe.MASS;
     
@@ -50,7 +51,7 @@ public abstract class Dimensions {
      * Fundamental dimension of <i>length</i>, the abstraction of the
      * perception of space.
      * <p>
-     * Denoted as <i>[L]</i>
+     * Denoted as <i>[L]</i>.
      */
     public static final FundamentalDimension LENGTH = Universe.LENGTH;
     
@@ -59,7 +60,7 @@ public abstract class Dimensions {
      * of sequences of events that occur in irreversible succession from past
      * to present.
      * <p>
-     * Denoted as <i>[T]</i>
+     * Denoted as <i>[T]</i>.
      */
     public static final FundamentalDimension TIME = Universe.TIME;
     
@@ -67,7 +68,7 @@ public abstract class Dimensions {
      * Fundamental dimension of <i>electric current</i>, the abstraction of the
      * notion of flow of electric charge.
      * <p>
-     * Denoted as <i>[I]</i>
+     * Denoted as <i>[I]</i>.
      */
     public static final FundamentalDimension ELECTRIC_CURRENT = Universe.ELECTRIC_CURRENT;
     
@@ -76,7 +77,7 @@ public abstract class Dimensions {
      * abstraction of the notion of the random vibrations of particle
      * constituents of matter.
      * <p>
-     * Denoted as <i>[θ]</i>
+     * Denoted as <i>[θ]</i>.
      */
     public static final FundamentalDimension THERMODYNAMIC_TEMPERATURE = Universe.THERMODYNAMIC_TEMPERATURE;
     
@@ -84,7 +85,7 @@ public abstract class Dimensions {
      * Fundamental dimension of <i>amount of substance</i>, the abstraction
      * of the notion of the number of particles comprising matter.
      * <p>
-     * Denoted as <i>[N]</i>
+     * Denoted as <i>[N]</i>.
      */
     public static final FundamentalDimension AMOUNT_OF_SUBSTANCE = Universe.AMOUNT_OF_SUBSTANCE;
     
@@ -92,7 +93,7 @@ public abstract class Dimensions {
      * Fundamental dimension of <i>luminous intensity</i>, the abstraction
      * of the notion of light power through space.
      * <p>
-     * Denoted as <i>[J]</i>
+     * Denoted as <i>[J]</i>.
      */
     public static final FundamentalDimension LUMINOUS_INTENSITY = Universe.LUMINOUS_INTENSITY;
 
@@ -249,8 +250,7 @@ public abstract class Dimensions {
     }
     
     /**
-     * 
-     * @return 
+     * Returns a builder for creating a new dimension.
      */
     public static final DimensionBuilder newDimension() {
         return DimensionBuilder.NULL_BUILDER;
@@ -346,161 +346,311 @@ public abstract class Dimensions {
     
     //derived dimensions tier 1
     /**
-     * <i>a = [LT<sup>-2</sup>]</i>
+     * Dimension of <i>acceleration</i>, the rate of change of the {@linkplain #VELOCITY velocity}
+     * of an object with respect to {@linkplain #TIME time}.
+     * 
+     * <p>Denoted as <i>[a]</i>, with composition <i>[{@linkplain #LENGTH L}{@linkplain #TIME T}<sup>-2</sup>]</i>.
      */
     public static final Dimension ACCELERATION;
+    
     /**
-     * <i>\u03b1 = [T<sup>-2</sup>]</i>
+     * Dimension of <i>angular acceleration</i>, the rate of change of the {@linkplain #ANGULAR_VELOCITY angular velocity}
+     * of an object with respect to {@linkplain #TIME time}.
+     * <p>Denoted as <i>[\u03b1]</i>, with composition <i>[{@linkplain #TIME T}<sup>-2</sup>]</i>.
      */
     public static final Dimension ANGULAR_ACCELERATION;
+    
     /**
-     * <i>A = [L<sup>2</sup>]</i>
+     * Dimension of <i>area</i>, the extent of a region on a plane.
+     * 
+     * <p>Denoted as <i>[A]</i>, with composition <i>[{@linkplain #LENGTH L}<sup>2</sup>]</i>.
      */
     public static final Dimension AREA;
+    
     /**
-     * <i>z = [T<sup>-1</sup>N]</i>
+     * Dimension of <i>catalytic activity</i>, the rate of change of a chemical 
+     * reaction caused by the presence of a catalyst.
+     * 
+     * <p>Denoted as <i>[z]</i>, with composition <i>[{@linkplain #TIME T}<sup>-1</sup>{@linkplain #AMOUNT_OF_SUBSTANCE N}]</i>.
      */
     public static final Dimension CATALYTIC_ACTIVITY;
+    
     /**
-     * <i>Q = [TI]</i>
+     * Dimension of <i>electric charge</i>, the property of charged matter to 
+     * experience a force when placed in an electromagnetic field.
+     * 
+     * <p>Denoted as <i>[q]</i>, with composition <i>[{@linkplain #TIME T}{@linkplain #ELECTRIC_CURRENT I}]</i>.
      */
     public static final Dimension ELECTRIC_CHARGE;
+    
     /**
-     * <i>f = [T<sup>-1</sup>]</i>
+     * Dimension of <i>frequency</i>, the number of occurrences of a repeated
+     * event per unit of time.
+     * 
+     * <p>Denoted as <i>[f]</i>, with composition <i>[{@linkplain #TIME T}<sup>-1</sup>]</i>.
      */
     public static final Dimension FREQUENCY;
+    
     /**
-     * <i>q = [ML<sup>-1</sup>]</i>
+     * Dimension of <i>linear mass density</i>, the amount of mass per unit of length.
+     * 
+     * <p>Denoted as <i>[\u03C1<sub>l</sub>]</i>, with composition <i>[{@linkplain #MASS M}{@linkplain #LENGTH L}<sup>-1</sup>]</i>.
      */
     public static final Dimension LINEAR_MASS_DENSITY;
+    
     /**
-     * <i>\u03d5 = [-]</i>
+     * Dimension of <i>angle</i>, the figure formed by two rays sharing a common
+     * endpoint.
+     * 
+     * <p>Denoted as <i>[\u03d5]</i>, with composition <i>[{@linkplain #DIMENSIONLESS -}]</i>.
      */
     public static final Dimension ANGLE;
+    
     /**
-     * <i>\u03a9 = [-]</i>
+     * Dimension of <i>solid angle</i>, the amount of the field of view a 
+     * particular point that an object covers.
+     * 
+     * <p>Denoted as <i>[\u03a9]</i>, with composition <i>[{@linkplain #DIMENSIONLESS -}]</i>.
      */
     public static final Dimension SOLID_ANGLE;
+    
     /**
-     * <i>\u03b5 = [-]</i>
+     * Dimension of <i>strain</i>, the deformation of a body relative to some
+     * reference configuration.
+     * 
+     * <p>Denoted as <i>[\u03b5]</i>, with composition <i>[{@linkplain #DIMENSIONLESS -}]</i>.
      */
     public static final Dimension STRAIN;
+    
     /**
-     * <i>v = [LT<sup>-1</sup>]</i>
+     * Dimension of <i>velocity</i>, the rate of change of position per unit of time.
+     * 
+     * <p>Denoted as <i>[v]</i>, with composition <i>[{@linkplain #LENGTH L}{@linkplain #TIME T}<sup>-1</sup>]</i>.
      */
     public static final Dimension VELOCITY;
+    
     /**
-     * <i>V = [L<sup>3</sup>]</i>
+     * Dimension of <i>volume</i>, the extent of a body in space.
+     * 
+     * <p>Denoted as <i>[V]</i>, with composition <i>[{@linkplain #LENGTH L}<sup>3</sup>]</i>.
      */
     public static final Dimension VOLUME;
     
     //derived dimensions tier 2
     /**
-     * <i>\u03C9 = [T<sup>-1</sup>]</i>
+     * Dimension of <i>angular velocity</i>, the rate of change of angular position
+     * with respect to time.
+     * 
+     * <p>Denoted as <i>[\u03C9]</i>, with composition <i>[{@linkplain #TIME T}<sup>-1</sup>]</i>.
      */
     public static final Dimension ANGULAR_VELOCITY;
+    
     /**
-     * <i>\u03C1<sub>A</sub> = [ML<sup>-2</sup>]</i>
+     * Dimension of <i>area mass density</i>, the amount of mass per unit of area.
+     * 
+     * <p>Denoted as <i>[\u03C1<sub>A</sub>]</i>, with composition <i>[{@linkplain #MASS 
+     * M}{@linkplain #LENGTH L}<sup>-2</sup>]</i>.
      */
     public static final Dimension AREA_MASS_DENSITY;
+    
     /**
-     * <i>F = [MLT<sup>-2</sup>]</i>
+     * Dimension of <i>force</i>, an influence that changes the motion of an object.
+     * 
+     * <p>Denoted as <i>[F]</i>, with composition <i>[{@linkplain #MASS M}{@linkplain
+     * #LENGTH L}{@linkplain #TIME T}<sup>-2</sup>]</i>.
      */
     public static final Dimension FORCE;
+    
     /**
-     * <i>\u03D5 = [J]</i>
+     * Dimension of <i>luminous flux</i>, the amount of light emitted by a source
+     * per unit of time.
+     * 
+     * <p>Denoted as <i>[\u03D5<sub>v</sub>]</i>, with composition <i>[{@linkplain #LUMINOUS_INTENSITY J}]</i>.
      */
     public static final Dimension LUMINOUS_FLUX;
+    
     /**
-     * <i>\u03C1 = [ML<sup>-3</sup>]</i>
+     * Dimension of <i>mass density</i>, the amount of mass per unit of volume.
+     * 
+     * <p>Denoted as <i>[\u03C1]</i>, with composition <i>[{@linkplain #MASS M}{@linkplain 
+     * #LENGTH L}<sup>-3</sup>]</i>.
      */
     public static final Dimension MASS_DENSITY;
+    
     /**
-     * <i>A = [T<sup>-1</sup>]</i>
+     * Dimension of <i>radioactivity</i>, the rate of nuclear decay with respect 
+     * to time.
+     * 
+     * <p>Denoted as <i>[A]</i>, with composition <i>[{@linkplain #TIME T}<sup>-1</sup>]</i>.
      */
     public static final Dimension RADIOACTIVITY;
     
     //derived dimensions tier 3
     /**
-     * <i>E<sub>V</sub> = [L<sup>-2</sup>J]</i>
+     * Dimension of <i>illuminance</i>, the luminous flux incident on a surface
+     * per unit area.
+     * 
+     * <p>Denoted as <i>[E<sub>V</sub>]</i>, with composition <i>[{@linkplain 
+     * #LENGTH L}<sup>-2</sup>{@linkplain #LUMINOUS_INTENSITY J}]</i>.
      */
     public static final Dimension ILLUMINANCE;
+    
     /**
-     * <i>q = [MT<sup>-2</sup>]</i>
+     * Dimension of <i>linear weight density</i>, the amount of weight per unit of length.
+     * 
+     * <p>Denoted as <i>[q]</i>, with composition <i>[{@linkplain #MASS M}{@linkplain 
+     * #TIME T}<sup>-2</sup>]</i>.
      */
     public static final Dimension LINEAR_WEIGHT_DENSITY;
+    
     /**
-     * <i>M = [ML<sup>2</sup>T<sup>-2</sup>]</i>
+     * Dimension of <i>moment</i>, the amount of rotational force.
+     * 
+     * <p>Denoted as <i>[M]</i>, with composition <i>[{@linkplain #MASS 
+     * M}{@linkplain #LENGTH L}<sup>2</sup>{@linkplain #TIME T}<sup>-2</sup>]</i>.
      */
     public static final Dimension MOMENT;
+    
     /**
-     * <i>p = [ML<sup>-1</sup>T<sup>-2</sup>]</i>
+     * Dimension of <i>pressure</i>, the amount of force applied perpendicular 
+     * to a surface per unit area.
+     * 
+     * <p>Denoted as <i>[p]</i>, with composition <i>[{@linkplain #MASS
+     * M}{@linkplain #LENGTH L}<sup>-1</sup>{@linkplain #TIME T}<sup>-2</sup>]</i>.
      */
     public static final Dimension PRESSURE;
+    
     /**
-     * <i>W = [MLT<sup>-2</sup>]</i>
+     * Dimension of <i>weight</i>, the force acting on an object due to gravity.
+     * 
+     * <p>Denoted as <i>[W]</i>, with composition <i>[{@linkplain #MASS M}{@linkplain 
+     * #LENGTH L}{@linkplain #TIME T}<sup>-2</sup>]</i>.
      */
     public static final Dimension WEIGHT;
+    
     /**
-     * <i>\u03B3 = [ML<sup>-2</sup>T<sup>-2</sup>]</i>
+     * Dimension of <i>weight density</i>, the force acting on an object due
+     * to gravity per unit of volume it occupies.
+     * 
+     * <p>Denoted as <i>[\u03B3]</i>, with composition <i>[{@linkplain #MASS 
+     * M}{@linkplain #LENGTH L}<sup>-2</sup>{@linkplain #TIME T}<sup>-2</sup>]</i>.
      */
     public static final Dimension WEIGHT_DENSITY;
     
     //derived dimensions tier 4
     /**
-     * <i>w = [ML<sup>-1</sup>T<sup>-2</sup>]</i>
+     * Dimension of <i>area weight density</i>, the amount of mass per unit of area.
+     * 
+     * <p>Denoted as <i>[w]</i>, with composition <i>[{@linkplain #MASS 
+     * M}{@linkplain #LENGTH L}<sup>-1</sup>{@linkplain #TIME T}<sup>-2</sup>]</i>.
      */
     public static final Dimension AREA_WEIGHT_DENSITY;
+    
     /**
-     * <i>E = [ML<sup>2</sup>T<sup>-2</sup>]</i>
+     * Dimension of <i>energy</i>, the ability to exert a force causing displacement
+     * of an object.
+     * 
+     * <p>Denoted as <i>[E]</i>, with composition <i>[{@linkplain #MASS 
+     * M}{@linkplain #LENGTH L}<sup>2</sup>{@linkplain #TIME T}<sup>-2</sup>]</i>.
      */
     public static final Dimension ENERGY;
+    
     /**
-     * <i>\u03C3 = [ML<sup>-1</sup>T<sup>-2</sup>]</i>
+     * Dimension of <i>stress</i>, the internal resistance exhibited by a body subject to an
+     * external force.
+     * 
+     * <p>Denoted as <i>[\u03C3]</i>, with composition <i>[{@linkplain #MASS 
+     * M}{@linkplain #LENGTH L}<sup>-1</sup>{@linkplain #TIME T}<sup>-2</sup>]</i>.
      */
     public static final Dimension STRESS;
     
     //derived dimensions tier 5
     /**
-     * <i>D = [L<sup>2</sup>T<sup>-2</sup>]</i>
+     * Dimension of <i>absorbed does</i>, the energy deposited in matter by
+     * ionizing radiation per unit mass.
+     * 
+     * <p>Denoted as <i>[D]</i>, with composition <i>[{@linkplain #LENGTH 
+     * L}<sup>2</sup>{@linkplain #TIME T}<sup>-2</sup>]</i>.
      */
     public static final Dimension ABSORBED_DOSE;
+    
     /**
-     * <i>P = [ML<sup>2</sup>T<sup>-3</sup>]</i>
+     * Dimension of <i>power</i>, the amount of energy produced or consumed per
+     * unit of time.
+     * 
+     * <p>Denoted as <i>[P]</i>, with composition <i>[{@linkplain #MASS 
+     * M}{@linkplain #LENGTH L}<sup>2</sup>{@linkplain #TIME T}<sup>-3</sup>]</i>.
      */
     public static final Dimension POWER;
     
     //derived dimensions tier 6
     /**
-     * <i>\u03C6 = [ML<sup>2</sup>T<sup>-3</sup>I<sup>-1</sup>]</i>
+     * Dimension of <i>electric potential</i>, the amount of energy needed to move
+     * a unit of electric charge in an electric field.
+     * 
+     * <p>Denoted as <i>[\u03D5]</i>, with composition <i>[{@linkplain #MASS 
+     * M}{@linkplain #LENGTH L}<sup>2</sup>{@linkplain #TIME 
+     * T}<sup>-3</sup>{@linkplain #ELECTRIC_CURRENT I}<sup>-1</sup>]</i>.
      */
     public static final Dimension ELECTRIC_POTENTIAL;
     
     //derived dimensions tier 7
     /**
-     * <i>C = [M<sup>-1</sup>L<sup>-2</sup>T<sup>4</sup>I<sup>2</sup>]</i>
+     * Dimension of <i>electric capacitance</i>, the amount of electric charge
+     * per unit of electric potential.
+     * 
+     * <p>Denoted as <i>[C]</i>, with composition <i>[{@linkplain #MASS 
+     * M}<sup>-1</sup>{@linkplain #LENGTH L}<sup>-2</sup>{@linkplain #TIME
+     * T}<sup>4</sup>{@linkplain #ELECTRIC_CURRENT I}<sup>2</sup>]</i>.
      */
     public static final Dimension ELECTRIC_CAPACITANCE;
+    
     /**
-     * <i>R = [ML<sup>2</sup>T<sup>-3</sup>I<sup>-2</sup>]</i>
+     * Dimension of <i>electric resistance</i>, the opposition to the flow of electric current.
+     * 
+     * <p>Denoted as <i>[R]</i>, with composition <i>[{@linkplain #MASS 
+     * M}{@linkplain #LENGTH L}<sup>2</sup>{@linkplain #TIME
+     * T}<sup>-3</sup>{@linkplain #ELECTRIC_CURRENT I}<sup>-2</sup>]</i>.
      */
     public static final Dimension ELECTRIC_RESISTANCE;
+    
     /**
-     * <i>S = [M<sup>-1</sup>L<sup>-2</sup>T<sup>3</sup>I<sup>2</sup>]</i>
+     * Dimension of <i>electric conductance</i>, the ease of flow of
+     * electric current.
+     * 
+     * <p>Denoted as <i>[S]</i>, with composition <i>[{@linkplain #MASS
+     * M}<sup>-1</sup>{@linkplain #LENGTH L}<sup>-2</sup>{@linkplain #TIME
+     * T}<sup>3</sup>{@linkplain #ELECTRIC_CURRENT I}<sup>2</sup>]</i>.
      */
     public static final Dimension ELECTRIC_CONDUCTANCE;
+    
     /**
-     * <i>\u03A6 = [ML<sup>2</sup>T<sup>-2</sup>I<sup>-1</sup>]</i>
+     * Dimension of <i>magnetic flux</i>, the magnitude of a magnetic field through
+     * a surface.
+     * 
+     * <p>Denoted as <i>[\u03A6]</i>, with composition <i>[{@linkplain #MASS
+     * M}{@linkplain #LENGTH L}<sup>2</sup>{@linkplain #TIME
+     * T}<sup>-2</sup>{@linkplain #ELECTRIC_CURRENT I}<sup>-1</sup>]</i>.
      */
     public static final Dimension MAGNETIC_FLUX;
     
     //derived dimensions tier 8
     /**
-     * <i>B = [MT<sup>-2</sup>I<sup>-1</sup>]</i>
+     * Dimension of <i>area magnetic flux density</i>, the amount of
+     * magnetic flux per unit of area.
+     * 
+     * <p>Denoted as <i>[B]</i>, with composition <i>[{@linkplain #MASS 
+     * M}{@linkplain #TIME T}<sup>-2</sup>{@linkplain #ELECTRIC_CURRENT I}<sup>-1</sup>]</i>.
      */
     public static final Dimension AREA_MAGNETIC_FLUX_DENSITY;
+    
     /**
-     * <i>L = [ML<sup>2</sup>T<sup>-2</sup>I<sup>-2</sup>]</i>
+     * Dimension of <i>inductance</i>, the tendency of an electrical conductor to oppose 
+     * a change in the electric current flowing through it.
+     * 
+     * <p>Denoted as <i>[L]</i>, with composition <i>[{@linkplain #MASS
+     * M}{@linkplain #LENGTH L}<sup>2</sup>{@linkplain #TIME
+     * T}<sup>-2</sup>{@linkplain #ELECTRIC_CURRENT I}<sup>-2</sup>]</i>.
      */
     public static final Dimension INDUCTANCE;
     
@@ -509,9 +659,9 @@ public abstract class Dimensions {
         ANGULAR_ACCELERATION    = newDimension().append(TIME,-2).withName("ANGULAR ACCELERATION").withSymbol("\u03b1").create();
         AREA                    = newDimension().append(LENGTH,2).withName("AREA").withSymbol("A").create();
         CATALYTIC_ACTIVITY      = newDimension().append(AMOUNT_OF_SUBSTANCE).append(TIME,-1).withName("CATALYTIC ACTIVITY").withSymbol("z").create();
-        ELECTRIC_CHARGE         = newDimension().append(ELECTRIC_CURRENT).append(TIME).withName("ELECTRIC CHARGE").withSymbol("Q").create();
+        ELECTRIC_CHARGE         = newDimension().append(ELECTRIC_CURRENT).append(TIME).withName("ELECTRIC CHARGE").withSymbol("q").create();
         FREQUENCY               = newDimension().append(TIME,-1).withName("FREQUENCY").withSymbol("f").create();
-        LINEAR_MASS_DENSITY     = newDimension().append(MASS).append(LENGTH,-1).withName("LINEAR MASS DENSITY").withSymbol("q").create();
+        LINEAR_MASS_DENSITY     = newDimension().append(MASS).append(LENGTH,-1).withName("LINEAR MASS DENSITY").withSymbol("\u03C1_l").create();
         ANGLE                   = newDimension().append(DIMENSIONLESS).withName("ANGLE").withSymbol("\u03d5").create();
         SOLID_ANGLE             = newDimension().append(DIMENSIONLESS).withName("SOLID ANGLE").withSymbol("\u03a9").create();
         STRAIN                  = newDimension().append(DIMENSIONLESS).withName("STRAIN").withSymbol("\u03b5").create();
@@ -521,7 +671,7 @@ public abstract class Dimensions {
         ANGULAR_VELOCITY        = newDimension().append(FREQUENCY).withName("ANGULAR VELOCITY").withSymbol("\u03C9").create();
         AREA_MASS_DENSITY       = newDimension().append(MASS).append(AREA,-1).withName("AREA MASS DENSITY").withSymbol("\u03C1_A").create();
         FORCE                   = newDimension().append(MASS).append(ACCELERATION).withName("FORCE").withSymbol("F").create();
-        LUMINOUS_FLUX           = newDimension().append(LUMINOUS_INTENSITY).append(SOLID_ANGLE).withName("LUMINOUS FLUX").withSymbol("\u03D5").create();
+        LUMINOUS_FLUX           = newDimension().append(LUMINOUS_INTENSITY).append(SOLID_ANGLE).withName("LUMINOUS FLUX").withSymbol("\u03D5_v").create();
         MASS_DENSITY            = newDimension().append(MASS).append(VOLUME,-1).withName("MASS DENSITY").withSymbol("\u03C1").create();
         RADIOACTIVITY           = newDimension().append(FREQUENCY).withName("RADIOACTIVITY").withSymbol("A").create();
         
@@ -539,7 +689,7 @@ public abstract class Dimensions {
         ABSORBED_DOSE           = newDimension().append(ENERGY).append(MASS,-1).withName("ABSORBED DOSE").withSymbol("D").create();
         POWER                   = newDimension().append(ENERGY).append(TIME,-1).withName("POWER").withSymbol("P").create();
         
-        ELECTRIC_POTENTIAL      = newDimension().append(POWER).append(ELECTRIC_CURRENT,-1).withName("ELECTRIC POTENTIAL").withSymbol("\u03C6").create();
+        ELECTRIC_POTENTIAL      = newDimension().append(POWER).append(ELECTRIC_CURRENT,-1).withName("ELECTRIC POTENTIAL").withSymbol("\u03D5").create();
         
         ELECTRIC_CAPACITANCE    = newDimension().append(ELECTRIC_CHARGE).append(ELECTRIC_POTENTIAL,-1).withName("ELECTRIC CAPACITANCE").withSymbol("C").create();
         ELECTRIC_RESISTANCE     = newDimension().append(ELECTRIC_POTENTIAL).append(ELECTRIC_CURRENT,-1).withName("ELECTRIC RESISTANCE").withSymbol("R").create();
@@ -551,6 +701,32 @@ public abstract class Dimensions {
         INDUCTANCE              = newDimension().append(MAGNETIC_FLUX).append(ELECTRIC_CURRENT,-1).withName("INDUCTANCE").withSymbol("L").create();
     }
     
+    /**
+     * Builder class for creating new dimensions.
+     * 
+     * <p>A dimension is built using this builder by the following steps:
+     * <ol>
+     * <li>Use {@link DimensionBuilder#append(com.jamw.jmud.Dimension) append()} 
+     * one or more times to append an existing {@link Dimension dimension} 
+     * or {@link FundamentalDimension fundamental dimension}, optionally raised 
+     * to a rational number {@link Exponent exponent}, to the special null 
+     * dimension {@link Universe#getDimensionless() "dimensionless"}. </li>
+     * <li>Optionally, provide a descriptive name with 
+     * {@link DimensionBuilder#withName(java.lang.String) withName()}. If omitted,
+     * a descriptive name will attempt to be
+     * generated based on the composition of the dimension.</li>
+     * <li>Optionally, provide a descriptive symbol with 
+     * {@link DimensionBuilder#withSymbol(java.lang.String) withSymbol()}. If omitted,
+     * a descriptive symbol will attempt to be
+     * generated based on the composition of the dimension.</li>
+     * <li>Create the dimension using {@link DimensionBuilder#create() create()}.
+     * </ol>
+     * The methods of this class return instances of this class for method chaining.
+     * <p>Instances of this class, including those returned by methods,
+     * are immutable and thread safe.  
+     * 
+     * @author andreww1011
+     */
     public static final class DimensionBuilder {
 
         private static final DimensionBuilder NULL_BUILDER = new DimensionBuilder("","",Map.of());
@@ -564,18 +740,50 @@ public abstract class Dimensions {
             this.compositionMap = compositionMap;
         }
         
+        /**
+         * Appends the specified dimension raised to the rational exponent one to
+         * this builder.
+         * @param d dimension to append.
+         * @return a DimensionBuilder instance with the specified dimension appended to it.
+         * @see DimensionBuilder#append(Dimension, Exponent) 
+         */
         public DimensionBuilder append(Dimension d) {
             return append(d,1); //magic number
         }
 
-        public DimensionBuilder append(Dimension d,int exponentNumerator) {
-            return append(d,exponentNumerator,1); //magic number
+        /**
+         * Appends the specified dimension raised to the specified integer power to
+         * this builder.
+         * @param d dimension to append.
+         * @param power integer power of the specified dimension to be appended.
+         * @return a DimensionBuilder instance with the specified dimension and power appended to it.
+         * @see DimensionBuilder#append(Dimension, Exponent) 
+         */
+        public DimensionBuilder append(Dimension d,int power) {
+            return append(d,power,1); //magic number
         }
         
-        public DimensionBuilder append(Dimension d,int exponentNumerator, int exponentDenominator) {
+        /**
+         * Appends the specified dimension raised to the rational number power
+         * <code>exponentNumerator/exponentDenominator</code> to this builder.
+         * @param d dimension to append.
+         * @param exponentNumerator integer numerator of the rational number power of the specified dimension to be appended.
+         * @param exponentDenominator integer denominator of the rational number power of the specified dimension to be appended.  Must not be zero.
+         * @return a DimensionBuilder instance with the specified dimension and rational number power appended to it.
+         * @throws IllegalArgumentException if the denominator of the rational number is zero.
+         * @see DimensionBuilder#append(Dimension, Exponent) 
+         */
+        public DimensionBuilder append(Dimension d,int exponentNumerator, int exponentDenominator) throws IllegalArgumentException{
             return append(d,Exponents.of(exponentNumerator,exponentDenominator));
         }
 
+        /**
+         * Appends the specified dimension raised to the rational number exponent
+         * to this builder.
+         * @param d dimension to append.
+         * @param e exponent of the specified dimension to be appended.
+         * @return a DimensionBuilder instance with the specified dimension and exponent appended to it.
+         */
         public DimensionBuilder append(Dimension d,Exponent e) {
             Map<FundamentalDimension,Exponent> map = new HashMap<>(compositionMap);
             
@@ -596,14 +804,32 @@ public abstract class Dimensions {
             return new DimensionBuilder(name,symbol,map);
         }
 
+        /**
+         * Reserves the specified string as the name of the dimension to be 
+         * created by this builder.  Subsequent calls to this method overwrites
+         * any previously specified names.
+         * @param name canonical name of dimension.
+         * @return a DimensionBuilder instance incorporating the specified name.
+         */
         public DimensionBuilder withName(String name) {
             return new DimensionBuilder(name,symbol,compositionMap);   
         }
 
+        /**
+         * Reserves the specified string as the symbol of the dimension to be 
+         * created by this builder.  Subsequent calls to this method overwrites
+         * any previously specified symbols.
+         * @param symbol canonical symbol of dimension.
+         * @return a DimensionBuilder instance incorporating the specified symbol.
+         */
         public DimensionBuilder withSymbol(String symbol) {
             return new DimensionBuilder(name,symbol,compositionMap);   
         }
 
+        /**
+         * Returns a new Dimension object using the 
+         * parameters set by this builder.
+         */
         public Dimension create() {
             Map<FundamentalDimension,Exponent> map = new HashMap<>(compositionMap);
             cleanCompositionMap(map);

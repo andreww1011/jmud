@@ -18,9 +18,8 @@
 package com.jamw.jmud;
 
 /**
- * Dimension is not commensurable with other dimension.
+ * Dimension is not commensurable with another dimension.
  * @author andreww1011
- * @since 1.0
  */
 public class IncommensurableDimensionException extends RuntimeException {
     

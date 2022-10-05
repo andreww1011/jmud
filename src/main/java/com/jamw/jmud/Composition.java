@@ -41,8 +41,8 @@ public interface Composition extends Iterable<CompositionComponent> {
     /**
      * Returns the exponent of the specified fundamental dimension of this
      * composition.
-     * @param fd Fundamental dimension in composition.
-     * @return Exponent corresponding to the specified fundamental dimension.
+     * @param fd fundamental dimension in composition.
+     * @return exponent corresponding to the specified fundamental dimension.
      */
     Exponent getExponent(FundamentalDimension fd);
     
@@ -53,7 +53,7 @@ public interface Composition extends Iterable<CompositionComponent> {
      * traversed by this iterator.  Implementations should not rely on this method
      * to return all possible fundamental dimensions.  Modifying this composition 
      * via the iterator is not permitted.
-     * @return An iterator of composition components of this composition.
+     * @return an iterator of composition components of this composition.
      */
     @Override
     Iterator<CompositionComponent> iterator();
@@ -68,9 +68,9 @@ public interface Composition extends Iterable<CompositionComponent> {
      * instance, the compositions <i>Q1 = [L<sup>2</sup>]</i> and 
      * <i>Q2 = [L<sup>2</sup>T<sup>0</sup>]</i> are, in fact, equal.
      * 
-     * @param o Object to be compared for equality to this composition.
+     * @param o object to be compared for equality to this composition.
      * 
-     * @return True if the specified object is equal to this composition.
+     * @return true if the specified object is equal to this composition.
      */
     boolean equals(Object o);
 }

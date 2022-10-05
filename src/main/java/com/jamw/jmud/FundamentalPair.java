@@ -18,12 +18,19 @@
 package com.jamw.jmud;
 
 /**
- *
+ * A fundamental pair is the mapping of a fundamental unit to a fundamental dimension.
+ * 
  * @author andreww1011
  */
 public interface FundamentalPair {
     
+    /**
+     * Returns the fundamental dimension mapped to the fundamental unit of this pair.
+     */
     FundamentalDimension getFundamentalDimension();
     
+    /**
+     * Returns the fundamental unit mapped to the fundamental dimension of this pair.
+     */
     FundamentalUnit getFundamentalUnit();
 }

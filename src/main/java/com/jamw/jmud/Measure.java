@@ -18,7 +18,7 @@
 package com.jamw.jmud;
 
 /**
- *
+ * This class has a natural ordering that is inconsistent with equals.
  * @author andreww1011
  */
 public interface Measure<F extends Field<F>> extends Comparable<Measure<F>>{

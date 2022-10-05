@@ -18,36 +18,117 @@
 package com.jamw.jmud;
 
 /**
- *
+ * A level is the value of a measurement in a particular {@link Scale scale}.
+ * This class has a natural ordering that is inconsistent with equals.
  * @author andreww1011
  */
 public interface Level<F extends Field<F>> extends Comparable<Level<F>>{
     
-    F getValue();
+    /**
+     * Returns the field of this level.
+     */
+    F getField();
     
+    /**
+     * Returns the scale of this level.
+     */
     Scale getScale();
     
+    /**
+     * Returns the measure associated with the value of this level.
+     */
     Measure<F> getMeasure();
         
+    /**
+     * Compares the specified object with this level for equality. 
+     * Returns true if the specified object is a level and the two levels
+     * have the same scale and the fields represent the same value.
+     * 
+     * <p>Note: this class has a natural ordering that is inconsistent with equals.
+     * @param o object to be compared for equality to this field.
+     */
     @Override
     boolean equals(Object o);
     
-    @Override
-    String toString();
-    
+    /**
+     * Compares this level with the specified level for order.  Returns a
+     * negative integer, zero, or a positive integer as this object is less
+     * than, equal to, or greater than the specified level.
+     * 
+     * <p>If this and the specified level have the same scale, this method
+     * provides the same behavior as {@link Field#compareTo}.  If the two
+     * levels have different scales, but the dimensions of their underlying units 
+     * are commensurable, this method provides the same behavior as 
+     * {@link Measure#compareTo}.  Otherwise, an exception is thrown.
+     * 
+     * <p>Note: this class has a natural ordering that is inconsistent with equals.
+     * 
+     * @param   o the level to be compared.
+     * @return  a negative integer, zero, or a positive integer as this level
+     *          is less than, equal to, or greater than the specified level.
+     * 
+     * @throws IncommensurableDimensionException if the dimensions of the 
+     * underlying units of this and the specified level are incommensurable.
+     */
     @Override
     public int compareTo(Level<F> o) throws IncommensurableDimensionException;
     
+    /**
+     * Returns true if this level and the specified level are equal in value.  
+     * Two levels are considered equal if the {@link equals} method returns true, or 
+     * in the case that the scales of the levels are different, but the
+     * dimension of their underlying units are commensurable, if their measures
+     * are equivalent.
+     * 
+     * <p>Note: this class has a natural ordering that is inconsistent with equals.
+     * 
+     * @param   o the level to be compared.
+     * 
+     * @throws IncommensurableDimensionException if the dimensions of the 
+     * underlying units of this and the specified level are incommensurable.
+     */
     @Override
     default boolean isEqualTo(Level<F> o) throws IncommensurableDimensionException {
         return this.compareTo(o) == 0;
     }
     
+    /**
+     * Returns true if the value of this level is less than the specified level. 
+     * 
+     * <p>If this and the specified level have the same scale, this method
+     * provides the same behavior as {@link Field#isLessThan}.  If the two
+     * levels have different scales, but the dimensions of their underlying units 
+     * are commensurable, this method provides the same behavior as 
+     * {@link Measure#isLessThan}.  Otherwise, an exception is thrown.
+     * 
+     * <p>Note: this class has a natural ordering that is inconsistent with equals.
+     * 
+     * @param   o the level to be compared.
+     * 
+     * @throws IncommensurableDimensionException if the dimensions of the 
+     * underlying units of this and the specified level are incommensurable.
+     */
     @Override
     default boolean isLessThan(Level<F> o) throws IncommensurableDimensionException {
         return this.compareTo(o) < 0;
     }
     
+    /**
+     * Returns true if the value of this level is greater than the specified level. 
+     * 
+     * <p>If this and the specified level have the same scale, this method
+     * provides the same behavior as {@link Field#isGreaterThan}.  If the two
+     * levels have different scales, but the dimensions of their underlying units 
+     * are commensurable, this method provides the same behavior as 
+     * {@link Measure#isGreaterThan}.  Otherwise, an exception is thrown.
+     * 
+     * <p>Note: this class has a natural ordering that is inconsistent with equals.
+     * 
+     * @param   o the level to be compared.
+     * 
+     * @throws IncommensurableDimensionException if the dimensions of the 
+     * underlying units of this and the specified level are incommensurable.
+     */
     @Override
     default boolean isGreaterThan(Level<F> o) throws IncommensurableDimensionException {
         return this.compareTo(o) > 0;

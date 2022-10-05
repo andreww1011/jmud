@@ -19,11 +19,27 @@ package com.jamw.jmud;
 
 /**
  * Factory class of common universal constants.
+ * 
  * @author andreww1011
  */
 public abstract class Constants<F extends Field<F>> {
     
     private Constants() {} 
+    
+    /**
+     * A scalar representing the number 0.
+     */
+    public static final Scalar zero = Expressions.ZERO;
+    
+    /**
+     * A scalar representing the number 1.
+     */
+    public static final Scalar one = Expressions.ONE;
+    
+    /**
+     * A scalar representing the decimal number 10.
+     */
+    public static final Scalar ten = Expressions.TEN;
     
     /**
      * The ratio of the circumference of a circle to its diameter, <i>\u03C0</i>, 
@@ -49,7 +65,7 @@ public abstract class Constants<F extends Field<F>> {
 
     /**
      * The reduced Planck constant, <i>\u0127</i>, defined as
-     * {@link #h h} / 2⋅\u03C0.
+     * {@link #h h} / 2⋅{@link pi \u03C0}.
      */
     public static final Expression h_bar = h.divide(2).divide(pi);
     
