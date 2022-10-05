@@ -17,20 +17,28 @@
  */
 package com.jamw.jmud;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+
 /**
- * A fundamental pair is the mapping of a fundamental unit to a fundamental dimension.
- * 
+ *
  * @author andreww1011
  */
-public interface FundamentalPair {
+public interface ValueEqualityContract<T> {
     
-    /**
-     * Returns the fundamental dimension mapped to the fundamental unit of this pair.
-     */
-    FundamentalDimension getFundamentalDimension();
+    T createValue();
     
-    /**
-     * Returns the fundamental unit mapped to the fundamental dimension of this pair.
-     */
-    FundamentalUnit getFundamentalUnit();
+    @Test
+    default void valueEqualsItself() {
+        T value = createValue();
+        assertEquals(value,value);
+    }
+    
+    @Test
+    default void valueEqualsAnotherObjectOfSameValue() {
+        T value = createValue();
+        T anotherValue = createValue();
+        assertEquals(value,anotherValue);
+        assertEquals(anotherValue,value);
+    }
 }

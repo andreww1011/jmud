@@ -22,8 +22,6 @@ import com.jamw.jmud.Expressions;
 import com.jamw.jmud.Measure;
 import com.jamw.jmud.Unit;
 import com.jamw.jmud.Units;
-import static com.jamw.jmud.examples.Utils.equalsWithinUlp;
-import com.jamw.jmud.fields.BigDecimal128Field;
 import com.jamw.jmud.fields.DoubleField;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
@@ -76,12 +74,8 @@ public class HeatTransferRateExample {
         Measure<DoubleField> rateDouble = rateOfHeatTransfer
                 .using(DoubleField.factory())
                 .as(Units.KILOWATT);
-        Measure<BigDecimal128Field> rateBigDecimal128 = rateOfHeatTransfer
-                .using(BigDecimal128Field.factory())
-                .as(Units.KILOWATT);
         String answerInKilowatt = "2.351612903225807";
         
-        assertTrue(equalsWithinUlp(rateDouble.getField().value(),rateBigDecimal128.getField().value().doubleValue()));
         assertTrue(Double.toString(rateDouble.getField().value()).equals(answerInKilowatt));
     }
     

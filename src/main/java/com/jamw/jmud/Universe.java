@@ -19,9 +19,11 @@ package com.jamw.jmud;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 /**
- *
+ * Factory class for creating fundamental dimensions and fundamental units.
+ * 
  * @author andreww1011
  */
 public abstract class Universe {
@@ -70,21 +72,73 @@ public abstract class Universe {
         CANDELA         = LUMINOUS_INTENSITY.getFundamentalUnit();
     }
     
+    /**
+     * Returns the special fundamental dimension corresponding to dimensionless 
+     * measurements.
+     * 
+     * <p>An operation on dimensions that results in the null dimension (i.e. a dimension
+     * whose composition comprises all fundamental dimensions raised to the power
+     * zero) returns this object.  The composition of the 
+     * {@code Dimensionless} dimension is always itself raised to the power one.
+     * An operation on a dimensionless measurement that results in a
+     * non-dimensionless measurement will return a dimension whose composition
+     * always excludes the {@code Dimensionless} fundamental dimension.  The name 
+     * and symbol of the {@code Dimensionless} dimension are <code>"DIMENSIONLESS"</code> 
+     * and <code>"-"</code>, respectively.
+     */
     public static final FundamentalDimension getDimensionless() {
         return DIMENSIONLESS;
     }
     
+    /**
+     * Returns the special fundamental unit corresponding to dimensionless 
+     * measurements.  
+     * 
+     * <p>The fundamental unit paired to the <code>Unitless</code> unit 
+     * is {@link Universe#getDimensionless()}.  The name 
+     * and symbol of the {@code Unitless} unit are <code>"UNITLESS"</code> 
+     * and <code>"-"</code>, respectively.
+     */
+    public static final FundamentalUnit getUnitless() {
+        return UNITLESS;
+    }
+    
     private Universe() {}
     
+    /**
+     * Returns a fundamental pair for the specified identifiers.  The specified
+     * names and symbols for the fundamental dimension and fundamental unit cannot
+     * be <code>null</code> nor blank.  
+     * 
+     * <p>This is the mechanism by which new fundamental dimensions and corresponding
+     * fundamental units are created.
+     * 
+     * @param FundamentalDimensionName name for the fundamental dimension.
+     * @param FundamentalDimensionSymbol symbol for the fundamental dimension.
+     * @param FundamentalUnitName name for the fundamental unit.
+     * @param FundamentalUnitSymbol name for the fundamental unit.
+     * @return a fundamental pair containing a new fundamental dimension
+     *         and fundamental unit with the specified names and symbols.
+     */
     public static final FundamentalPair newFundamentalPair(String FundamentalDimensionName,
                                                     String FundamentalDimensionSymbol,
                                                     String FundamentalUnitName,
                                                     String FundamentalUnitSymbol) {
+        checkString(FundamentalDimensionName);
+        checkString(FundamentalDimensionSymbol);
+        checkString(FundamentalUnitName);
+        checkString(FundamentalUnitSymbol);
         return new FundamentalPairImpl(
                 FundamentalDimensionName, 
                 FundamentalDimensionSymbol,
                 FundamentalUnitName,
                 FundamentalUnitSymbol);
+    }
+    
+    private static void checkString(String s) {
+        Objects.requireNonNull(s);
+        if (s.isBlank())
+            throw new IllegalArgumentException();
     }
     
     private static final class FundamentalPairImpl implements FundamentalPair {

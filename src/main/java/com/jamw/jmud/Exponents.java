@@ -18,7 +18,8 @@
 package com.jamw.jmud;
 
 /**
- *
+ * Factory class of common exponent values.
+ * 
  * @author andreww1011
  */
 public abstract class Exponents {
@@ -60,10 +61,18 @@ public abstract class Exponents {
      */
     public static final Exponent INVERSE = of(-1,1);
     
-    public static final Exponent of(int numerator) {
-        return of(numerator,1); //magic number
+    /**
+     * Returns an exponent with the specified value.
+     */
+    public static final Exponent of(int value) {
+        return of(value,1); //magic number
     }
     
+    /**
+     * Returns an exponent with a value equivalent to <i>numerator/denominator</i>.
+     * @param numerator an integer.
+     * @param denominator a non-zero integer.
+     */
     public static final Exponent of(int numerator, int denominator) {
         return of(numerator,denominator, false);
     }

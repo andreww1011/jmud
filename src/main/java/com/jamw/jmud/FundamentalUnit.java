@@ -18,11 +18,27 @@
 package com.jamw.jmud;
 
 /**
- *
+ * A fundamental unit is a special 
+ * {@link Unit Unit} that together with other fundamental units forms a basis 
+ * for describing the scales of all other units.  A fundamental unit has a scale 
+ * exactly equal to 1.
+ * 
+ * <p>A fundamental unit must be described by a non-empty {@link String String} 
+ * <i>name</i> and <i>symbol</i>.  
+ * 
+ * <p>It is not permissible to have separate instances represent the same
+ * fundamental unit, say <i>meter</i>, even though they both might have 
+ * the name <i>"METER"</i> and symbol <i>"m"</i>.  The equality
+ * of two fundamental dimensions is always implemented as object equality.
+ * Therefore, all instances of this interface are unique.  
+ * 
  * @author andreww1011
  */
 public interface FundamentalUnit extends Unit {
     
+    /**
+     * Returns the fundamental dimension paired to this fundamental unit.
+     */
     @Override
     FundamentalDimension getDimension();
 }

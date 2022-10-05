@@ -84,6 +84,16 @@ public class ElectricalPowerTransmissionExample {
         }
         
         @Override
+        public ComplexDoubleField zero() {
+            return ZERO;
+        }
+        
+        @Override
+        public ComplexDoubleField one() {
+            return ONE;
+        }
+        
+        @Override
         public ComplexDoubleField of(int value) {
             return new ComplexDoubleField(value,0); //magic number
         }

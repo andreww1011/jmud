@@ -18,21 +18,43 @@
 package com.jamw.jmud;
 
 /**
+ * A scale is an alternative representation of a measurement relative to a 
+ * reference unit.  A {@link Level level} is the value of a measurement in
+ * a particular scale.  
+ * 
+ * <p>A scale must define the relationship between a measure and its corresponding
+ * level, and vice versa.  
  *
  * @author andreww1011
  */
 public interface Scale {
     
+    /**
+     * Returns the name of this scale.  
+     */
     String getName();
     
+    /**
+     * Returns the symbol of this scale.  
+     */
     String getSymbol();
     
+    /**
+     * Returns the reference unit of this scale.
+     */
     Unit getReferenceUnit();
     
+    /**
+     * Creates a level of the specified field value.
+     * @param <T> the type of field in which to represent values.
+     * @param value the value of the level.
+     */
     <T extends Field<T>> Level<T> of(T value);
         
+    /**
+     * Returns a level representing the value of the specified measure in this scale.
+     * @param <T> the type of field in which to represent values.
+     * @param measure a measure from which to obtain a level.
+     */
     <T extends Field<T>> Level<T> level(Measure<T> measure);
-        
-    @Override
-    String toString();
 }

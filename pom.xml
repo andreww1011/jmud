@@ -4,7 +4,7 @@
     <groupId>com.jamw.jmud</groupId>
     <artifactId>jmud</artifactId>
     <name>jmud</name>
-    <version>1.2.0-beta</version>
+    <version>1.2.1</version>
     <packaging>jar</packaging>
     <build>
         <plugins>
@@ -19,6 +19,7 @@
                 <version>3.0.0-M7</version>
                 <configuration>
                     <includes>
+                        <include>*Test.java</include>
                         <include>**/examples/*.java</include>
                     </includes>
                 </configuration>

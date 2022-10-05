@@ -1,8 +1,5 @@
-# jmud
+# <img src="https://repository-images.githubusercontent.com/325668576/94ce6095-c753-485e-a563-c98b0b434341" alt="jmud" width="320">
 Java library for creating and manipulating dimensional units of measurement.
-
-# BETA
-This project is in development stage and is not for use in production.  FOR EVALUATION USE ONLY.
 
 ## Usage
 
@@ -19,12 +16,11 @@ Unit mile = Units.newUnit()
 
 Expression distance = Expressions.take(7, mile);
 Expression time = Expressions.take("16.09344", Units.MINUTE);
+Expression speed = distance.divide(time);
 
-Measure<DoubleField> speed = distance.divide(time)  
-    .using(DoubleField.factory())  
-    .as(kilometerPerHour);
+Measure<DoubleField> m = speed.using(DoubleField.factory());
 
-System.out.println(speed.toString());  //prints "42.0 kph"
+System.out.println(m.as(kilometerPerHour).toString());  //prints "42.0 kph"
 ```
 
 ## Features

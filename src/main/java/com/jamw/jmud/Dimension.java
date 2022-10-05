@@ -67,8 +67,8 @@ public interface Dimension {
     /**
      * Asserts that the specified dimensions are commensurable.
      *
-     * @param d1 Dimension to compare 
-     * @param d2 Dimension to compare
+     * @param d1 dimension to compare 
+     * @param d2 dimension to compare
      * 
      * @throws IncommensurableDimensionException if the dimensions are not commensurable.
      */
@@ -78,12 +78,12 @@ public interface Dimension {
     } 
     
     /**
-     * Returns the canonical name of this dimension.  
+     * Returns the name of this dimension.  
      */
     String getName();
     
     /**
-     * Returns the canonical symbol of this dimension.
+     * Returns the symbol of this dimension.
      */
     String getSymbol();
     
@@ -96,7 +96,7 @@ public interface Dimension {
      * Returns true if the specified dimension is commensurable with this
      * dimension.  
      * 
-     * @param d Dimension to be compared for commensurability with this dimension.
+     * @param d dimension to be compared to this dimension for commensurability .
      */
     default boolean isCommensurable(Dimension d) {
         if (this.equals(d))
@@ -111,7 +111,7 @@ public interface Dimension {
      * Thus, this method returns true if and only if the
      * specified object and this dimension are the same object.
      * 
-     * @param o Object to compare to this dimension.
+     * @param o object to compare to this dimension.
      */
     @Override
     boolean equals(Object o);
