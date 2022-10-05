@@ -29,22 +29,45 @@ import com.jamw.jmud.Units;
 import java.util.Objects;
 
 /**
- *
+ * A {@link com.jamw.jmud.Field Field} implementation using the java 
+ * {@code double} primitive as the underlying numerical implementation.
+ * 
+ * <p>All instances of this class are immutable and thread-safe.
+ * 
  * @author andreww1011
  */
 public final class DoubleField implements Field<DoubleField>, Field.Factory<DoubleField> {
     
+    /**
+     * The value 0.
+     */
     public static final DoubleField ZERO = new DoubleField(0);
+    
+    /**
+     * The value 1.
+     */
     public static final DoubleField ONE = new DoubleField(1);
+    
+    /**
+     * The value 10.
+     */
     public static final DoubleField TEN = new DoubleField(10);
 
+    /**
+     * The value of the base of the natural logarithm, <i>e</i>.
+     */
     private static final DoubleField E = Constants.euler.using(factory());
     
-    
+    /**
+     * Returns a factory for the <code>DoubleField</code> type.
+     */
     public static final Field.Factory<DoubleField> factory() {
         return ZERO;
     }
     
+    /**
+     * Returns a {@code DoubleField} of the specified value.
+     */
     public static final DoubleField of(double value) {
         return new DoubleField(value);
     }
@@ -55,6 +78,10 @@ public final class DoubleField implements Field<DoubleField>, Field.Factory<Doub
         this.value = value;
     }
     
+    /**
+     * Returns the {@code double} value underlying this {@code DoubleField}.
+     * @return 
+     */
     public double value() {
         return value;
     }
@@ -165,110 +192,297 @@ public final class DoubleField implements Field<DoubleField>, Field.Factory<Doub
         return Double.toString(value);
     }
     
+    /**
+     * A {@link com.jamw.jmud.Measure Measure} implementation using a 
+     * {@link DoubleField} as the underlying field implementation.
+     * 
+     * <p>All instances of this class are immutable and thread-safe.
+     */
     public static final class Measure implements com.jamw.jmud.Measure<DoubleField> {
 
+        /**
+         * Returns a {@code DoubleField} measure of the specified double and unit.
+         * @param value a double number.
+         * @param unit the unit of the specified number.
+         */
         public static final DoubleField.Measure of(double value,Unit unit) {
             return of(DoubleField.of(value),unit);
         }
         
+        /**
+         * Returns a {@code DoubleField} measure of the specified {@code DoubleField} and unit.
+         * @param value a {@code DoubleField} number.
+         * @param unit the unit of the specified number.
+         */
         public static final DoubleField.Measure of(DoubleField value,Unit unit) {
             return of(Expressions.take(value,unit));
         }
         
+        /**
+         * Wraps the specified measure into a {@code DoubleField.Measure}.
+         * @param measure a measure.
+         */
         public static final DoubleField.Measure of(com.jamw.jmud.Measure<DoubleField> measure) {
             return new Measure(measure);
         }
         
+        /**
+         * Returns the absolute value of the measure represented by
+         * the specified expression particularized to a {@code DoubleField.Measure}.
+         *
+         * @param expression an expression.
+         * 
+         * @see Math#abs(double)
+         */
         public static final DoubleField.Measure abs(Expression expression) {
             return abs(expression.using(DoubleField.factory()));
         }
         
+        /**
+         * Returns the absolute value of the specified measure.
+         * 
+         * @param measure a measure.
+         * 
+         * @see Math#abs(double)
+         */
         public static final DoubleField.Measure abs(com.jamw.jmud.Measure<DoubleField> measure) {
             return of(Math.abs(measure.getField().value()),measure.getUnit());
         }
         
+        /**
+         * Returns the ceiling of the measure represented by
+         * the specified expression particularized to a {@code DoubleField.Measure}.
+         *
+         * @param expression an expression.
+         * 
+         * @see Math#ceil(double)
+         */
         public static final DoubleField.Measure ceil(Expression expression) {
             return ceil(expression.using(DoubleField.factory()));
         }
         
+        /**
+         * Returns the ceiling of the specified measure.
+         * 
+         * @param measure a measure.
+         * 
+         * @see Math#ceil(double)
+         */
         public static final DoubleField.Measure ceil(com.jamw.jmud.Measure<DoubleField> measure) {
             return of(Math.ceil(measure.getField().value()),measure.getUnit());
         }
         
+        /**
+         * Returns the floor of the measure represented by
+         * the specified expression particularized to a {@code DoubleField.Measure}.
+         *
+         * @param expression an expression.
+         * 
+         * @see Math#floor(double)
+         */
         public static final DoubleField.Measure floor(Expression expression) {
             return floor(expression.using(DoubleField.factory()));
         }
         
+        /**
+         * Returns the floor of the specified measure.
+         * 
+         * @param measure a measure.
+         * 
+         * @see Math#floor(double)
+         */
         public static final DoubleField.Measure floor(com.jamw.jmud.Measure<DoubleField> measure) {
             return of(Math.floor(measure.getField().value()),measure.getUnit());
         }
         
+        /**
+         * Returns the sign of the measure represented by
+         * the specified expression particularized to a {@code DoubleField.Measure}.
+         *
+         * @param expression an expression.
+         * 
+         * @see Math#signum(double)
+         */
         public static final DoubleField signum(Expression expression) {
             return signum(expression.using(DoubleField.factory()));
         }
         
+        /**
+         * Returns the sign of the specified measure.
+         * 
+         * @param measure a measure.
+         * 
+         * @see Math#signum(double)
+         */
         public static final DoubleField signum(com.jamw.jmud.Measure<DoubleField> measure) {
             return DoubleField.of(Math.signum(measure.getField().value()));
         }
         
+        /**
+         * Returns the cosine of the (dimensionless) measure represented by
+         * the specified expression particularized to a {@code DoubleField.Measure}.
+         *
+         * @param expression an expression.
+         * 
+         * @see Math#cos(double)
+         */
         public static final DoubleField.Measure cos(Expression expression) {
             return cos(expression.using(DoubleField.factory()));
         }
         
+        /**
+         * Returns the cosine of the specified (dimensionless) measure.
+         * 
+         * @param measure a measure.
+         * 
+         * @see Math#cos(double)
+         */
         public static final DoubleField.Measure cos(com.jamw.jmud.Measure<DoubleField> measure) {
             com.jamw.jmud.Measure<DoubleField> m = measure.as(Units.RADIAN);
             return of(Math.cos(m.getField().value()),Units.UNITLESS);
         }
         
+        /**
+         * Returns the sine of the (dimensionless) measure represented by
+         * the specified expression particularized to a {@code DoubleField.Measure}.
+         *
+         * @param expression an expression.
+         * 
+         * @see Math#sin(double)
+         */
         public static final DoubleField.Measure sin(Expression expression) {
             return sin(expression.using(DoubleField.factory()));
         }
         
+        /**
+         * Returns the sine of the specified (dimensionless) measure.
+         * 
+         * @param measure a measure.
+         * 
+         * @see Math#sin(double)
+         */
         public static final DoubleField.Measure sin(com.jamw.jmud.Measure<DoubleField> measure) {
             com.jamw.jmud.Measure<DoubleField> m = measure.as(Units.RADIAN);
             return of(Math.sin(m.getField().value()),Units.UNITLESS);
         }
         
+        /**
+         * Returns the tangent of the (dimensionless) measure represented by
+         * the specified expression particularized to a {@code DoubleField.Measure}.
+         *
+         * @param expression an expression.
+         * 
+         * @see Math#tan(double)
+         */
         public static final DoubleField.Measure tan(Expression expression) {
             return tan(expression.using(DoubleField.factory()));
         }
         
+        /**
+         * Returns the tangent of the specified (dimensionless) measure.
+         * 
+         * @param measure a measure.
+         * 
+         * @see Math#tan(double)
+         */
         public static final DoubleField.Measure tan(com.jamw.jmud.Measure<DoubleField> measure) {
             com.jamw.jmud.Measure<DoubleField> m = measure.as(Units.RADIAN);
             return of(Math.tan(m.getField().value()),Units.UNITLESS);
         }
         
+        /**
+         * Returns the arc cosine of the (dimensionless) measure represented by
+         * the specified expression particularized to a {@code DoubleField.Measure}.
+         *
+         * @param expression an expression.
+         * 
+         * @see Math#acos(double)
+         */
         public static final DoubleField.Measure acos(Expression expression) {
             return acos(expression.using(DoubleField.factory()));
         }
         
+        /**
+         * Returns the arc cosine of the specified (dimensionless) measure.
+         * 
+         * @param measure a measure.
+         * 
+         * @see Math#acos(double)
+         */
         public static final DoubleField.Measure acos(com.jamw.jmud.Measure<DoubleField> measure) {
             com.jamw.jmud.Measure<DoubleField> m = measure.as(Units.UNITLESS);
             return of(Math.acos(m.getField().value()),Units.RADIAN);
         }
         
+        /**
+         * Returns the arc sine of the (dimensionless) measure represented by
+         * the specified expression particularized to a {@code DoubleField.Measure}.
+         *
+         * @param expression an expression.
+         * 
+         * @see Math#asin(double)
+         */
         public static final DoubleField.Measure asin(Expression expression) {
             return asin(expression.using(DoubleField.factory()));
         }
         
+        /**
+         * Returns the arc sine of the specified (dimensionless) measure.
+         * 
+         * @param measure a measure.
+         * 
+         * @see Math#asin(double)
+         */
         public static final DoubleField.Measure asin(com.jamw.jmud.Measure<DoubleField> measure) {
             com.jamw.jmud.Measure<DoubleField> m = measure.as(Units.UNITLESS);
             return of(Math.asin(m.getField().value()),Units.RADIAN);
         }
         
+        /**
+         * Returns the arc tangent of the (dimensionless) measure represented by
+         * the specified expression particularized to a {@code DoubleField.Measure}.
+         *
+         * @param expression an expression.
+         * 
+         * @see Math#atan(double)
+         */
         public static final DoubleField.Measure atan(Expression expression) {
             return atan(expression.using(DoubleField.factory()));
         }
         
+        /**
+         * Returns the arc tangent of the specified (dimensionless) measure.
+         * 
+         * @param measure a measure.
+         * 
+         * @see Math#atan(double)
+         */
         public static final DoubleField.Measure atan(com.jamw.jmud.Measure<DoubleField> measure) {
             com.jamw.jmud.Measure<DoubleField> m = measure.as(Units.UNITLESS);
             return of(Math.atan(m.getField().value()),Units.RADIAN);
         }
         
+        /**
+         * Returns the arc tangent of the (dimensionless) measure represented by
+         * the specified expressions particularized to a {@code DoubleField.Measure}.
+         *
+         * @param x an expression for the ordinate coordinate.
+         * @param y an expression for the abscissa coordinate.
+         * 
+         * @see Math#atan2(double,double)
+         */
         public static final DoubleField.Measure atan2(Expression x, Expression y) {
             return atan2(x.using(DoubleField.factory()),y.using(DoubleField.factory()));
         }
         
+        /**
+         * Returns the arc tangent of the specified (dimensionless) measures.
+         *
+         * @param x a measure for the ordinate coordinate.
+         * @param y a measure for the abscissa coordinate.
+         * 
+         * @see Math#atan2(double,double)
+         */
         public static final DoubleField.Measure atan2(com.jamw.jmud.Measure<DoubleField> x, com.jamw.jmud.Measure<DoubleField> y) {
             com.jamw.jmud.Measure<DoubleField> y2 = y.as(x.getUnit());
             return of(Math.atan2(x.getField().value(),y2.getField().value()),Units.RADIAN);
@@ -514,14 +728,29 @@ public final class DoubleField implements Field<DoubleField>, Field.Factory<Doub
             return hash;
         }
         
+        /**
+         * Returns the absolute value of this measure.
+         * 
+         * @see Math#abs(double)
+         */
         public DoubleField.Measure abs() {
             return abs(this);
         }
         
+        /**
+         * Returns the ceiling of this measure.
+         * 
+         * @see Math#ceil(double)
+         */
         public DoubleField.Measure ceil() {
             return ceil(this);
         }
         
+        /**
+         * Returns the floor of this measure.
+         * 
+         * @see Math#floor(double)
+         */
         public DoubleField.Measure floor() {
             return floor(this);
         }

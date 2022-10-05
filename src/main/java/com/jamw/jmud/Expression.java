@@ -18,6 +18,18 @@
 package com.jamw.jmud;
 
 /**
+ * An expression represents any dimensional value that can be transformed to an 
+ * equivalent measure of a particular {@link Field field} at a later point.  The 
+ * process of transforming an expression to a measure of a particular field type 
+ * is called <i>particularization</i>.
+ * 
+ * <p>The operations on an expression do not affect the numerical precision of the 
+ * dimensional value it represents.  It is only when an expression is particularized that 
+ * precision may be lost due to the numerical implementation of the underlying field.
+ * 
+ * <p>An expression provides functionality for a numerical implementation-independent measure. 
+ * 
+ * <p>Implementations must declare whether they are immutable or not.
  * 
  * @author andreww1011
  */
