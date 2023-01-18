@@ -39,4 +39,11 @@
         <maven.compiler.source>12</maven.compiler.source>
         <maven.compiler.target>12</maven.compiler.target>
     </properties>
+    <distributionManagement>
+        <repository>
+          <id>github</id>
+          <name>GitHub Packages</name>
+          <url>https://maven.pkg.github.com/andreww1011/jmud</url>
+        </repository>
+    </distributionManagement>
 </project>
