@@ -19,7 +19,7 @@
        <version.plugin.surefire>3.0.0-M7</version.plugin.surefire>
        <version.plugin.source>3.2.1</version.plugin.source>
        <version.plugin.gpg>3.0.1</version.plugin.gpg>
-       <versions.plugin.coveralls>4.3.0</versions.plugin.coveralls>
+       <version.plugin.coveralls>4.3.0</version.plugin.coveralls>
    </properties>
    <build>
        <plugins>
@@ -100,7 +100,7 @@
            <plugin>
                <groupId>org.eluder.coveralls</groupId>
                <artifactId>coveralls-maven-plugin</artifactId>
-               <version>${versions.plugin.coveralls}</version>
+               <version>${version.plugin.coveralls}</version>
                <configuration>
                    <repoToken>${env.COVERALLS_REPO_TOKEN}</repoToken>
                </configuration>
