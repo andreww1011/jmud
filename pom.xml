@@ -3,7 +3,7 @@
    <modelVersion>4.0.0</modelVersion>
    <groupId>io.github.andreww1011</groupId>
    <artifactId>jmud</artifactId>
-   <version>1.2.1</version>
+   <version>1.2.2</version>
    <name>${project.groupId}:${project.artifactId}</name>
    <description>Java library for creating and manipulating dimensional units of measurement.</description>
    <url>https://github.com/andreww1011/jmud</url>
