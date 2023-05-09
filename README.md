@@ -1,6 +1,10 @@
 # <img src="https://repository-images.githubusercontent.com/325668576/94ce6095-c753-485e-a563-c98b0b434341" alt="jmud" width="320">
 Java library for creating and manipulating dimensional units of measurement.
 
+[![Coverage Status](https://coveralls.io/repos/github/andreww1011/jmud/badge.svg?branch=master)](https://coveralls.io/github/andreww1011/jmud?branch=master)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.andreww1011/jmud/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.andreww1011/jmud)
+[![javadoc](https://javadoc.io/badge2/io.github.andreww1011/mud/javadoc.svg)](https://javadoc.io/doc/io.github.andreww1011/mud)
+
 ## Usage
 
 ```java
