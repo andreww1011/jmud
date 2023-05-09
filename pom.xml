@@ -35,7 +35,7 @@
                    <encoding>${project.build.sourceEncoding}</encoding>
                    <showWarnings>true</showWarnings>
                    <showDeprecation>true</showDeprecation>
-               </configuation>
+               </configuration>
            </plugin>
            <plugin>
                <groupId>org.apache.maven.plugins</groupId>
