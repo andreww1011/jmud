@@ -3,7 +3,7 @@ Java library for creating and manipulating dimensional units of measurement.
 
 [![Coverage Status](https://coveralls.io/repos/github/andreww1011/jmud/badge.svg?branch=master)](https://coveralls.io/github/andreww1011/jmud?branch=master)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.andreww1011/jmud/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.andreww1011/jmud)
-[![javadoc](https://javadoc.io/badge2/io.github.andreww1011/mud/javadoc.svg)](https://javadoc.io/doc/io.github.andreww1011/mud)
+[![javadoc](https://javadoc.io/badge2/io.github.andreww1011/jmud/javadoc.svg)](https://javadoc.io/doc/io.github.andreww1011/jmud)
 
 ## Usage
 
