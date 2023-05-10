@@ -36,21 +36,27 @@ public interface Exponent extends Comparable<Exponent>{
     
     /**
      * Returns the numerator of this rational number exponent.
+     *
+     * @return a int
      */
     int numerator();
     
     /**
      * Returns the denominator of the rational number exponent.  The denominator
      * must be a positive integer.
+     *
+     * @return a int
      */
     int denominator();
     
     /**
+     * {@inheritDoc}
+     *
      * Compares the specified object with this exponent for equality. 
      * Returns true if the specified object is an exponent and the two 
      * exponents represent the same value.
+     * 
      * @param o object to be compared for equality to this exponent.
-     * @return 
      */
     @Override
     boolean equals(Object o);

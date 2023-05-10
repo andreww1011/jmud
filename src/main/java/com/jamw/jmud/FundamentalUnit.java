@@ -37,6 +37,8 @@ package com.jamw.jmud;
 public interface FundamentalUnit extends Unit {
     
     /**
+     * {@inheritDoc}
+     *
      * Returns the fundamental dimension paired to this fundamental unit.
      */
     @Override

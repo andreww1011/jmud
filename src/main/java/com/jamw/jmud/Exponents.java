@@ -63,6 +63,9 @@ public abstract class Exponents {
     
     /**
      * Returns an exponent with the specified value.
+     *
+     * @param value a int
+     * @return a {@link com.jamw.jmud.Exponent} object
      */
     public static final Exponent of(int value) {
         return of(value,1); //magic number
@@ -70,8 +73,10 @@ public abstract class Exponents {
     
     /**
      * Returns an exponent with a value equivalent to <i>numerator/denominator</i>.
+     *
      * @param numerator an integer.
      * @param denominator a non-zero integer.
+     * @return a {@link com.jamw.jmud.Exponent} object
      */
     public static final Exponent of(int numerator, int denominator) {
         return of(numerator,denominator, false);

@@ -20,37 +20,49 @@ package com.jamw.jmud;
 /**
  * A level is the value of a measurement in a particular {@link Scale scale}.
  * This class has a natural ordering that is inconsistent with equals.
+ *
  * @author andreww1011
  */
 public interface Level<F extends Field<F>> extends Comparable<Level<F>>{
     
     /**
      * Returns the field of this level.
+     *
+     * @return a F object
      */
     F getField();
     
     /**
      * Returns the scale of this level.
+     *
+     * @return a {@link com.jamw.jmud.Scale} object
      */
     Scale getScale();
     
     /**
      * Returns the measure associated with the value of this level.
+     *
+     * @return a {@link com.jamw.jmud.Measure} object
      */
     Measure<F> getMeasure();
         
     /**
+     * {@inheritDoc}
+     *
      * Compares the specified object with this level for equality. 
      * Returns true if the specified object is a level and the two levels
      * have the same scale and the fields represent the same value.
      * 
      * <p>Note: this class has a natural ordering that is inconsistent with equals.
+     * 
      * @param o object to be compared for equality to this field.
      */
     @Override
     boolean equals(Object o);
     
     /**
+     * {@inheritDoc}
+     *
      * Compares this level with the specified level for order.  Returns a
      * negative integer, zero, or a positive integer as this object is less
      * than, equal to, or greater than the specified level.
@@ -66,7 +78,6 @@ public interface Level<F extends Field<F>> extends Comparable<Level<F>>{
      * @param   o the level to be compared.
      * @return  a negative integer, zero, or a positive integer as this level
      *          is less than, equal to, or greater than the specified level.
-     * 
      * @throws IncommensurableDimensionException if the dimensions of the 
      * underlying units of this and the specified level are incommensurable.
      */
@@ -74,6 +85,8 @@ public interface Level<F extends Field<F>> extends Comparable<Level<F>>{
     public int compareTo(Level<F> o) throws IncommensurableDimensionException;
     
     /**
+     * {@inheritDoc}
+     *
      * Returns true if this level and the specified level are equal in value.  
      * Two levels are considered equal if the {@link equals} method returns true, or 
      * in the case that the scales of the levels are different, but the
@@ -83,7 +96,6 @@ public interface Level<F extends Field<F>> extends Comparable<Level<F>>{
      * <p>Note: this class has a natural ordering that is inconsistent with equals.
      * 
      * @param   o the level to be compared.
-     * 
      * @throws IncommensurableDimensionException if the dimensions of the 
      * underlying units of this and the specified level are incommensurable.
      */
@@ -93,6 +105,8 @@ public interface Level<F extends Field<F>> extends Comparable<Level<F>>{
     }
     
     /**
+     * {@inheritDoc}
+     *
      * Returns true if the value of this level is less than the specified level. 
      * 
      * <p>If this and the specified level have the same scale, this method
@@ -104,7 +118,6 @@ public interface Level<F extends Field<F>> extends Comparable<Level<F>>{
      * <p>Note: this class has a natural ordering that is inconsistent with equals.
      * 
      * @param   o the level to be compared.
-     * 
      * @throws IncommensurableDimensionException if the dimensions of the 
      * underlying units of this and the specified level are incommensurable.
      */
@@ -114,6 +127,8 @@ public interface Level<F extends Field<F>> extends Comparable<Level<F>>{
     }
     
     /**
+     * {@inheritDoc}
+     *
      * Returns true if the value of this level is greater than the specified level. 
      * 
      * <p>If this and the specified level have the same scale, this method
@@ -125,7 +140,6 @@ public interface Level<F extends Field<F>> extends Comparable<Level<F>>{
      * <p>Note: this class has a natural ordering that is inconsistent with equals.
      * 
      * @param   o the level to be compared.
-     * 
      * @throws IncommensurableDimensionException if the dimensions of the 
      * underlying units of this and the specified level are incommensurable.
      */

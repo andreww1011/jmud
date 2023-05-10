@@ -21,7 +21,7 @@ package com.jamw.jmud;
  * A fundamental dimension is a special 
  * {@link Dimension Dimension} that together with other fundamental dimensions forms a basis 
  * for describing the composition of all other dimensions.  One may choose any set
- * of fundamental dimensions to form the basis of a {@link Universe}.
+ * of fundamental dimensions to form the basis of a {@link com.jamw.jmud.Universe}.
  * <p>
  * A fundamental dimension itself has a composition of itself raised to the 
  * power one;  all other powers are zero.  
@@ -41,6 +41,8 @@ public interface FundamentalDimension extends Dimension {
     
     /**
      * Returns the fundamental unit paired to this fundamental dimension.
+     *
+     * @return a {@link com.jamw.jmud.FundamentalUnit} object
      */
     FundamentalUnit getFundamentalUnit();
 }

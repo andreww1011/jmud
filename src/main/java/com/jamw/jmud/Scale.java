@@ -31,30 +31,40 @@ public interface Scale {
     
     /**
      * Returns the name of this scale.  
+     *
+     * @return a {@link java.lang.String} object
      */
     String getName();
     
     /**
      * Returns the symbol of this scale.  
+     *
+     * @return a {@link java.lang.String} object
      */
     String getSymbol();
     
     /**
      * Returns the reference unit of this scale.
+     *
+     * @return a {@link com.jamw.jmud.Unit} object
      */
     Unit getReferenceUnit();
     
     /**
      * Creates a level of the specified field value.
+     *
      * @param <T> the type of field in which to represent values.
      * @param value the value of the level.
+     * @return a {@link com.jamw.jmud.Level} object
      */
     <T extends Field<T>> Level<T> of(T value);
         
     /**
      * Returns a level representing the value of the specified measure in this scale.
+     *
      * @param <T> the type of field in which to represent values.
      * @param measure a measure from which to obtain a level.
+     * @return a {@link com.jamw.jmud.Level} object
      */
     <T extends Field<T>> Level<T> level(Measure<T> measure);
 }

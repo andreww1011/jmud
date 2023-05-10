@@ -26,7 +26,7 @@ package com.jamw.jmud;
  * <p>A {@link FundamentalUnit fundamental unit} is a reference measurement of a 
  * fundamental dimension.  A fundamental dimension can have only one fundamental
  * unit, and vice versa.  A {@link FundamentalPair fundamental dimension-unit pair}
- * can be created via {@link Universe#newFundamentalPair}.  The scale factor of
+ * can be created via {@link com.jamw.jmud.Universe#newFundamentalPair}.  The scale factor of
  * a fundamental unit is exactly 1.
  * 
  * <p>A <i>base unit</i> of a dimension is that unit which is composed only of powers of
@@ -40,25 +40,35 @@ public interface Unit {
     
     /**
      * Returns the name of this unit.  
+     *
+     * @return a {@link java.lang.String} object
      */
     String getName();
     
     /**
      * Returns the symbol of this unit.  
+     *
+     * @return a {@link java.lang.String} object
      */
     String getSymbol();
     
     /**
      * Returns the dimension of this unit.
+     *
+     * @return a {@link com.jamw.jmud.Dimension} object
      */
     Dimension getDimension();
     
     /**
      * Returns the scale of this unit.
+     *
+     * @return a {@link com.jamw.jmud.Scalar} object
      */
     Scalar getScale();
     
     /**
+     * {@inheritDoc}
+     *
      * Tests whether the specified object is equal to this unit.  Every 
      * unit is unique even if all defining properties are identical.
      * Thus, this method returns true if and only if the

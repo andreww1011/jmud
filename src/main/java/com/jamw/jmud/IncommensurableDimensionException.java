@@ -19,26 +19,54 @@ package com.jamw.jmud;
 
 /**
  * Dimension is not commensurable with another dimension.
+ *
  * @author andreww1011
  */
 public class IncommensurableDimensionException extends RuntimeException {
     
+    /**
+     * <p>Constructor for IncommensurableDimensionException.</p>
+     */
     public IncommensurableDimensionException() {
         super();
     }
     
+    /**
+     * <p>Constructor for IncommensurableDimensionException.</p>
+     *
+     * @param cause a {@link java.lang.Throwable} object
+     */
     public IncommensurableDimensionException(Throwable cause) {
         super(cause);
     }
     
+    /**
+     * <p>Constructor for IncommensurableDimensionException.</p>
+     *
+     * @param message a {@link java.lang.String} object
+     */
     public IncommensurableDimensionException(String message) {
         super(message);
     }
     
+    /**
+     * <p>Constructor for IncommensurableDimensionException.</p>
+     *
+     * @param message a {@link java.lang.String} object
+     * @param cause a {@link java.lang.Throwable} object
+     */
     public IncommensurableDimensionException(String message, Throwable cause) {
         super(message, cause);
     }
     
+    /**
+     * <p>Constructor for IncommensurableDimensionException.</p>
+     *
+     * @param message a {@link java.lang.String} object
+     * @param cause a {@link java.lang.Throwable} object
+     * @param enableSuppression a boolean
+     * @param writeableStackTrace a boolean
+     */
     public IncommensurableDimensionException(String message, Throwable cause, 
             boolean enableSuppression, boolean writeableStackTrace) {
         super(message,cause,enableSuppression, writeableStackTrace);

@@ -49,6 +49,9 @@ public abstract class Expressions {
     /**
      * Returns a scalar of the specified integer.  The returned implementation is
      * immutable and thread-safe.
+     *
+     * @param scalar a int
+     * @return a {@link com.jamw.jmud.Scalar} object
      */
     public static final Scalar take(int scalar) {
         return ScalarImpl.take(scalar);
@@ -57,6 +60,9 @@ public abstract class Expressions {
     /**
      * Returns a scalar of the number represented by the specified string.
      * The returned implementation is immutable and thread-safe.
+     *
+     * @param scalar a {@link java.lang.String} object
+     * @return a {@link com.jamw.jmud.Scalar} object
      */
     public static final Scalar take(String scalar) {
         return ScalarImpl.take(scalar);
@@ -65,8 +71,10 @@ public abstract class Expressions {
     /**
      * Returns an expression representing the measure of the specified integer value and unit.
      * The returned implementation is immutable and thread-safe.
+     *
      * @param value an integer number.
      * @param unit the unit of the specified number.
+     * @return a {@link com.jamw.jmud.Expression} object
      */
     public static final Expression take(int value, Unit unit) {
         return ExpressionImpl.take(value,unit);
@@ -76,8 +84,10 @@ public abstract class Expressions {
      * Returns an expression representing the measure of the number represented 
      * by the specified string and unit.
      * The returned implementation is immutable and thread-safe.
+     *
      * @param value a string representing a number.
      * @param unit the unit of the specified number.
+     * @return a {@link com.jamw.jmud.Expression} object
      */
     public static final Expression take(String value, Unit unit) {
         return ExpressionImpl.take(value,unit);
@@ -87,8 +97,10 @@ public abstract class Expressions {
      * Returns an expression representing the measure of the specified scalar
      * and unit.
      * The returned implementation is immutable and thread-safe.
+     *
      * @param value a scalar.
      * @param unit the unit of the specified scalar.
+     * @return a {@link com.jamw.jmud.Expression} object
      */
     public static final Expression take(Scalar value, Unit unit) {
         return ExpressionImpl.take(value,unit);
@@ -101,6 +113,7 @@ public abstract class Expressions {
      * @param function a {@link Function} that takes a {@link Field.Factory} 
      *                 and produces a measure.
      * @param dimension the dimension of the measure produced by the specified funtion.
+     * @return a {@link com.jamw.jmud.Expression} object
      */
     public static final Expression take(Function<Field.Factory,Measure> function, Dimension dimension) {
         return new ExpressionImpl(function,dimension);
@@ -109,9 +122,11 @@ public abstract class Expressions {
     /**
      * Returns a measure of the specified field and unit.
      * The returned implementation is immutable and thread-safe.
+     *
      * @param <F> the type of the field of the measure.
      * @param value a field of type T.
      * @param unit the unit of the specified field.
+     * @return a {@link com.jamw.jmud.Measure} object
      */
     public static final <F extends Field<F>> Measure<F> take(F value, Unit unit) {
         return MeasureImpl.take(value,unit);
