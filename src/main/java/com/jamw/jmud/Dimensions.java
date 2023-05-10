@@ -251,6 +251,8 @@ public abstract class Dimensions {
     
     /**
      * Returns a builder for creating a new dimension.
+     *
+     * @return a {@link com.jamw.jmud.Dimensions.DimensionBuilder} object
      */
     public static final DimensionBuilder newDimension() {
         return DimensionBuilder.NULL_BUILDER;

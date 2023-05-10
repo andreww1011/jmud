@@ -27,7 +27,7 @@ import java.util.Iterator;
  * <p>Two dimensions are commensurable if the sets of fundamental dimension - 
  * non-zero exponent pairs comprising the composition of each dimension are the
  * same, exclusive of the pair containing the special  
- * {@link Universe#getDimensionless dimensionless} fundamental dimension.
+ * {@link com.jamw.jmud.Universe#getDimensionless dimensionless} fundamental dimension.
  * 
  * <p>A dimension whose composition is the null set, or whose composition comprises
  * only of exponents with a value of zero, is equivalent to the dimensionless
@@ -41,18 +41,22 @@ public interface Composition extends Iterable<CompositionComponent> {
     /**
      * Returns the exponent of the specified fundamental dimension of this
      * composition.
+     *
      * @param fd fundamental dimension in composition.
      * @return exponent corresponding to the specified fundamental dimension.
      */
     Exponent getExponent(FundamentalDimension fd);
     
     /**
+     * {@inheritDoc}
+     *
      * Returns an iterator of composition components comprising this composition.
      *  
      * Fundamental dimensions with an exponent value of zero may or may not be
      * traversed by this iterator.  Implementations should not rely on this method
      * to return all possible fundamental dimensions.  Modifying this composition 
      * via the iterator is not permitted.
+     * 
      * @return an iterator of composition components of this composition.
      */
     @Override
@@ -69,7 +73,6 @@ public interface Composition extends Iterable<CompositionComponent> {
      * <i>Q2 = [L<sup>2</sup>T<sup>0</sup>]</i> are, in fact, equal.
      * 
      * @param o object to be compared for equality to this composition.
-     * 
      * @return true if the specified object is equal to this composition.
      */
     boolean equals(Object o);

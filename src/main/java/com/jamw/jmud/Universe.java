@@ -85,6 +85,8 @@ public abstract class Universe {
      * always excludes the {@code Dimensionless} fundamental dimension.  The name 
      * and symbol of the {@code Dimensionless} dimension are <code>"DIMENSIONLESS"</code> 
      * and <code>"-"</code>, respectively.
+     *
+     * @return a {@link com.jamw.jmud.FundamentalDimension} object
      */
     public static final FundamentalDimension getDimensionless() {
         return DIMENSIONLESS;
@@ -95,9 +97,11 @@ public abstract class Universe {
      * measurements.  
      * 
      * <p>The fundamental unit paired to the <code>Unitless</code> unit 
-     * is {@link Universe#getDimensionless()}.  The name 
+     * is {@link com.jamw.jmud.Universe#getDimensionless()}.  The name
      * and symbol of the {@code Unitless} unit are <code>"UNITLESS"</code> 
      * and <code>"-"</code>, respectively.
+     *
+     * @return a {@link com.jamw.jmud.FundamentalUnit} object
      */
     public static final FundamentalUnit getUnitless() {
         return UNITLESS;

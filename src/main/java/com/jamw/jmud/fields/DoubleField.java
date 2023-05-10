@@ -60,6 +60,8 @@ public final class DoubleField implements Field<DoubleField>, Field.Factory<Doub
     
     /**
      * Returns a factory for the <code>DoubleField</code> type.
+     *
+     * @return a {@link com.jamw.jmud.Field.Factory} object
      */
     public static final Field.Factory<DoubleField> factory() {
         return ZERO;
@@ -67,6 +69,9 @@ public final class DoubleField implements Field<DoubleField>, Field.Factory<Doub
     
     /**
      * Returns a {@code DoubleField} of the specified value.
+     *
+     * @param value a double
+     * @return a {@link com.jamw.jmud.fields.DoubleField} object
      */
     public static final DoubleField of(double value) {
         return new DoubleField(value);
@@ -80,52 +85,62 @@ public final class DoubleField implements Field<DoubleField>, Field.Factory<Doub
     
     /**
      * Returns the {@code double} value underlying this {@code DoubleField}.
-     * @return 
+     *
+     * @return a double
      */
     public double value() {
         return value;
     }
     
+    /** {@inheritDoc} */
     @Override
     public final Field.Factory<DoubleField> getFactory() {
         return factory();
     }
     
+    /** {@inheritDoc} */
     @Override
     public final DoubleField zero() {
         return ZERO;
     }
     
+    /** {@inheritDoc} */
     @Override
     public final DoubleField one() {
         return ONE;
     }
     
+    /** {@inheritDoc} */
     @Override
     public final DoubleField of(int value) {
         return new DoubleField(value);
     }
     
+    /** {@inheritDoc} */
     @Override
     public final DoubleField of(String value) {
         return new DoubleField(Double.parseDouble(value));
     }
     
+    /** {@inheritDoc} */
     @Override
     public final DoubleField add(DoubleField f) {
         return new DoubleField(this.value + f.value());
     }
     
+    /** {@inheritDoc} */
     @Override
     public final DoubleField subtract(DoubleField f) {
         return new DoubleField(this.value - f.value());
     }
     
+    /** {@inheritDoc} */
     @Override
     public final DoubleField multiply(DoubleField f) {
         return new DoubleField(this.value * f.value());
     }
     
+    /** {@inheritDoc} */
     @Override
     public final DoubleField divide(DoubleField f) {
         if (f.value() == 0)
@@ -133,11 +148,13 @@ public final class DoubleField implements Field<DoubleField>, Field.Factory<Doub
         return new DoubleField(this.value / f.value());
     }
     
+    /** {@inheritDoc} */
     @Override
     public final DoubleField negate() {
         return new DoubleField(-value);
     }
     
+    /** {@inheritDoc} */
     @Override
     public final DoubleField reciprocal() {
         if (value == 0)
@@ -145,6 +162,7 @@ public final class DoubleField implements Field<DoubleField>, Field.Factory<Doub
         return new DoubleField(1/value);
     }
     
+    /** {@inheritDoc} */
     @Override
     public final DoubleField power(DoubleField exponent) throws ArithmeticException {
         return new DoubleField(checkNan(Math.pow(value,exponent.value())));
@@ -156,6 +174,7 @@ public final class DoubleField implements Field<DoubleField>, Field.Factory<Doub
         return d;
     }
     
+    /** {@inheritDoc} */
     @Override
     public final DoubleField logarithm(DoubleField base) throws ArithmeticException {
         if (base.isEqualTo(E))
@@ -168,11 +187,13 @@ public final class DoubleField implements Field<DoubleField>, Field.Factory<Doub
         
     }
     
+    /** {@inheritDoc} */
     @Override
     public final int compareTo(DoubleField o) {
         return Double.compare(value,o.value());
     }
     
+    /** {@inheritDoc} */
     @Override 
     public final boolean equals(Object o) {
         if (this == o)
@@ -182,11 +203,13 @@ public final class DoubleField implements Field<DoubleField>, Field.Factory<Doub
         return compareTo((DoubleField)o) == 0;
     }
 
+    /** {@inheritDoc} */
     @Override
     public final int hashCode() {
         return Double.hashCode(value);
     }
     
+    /** {@inheritDoc} */
     @Override
     public final String toString() {
         return Double.toString(value);

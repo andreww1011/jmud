@@ -866,8 +866,9 @@ public abstract class Units {
      * Returns a new unit that is a factor 10<sup>24</sup> times the specified unit.
      * <p>
      * Denoted by the prefix <i>"Y"</i>.
+     *
      * @param u unit
-     * @return 
+     * @return a {@link com.jamw.jmud.Unit} object
      */
     public static final Unit yotta(Unit u) {
         return newUnit().ofDimension(u.getDimension()).asExactly(YOTTA).ofA(u).withName("YOTTA" + u.getName()).withSymbol("Y" + u.getSymbol()).create();
@@ -877,8 +878,9 @@ public abstract class Units {
      * Returns a new unit that is a factor 10<sup>21</sup> times the specified unit.
      * <p>
      * Denoted by the prefix <i>"Z"</i>.
+     *
      * @param u unit
-     * @return 
+     * @return a {@link com.jamw.jmud.Unit} object
      */
     public static final Unit zetta(Unit u) {
         return newUnit().ofDimension(u.getDimension()).asExactly(ZETTA).ofA(u).withName("ZETTA" + u.getName()).withSymbol("Z" + u.getSymbol()).create();
@@ -888,8 +890,9 @@ public abstract class Units {
      * Returns a new unit that is a factor 10<sup>18</sup> times the specified unit.
      * <p>
      * Denoted by the prefix <i>"E"</i>.
+     *
      * @param u unit
-     * @return 
+     * @return a {@link com.jamw.jmud.Unit} object
      */
     public static final Unit exa(Unit u) {
         return newUnit().ofDimension(u.getDimension()).asExactly(EXA).ofA(u).withName("EXA" + u.getName()).withSymbol("E" + u.getSymbol()).create();
@@ -899,8 +902,9 @@ public abstract class Units {
      * Returns a new unit that is a factor 10<sup>15</sup> times the specified unit.
      * <p>
      * Denoted by the prefix <i>"P"</i>.
+     *
      * @param u unit
-     * @return 
+     * @return a {@link com.jamw.jmud.Unit} object
      */
     public static final Unit peta(Unit u) {
         return newUnit().ofDimension(u.getDimension()).asExactly(PETA).ofA(u).withName("PETA" + u.getName()).withSymbol("P" + u.getSymbol()).create();
@@ -910,8 +914,9 @@ public abstract class Units {
      * Returns a new unit that is a factor 10<sup>12</sup> times the specified unit.
      * <p>
      * Denoted by the prefix <i>"T"</i>.
+     *
      * @param u unit
-     * @return 
+     * @return a {@link com.jamw.jmud.Unit} object
      */
     public static final Unit tera(Unit u) {
         return newUnit().ofDimension(u.getDimension()).asExactly(TERA).ofA(u).withName("TERA" + u.getName()).withSymbol("T" + u.getSymbol()).create();
@@ -921,8 +926,9 @@ public abstract class Units {
      * Returns a new unit that is a factor 10<sup>9</sup> times the specified unit.
      * <p>
      * Denoted by the prefix <i>"G"</i>.
+     *
      * @param u unit
-     * @return 
+     * @return a {@link com.jamw.jmud.Unit} object
      */
     public static final Unit giga(Unit u) {
         return newUnit().ofDimension(u.getDimension()).asExactly(GIGA).ofA(u).withName("GIGA" + u.getName()).withSymbol("G" + u.getSymbol()).create();
@@ -932,8 +938,9 @@ public abstract class Units {
      * Returns a new unit that is a factor 10<sup>6</sup> times the specified unit.
      * <p>
      * Denoted by the prefix <i>"M"</i>.
+     *
      * @param u unit
-     * @return 
+     * @return a {@link com.jamw.jmud.Unit} object
      */
     public static final Unit mega(Unit u) {
         return newUnit().ofDimension(u.getDimension()).asExactly(MEGA).ofA(u).withName("MEGA" + u.getName()).withSymbol("M" + u.getSymbol()).create();
@@ -943,8 +950,9 @@ public abstract class Units {
      * Returns a new unit that is a factor 10<sup>3</sup> times the specified unit.
      * <p>
      * Denoted by the prefix <i>"k"</i>.
+     *
      * @param u unit
-     * @return 
+     * @return a {@link com.jamw.jmud.Unit} object
      */
     public static final Unit kilo(Unit u) {
         return newUnit().ofDimension(u.getDimension()).asExactly(KILO).ofA(u).withName("KILO" + u.getName()).withSymbol("k" + u.getSymbol()).create();
@@ -954,8 +962,9 @@ public abstract class Units {
      * Returns a new unit that is a factor 10<sup>2</sup> times the specified unit.
      * <p>
      * Denoted by the prefix <i>"h"</i>.
+     *
      * @param u unit
-     * @return 
+     * @return a {@link com.jamw.jmud.Unit} object
      */
     public static final Unit hecto(Unit u) {
         return newUnit().ofDimension(u.getDimension()).asExactly(HECTO).ofA(u).withName("HECTO" + u.getName()).withSymbol("h" + u.getSymbol()).create();
@@ -965,8 +974,9 @@ public abstract class Units {
      * Returns a new unit that is a factor 10 times the specified unit.
      * <p>
      * Denoted by the prefix <i>"da"</i>.
+     *
      * @param u unit
-     * @return 
+     * @return a {@link com.jamw.jmud.Unit} object
      */
     public static final Unit deca(Unit u) {
         return newUnit().ofDimension(u.getDimension()).asExactly(DECA).ofA(u).withName("DECA" + u.getName()).withSymbol("da" + u.getSymbol()).create();
@@ -976,8 +986,9 @@ public abstract class Units {
      * Returns a new unit that is a factor 10<sup>-1</sup> times the specified unit.
      * <p>
      * Denoted by the prefix <i>"d"</i>.
+     *
      * @param u unit
-     * @return 
+     * @return a {@link com.jamw.jmud.Unit} object
      */
     public static final Unit deci(Unit u) {
         return newUnit().ofDimension(u.getDimension()).asExactly(DECI).ofA(u).withName("DECI" + u.getName()).withSymbol("d" + u.getSymbol()).create();
@@ -987,8 +998,9 @@ public abstract class Units {
      * Returns a new unit that is a factor 10<sup>-2</sup> times the specified unit.
      * <p>
      * Denoted by the prefix <i>"c"</i>.
+     *
      * @param u unit
-     * @return 
+     * @return a {@link com.jamw.jmud.Unit} object
      */
     public static final Unit centi(Unit u) {
         return newUnit().ofDimension(u.getDimension()).asExactly(CENTI).ofA(u).withName("CENTI" + u.getName()).withSymbol("c" + u.getSymbol()).create();
@@ -998,8 +1010,9 @@ public abstract class Units {
      * Returns a new unit that is a factor 10<sup>-3</sup> times the specified unit.
      * <p>
      * Denoted by the prefix <i>"m"</i>.
+     *
      * @param u unit
-     * @return 
+     * @return a {@link com.jamw.jmud.Unit} object
      */
     public static final Unit milli(Unit u) {
         return newUnit().ofDimension(u.getDimension()).asExactly(MILLI).ofA(u).withName("MILLI" + u.getName()).withSymbol("m" + u.getSymbol()).create();
@@ -1009,8 +1022,9 @@ public abstract class Units {
      * Returns a new unit that is a factor 10<sup>-6</sup> times the specified unit.
      * <p>
      * Denoted by the prefix <i>"\u03BC"</i>.
+     *
      * @param u unit
-     * @return 
+     * @return a {@link com.jamw.jmud.Unit} object
      */
     public static final Unit micro(Unit u) {
         return newUnit().ofDimension(u.getDimension()).asExactly(MICRO).ofA(u).withName("MICRO" + u.getName()).withSymbol("\u03BC" + u.getSymbol()).create();
@@ -1020,8 +1034,9 @@ public abstract class Units {
      * Returns a new unit that is a factor 10<sup>-9</sup> times the specified unit.
      * <p>
      * Denoted by the prefix <i>"n"</i>.
+     *
      * @param u unit
-     * @return 
+     * @return a {@link com.jamw.jmud.Unit} object
      */
     public static final Unit nano(Unit u) {
         return newUnit().ofDimension(u.getDimension()).asExactly(NANO).ofA(u).withName("NANO" + u.getName()).withSymbol("n" + u.getSymbol()).create();
@@ -1031,8 +1046,9 @@ public abstract class Units {
      * Returns a new unit that is a factor 10<sup>-12</sup> times the specified unit.
      * <p>
      * Denoted by the prefix <i>"p"</i>.
+     *
      * @param u unit
-     * @return 
+     * @return a {@link com.jamw.jmud.Unit} object
      */
     public static final Unit pico(Unit u) {
         return newUnit().ofDimension(u.getDimension()).asExactly(PICO).ofA(u).withName("PICO" + u.getName()).withSymbol("p" + u.getSymbol()).create();
@@ -1042,8 +1058,9 @@ public abstract class Units {
      * Returns a new unit that is a factor 10<sup>-15</sup> times the specified unit.
      * <p>
      * Denoted by the prefix <i>"f"</i>.
+     *
      * @param u unit
-     * @return 
+     * @return a {@link com.jamw.jmud.Unit} object
      */
     public static final Unit femto(Unit u) {
         return newUnit().ofDimension(u.getDimension()).asExactly(FEMTO).ofA(u).withName("FEMTO" + u.getName()).withSymbol("f" + u.getSymbol()).create();
@@ -1053,8 +1070,9 @@ public abstract class Units {
      * Returns a new unit that is a factor 10<sup>-18</sup> times the specified unit.
      * <p>
      * Denoted by the prefix <i>"a"</i>.
+     *
      * @param u unit
-     * @return 
+     * @return a {@link com.jamw.jmud.Unit} object
      */
     public static final Unit atto(Unit u) {
         return newUnit().ofDimension(u.getDimension()).asExactly(ATTO).ofA(u).withName("ATTO" + u.getName()).withSymbol("a" + u.getSymbol()).create();
@@ -1064,8 +1082,9 @@ public abstract class Units {
      * Returns a new unit that is a factor 10<sup>-21</sup> times the specified unit.
      * <p>
      * Denoted by the prefix <i>"z"</i>.
+     *
      * @param u unit
-     * @return 
+     * @return a {@link com.jamw.jmud.Unit} object
      */
     public static final Unit zepto(Unit u) {
         return newUnit().ofDimension(u.getDimension()).asExactly(ZEPTO).ofA(u).withName("ZEPTO" + u.getName()).withSymbol("z" + u.getSymbol()).create();
@@ -1075,8 +1094,9 @@ public abstract class Units {
      * Returns a new unit that is a factor 10<sup>-24</sup> times the specified unit.
      * <p>
      * Denoted by the prefix <i>"y"</i>.
+     *
      * @param u unit
-     * @return 
+     * @return a {@link com.jamw.jmud.Unit} object
      */
     public static final Unit yocto(Unit u) {
         return newUnit().ofDimension(u.getDimension()).asExactly(YOCTO).ofA(u).withName("YOCTO" + u.getName()).withSymbol("y" + u.getSymbol()).create();
@@ -1484,6 +1504,8 @@ public abstract class Units {
     
     /**
      * Returns a builder for creating a new unit.
+     *
+     * @return a {@link com.jamw.jmud.Units.UnitBuilder} object
      */
     public static final UnitBuilder newUnit() {
         return UnitBuilder.NULL_BUILDER;
@@ -1926,10 +1948,10 @@ public abstract class Units {
      * </ol>
      * </li>
      * <li>Optionally, provide a descriptive name with 
-     * {@link #withName withName()}.  If omitted, a descriptive name will attempt to be
+     * {@link CreateableUnitBuilder#withName withName()}.  If omitted, a descriptive name will attempt to be
      * generated based on the properties of the unit.</li>
      * <li>Optionally, provide a descriptive symbol with 
-     * {@link #withSymbol withSymbol()}.  If omitted, a descriptive symbol will attempt to be
+     * {@link CreateableUnitBuilder#withSymbol withSymbol()}.  If omitted, a descriptive symbol will attempt to be
      * generated based on the properties of the unit.</li>
      * <li>Create the unit using {@link CreateableUnitBuilder#create create()}.
      * </ol>

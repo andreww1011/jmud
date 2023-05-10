@@ -26,11 +26,15 @@ public interface FundamentalPair {
     
     /**
      * Returns the fundamental dimension mapped to the fundamental unit of this pair.
+     *
+     * @return a {@link com.jamw.jmud.FundamentalDimension} object
      */
     FundamentalDimension getFundamentalDimension();
     
     /**
      * Returns the fundamental unit mapped to the fundamental dimension of this pair.
+     *
+     * @return a {@link com.jamw.jmud.FundamentalUnit} object
      */
     FundamentalUnit getFundamentalUnit();
 }

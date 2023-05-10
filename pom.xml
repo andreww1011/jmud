@@ -67,6 +67,7 @@
                <version>${version.plugin.javadoc}</version>
                <configuration>
                    <source>${sourcecode.main.version}</source>
+                   <doclint>none</doclint>
                </configuration>
                <executions>
                    <execution>

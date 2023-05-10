@@ -32,7 +32,7 @@ package com.jamw.jmud;
  * value of the exponent in every fundamental dimension-exponent pair comprising 
  * the dimension's composition, is zero), and is interpreted as the special dimension
  * of dimensionless measurements represented by the object 
- * {@link Universe#getDimensionless()}.
+ * {@link com.jamw.jmud.Universe#getDimensionless()}.
  * 
  * <p>When physical quantities,
  * (with equal or non-equal composition) are multiplied or divided by one
@@ -69,8 +69,7 @@ public interface Dimension {
      *
      * @param d1 dimension to compare 
      * @param d2 dimension to compare
-     * 
-     * @throws IncommensurableDimensionException if the dimensions are not commensurable.
+     * @throws com.jamw.jmud.IncommensurableDimensionException if the dimensions are not commensurable.
      */
     static void assertCommensurable(Dimension d1, Dimension d2) throws IncommensurableDimensionException {
         if (!d1.isCommensurable(d2))
@@ -79,16 +78,22 @@ public interface Dimension {
     
     /**
      * Returns the name of this dimension.  
+     *
+     * @return a {@link java.lang.String} object
      */
     String getName();
     
     /**
      * Returns the symbol of this dimension.
+     *
+     * @return a {@link java.lang.String} object
      */
     String getSymbol();
     
     /**
      * Returns the composition of this dimension.
+     *
+     * @return a {@link com.jamw.jmud.Composition} object
      */
     Composition getComposition();
     
@@ -97,6 +102,7 @@ public interface Dimension {
      * dimension.  
      * 
      * @param d dimension to be compared to this dimension for commensurability .
+     * @return a boolean
      */
     default boolean isCommensurable(Dimension d) {
         if (this.equals(d))
@@ -106,6 +112,8 @@ public interface Dimension {
     }
     
     /**
+     * {@inheritDoc}
+     *
      * Tests whether the specified object is equal to this dimension.  Every 
      * dimension is unique even if all defining properties are identical.
      * Thus, this method returns true if and only if the

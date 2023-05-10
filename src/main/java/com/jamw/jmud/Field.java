@@ -20,7 +20,7 @@ package com.jamw.jmud;
 /**
  * A field represents a set of numbers together with the binary operations <i>addition</i>
  * and <i>multiplication</i> that satisfy the <a href="https://en.wikipedia.org/wiki/Field_(mathematics)#Classic_definition">field axioms</a>.
- * The set must contain the elements {@link Factory#zero() zero} and {@link Factory#one one},
+ * The set must contain the elements {@link com.jamw.jmud.Field.Factory#zero() zero} and {@link com.jamw.jmud.Field.Factory#one one},
  * the additive and multiplicative identities, respectively.
  * 
  * <p>For the purposes of this library, the set of operations on a field must also contain 
@@ -32,9 +32,7 @@ package com.jamw.jmud;
  * <p>Implementations must declare whether they are immutable or not.
  * 
  * @param <F> this field type (recursive type definition).
- * 
  * @see com.jamw.jmud.fields
- * 
  * @author andreww1011
  */
 public interface Field<F extends Field<F>> extends Comparable<F> {
@@ -71,24 +69,31 @@ public interface Field<F extends Field<F>> extends Comparable<F> {
         
     /**
      * Returns the factory for this field.
+     *
+     * @return a F.Factory object
      */
     F.Factory<F> getFactory();
     
     /**
      * Returns the negative or additive inverse of this field, <i>-a</i>.
      * <p><i>a + (-a) = {@linkplain Factory#zero() 0}</i>.
+     *
+     * @return a F object
      */
     F negate();
     
     /**
      * Returns the multiplicative inverse of this field, <i>1/a</i>.
      * <p><i>a • (1/a) = {@linkplain Factory#one() 1}</i>.
-     * @throws ArithmeticException if this field is equal to {@link Factory#zero() 0}.
+     *
+     * @throws java.lang.ArithmeticException if this field is equal to {@link com.jamw.jmud.Field.Factory#zero() 0}.
+     * @return a F object
      */
     F reciprocal() throws ArithmeticException;
     
     /**
      * Returns the result of the addition operation on this and the specified field.
+     *
      * @param b another field.
      * @return c = a + b.
      */
@@ -97,6 +102,7 @@ public interface Field<F extends Field<F>> extends Comparable<F> {
     /**
      * Returns the result of the addition operation on this and the
      * additive inverse of the specified field.
+     *
      * @param b another field.
      * @return c = a + (-b).
      */
@@ -104,6 +110,7 @@ public interface Field<F extends Field<F>> extends Comparable<F> {
     
     /**
      * Returns the result of the multiplication operation on this and the specified field.
+     *
      * @param b another field.
      * @return c = a • b.
      */
@@ -112,33 +119,37 @@ public interface Field<F extends Field<F>> extends Comparable<F> {
     /**
      * Returns the result of the multiplication operation on this and the
      * multiplicative inverse of the specified field.
+     *
      * @param b another field.
      * @return c = a • (1/b).
-     * @throws ArithmeticException if b is equal to {@link Factory#zero() 0}.
+     * @throws java.lang.ArithmeticException if b is equal to {@link com.jamw.jmud.Field.Factory#zero() 0}.
      */
     default F divide(F b) throws ArithmeticException { return this.multiply(b.reciprocal()); }
 
     /**
      * Returns the result of the power operation on this field, where the 
      * specified field is the exponential term.
+     *
      * @param exponent another field.
      * @return c = a^exponent.
-     * @throws ArithmeticException if the power operation is undefined for the specified exponent.
+     * @throws java.lang.ArithmeticException if the power operation is undefined for the specified exponent.
      */
     F power(F exponent) throws ArithmeticException;
     
     /**
      * Returns the result of the logarithm operation on this field, where the
      * specified field is the logarithmic base.
+     *
      * @param base another field.
      * @return c = log_base(a).
-     * @throws ArithmeticException if the logarithm operation is undefined for the specified base.
+     * @throws java.lang.ArithmeticException if the logarithm operation is undefined for the specified base.
      */
     F logarithm(F base) throws ArithmeticException;
 
     /**
      * Returns the result of the addition operation on this and the specified scalar
      * particularized to this field type.
+     *
      * @param b a scalar.
      * @return c = a + b.
      */
@@ -149,6 +160,7 @@ public interface Field<F extends Field<F>> extends Comparable<F> {
     /**
      * Returns the result of the addition operation on this and the
      * additive inverse of the specified scalar particularized to this field type.
+     *
      * @param b a scalar.
      * @return c = a + (-b).
      */
@@ -159,6 +171,7 @@ public interface Field<F extends Field<F>> extends Comparable<F> {
     /**
      * Returns the result of the multiplication operation on this and the specified scalar
      * particularized to this field type.
+     *
      * @param b a scalar.
      * @return c = a • b.
      */
@@ -169,9 +182,10 @@ public interface Field<F extends Field<F>> extends Comparable<F> {
     /**
      * Returns the result of the multiplication operation on this and the
      * multiplicative inverse of the specified scalar particularized to this field type.
+     *
      * @param b a scalar.
      * @return c = a • (1/b).
-     * @throws ArithmeticException if b is equal to {@link Factory#zero() 0}.
+     * @throws java.lang.ArithmeticException if b is equal to {@link com.jamw.jmud.Field.Factory#zero() 0}.
      */
     public default F divide(Scalar b) {
         return divide(b.using(getFactory()));
@@ -180,9 +194,10 @@ public interface Field<F extends Field<F>> extends Comparable<F> {
     /**
      * Returns the result of the power operation on this field, where the the exponential term
      * is the specified scalar particularized to this field type.
+     *
      * @param exponent a scalar.
      * @return c = a^exponent.
-     * @throws ArithmeticException if the power operation is undefined for the specified exponent.
+     * @throws java.lang.ArithmeticException if the power operation is undefined for the specified exponent.
      */
     public default F power(Scalar exponent) {
         return power(exponent.using(getFactory()));
@@ -191,9 +206,10 @@ public interface Field<F extends Field<F>> extends Comparable<F> {
     /**
      * Returns the result of the power operation on this field, where the the exponential term
      * is the value of the specified exponent represented by this field type.
+     *
      * @param exponent an exponent.
      * @return c = a^exponent.
-     * @throws ArithmeticException if the power operation is undefined for the specified exponent.
+     * @throws java.lang.ArithmeticException if the power operation is undefined for the specified exponent.
      */
     public default F power(Exponent exponent) {
         F e = getFactory().of(exponent.numerator());
@@ -205,15 +221,18 @@ public interface Field<F extends Field<F>> extends Comparable<F> {
     /**
      * Returns the result of the logarithm operation on this field, where the
      * the logarithmic base is the specified scalar particularized to this field type.
+     *
      * @param base a scalar.
      * @return c = log_base(a).
-     * @throws ArithmeticException if the logarithm operation is undefined for the specified base.
+     * @throws java.lang.ArithmeticException if the logarithm operation is undefined for the specified base.
      */
     public default F logarithm(Scalar base) {
         return logarithm(base.using(getFactory()));
     }
     
     /**
+     * {@inheritDoc}
+     *
      * Compares the specified object with this field for equality. 
      * Returns true if the specified object is a field of this type and the two 
      * fields represent the same value.
