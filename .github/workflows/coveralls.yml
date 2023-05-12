@@ -1,0 +1,17 @@
+name: Submit test coverage to coveralls
+
+jobs:
+  submit-test-coverage:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '16'
+        
+    - name: Test with Maven
+      run: mvn clean test cobertura:cobertura coveralls:report
+      env:
+        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
