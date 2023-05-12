@@ -15,6 +15,6 @@ jobs:
         java-version: '16'
         
     - name: Test with Maven
-      run: mvn clean test cobertura:cobertura coveralls:report
+      run: mvn clean test jacoco:report coveralls:report
       env:
         COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
