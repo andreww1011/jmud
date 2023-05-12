@@ -20,6 +20,7 @@
        <version.plugin.source>3.2.1</version.plugin.source>
        <version.plugin.gpg>3.0.1</version.plugin.gpg>
        <version.plugin.coveralls>4.3.0</version.plugin.coveralls>
+       <version.plugin.jaxb>2.3.1</version.plugin.jaxb>
        <version.plugin.jacoco>0.8.10</version.plugin.jacoco>
    </properties>
    <build>
@@ -103,6 +104,13 @@
                <groupId>org.eluder.coveralls</groupId>
                <artifactId>coveralls-maven-plugin</artifactId>
                <version>${version.plugin.coveralls}</version>
+               <dependencies>
+                   <dependency>
+                       <groupId>javax.xml.bind</groupId>
+                       <artifactId>jaxb-api</artifactId>
+                       <version>${version.plugin.jaxb}</version>
+                   </dependency>
+               </dependencies>       
                <configuration>
                    <repoToken>${env.COVERALLS_REPO_TOKEN}</repoToken>
                </configuration>
