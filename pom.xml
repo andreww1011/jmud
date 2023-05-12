@@ -19,9 +19,6 @@
        <version.plugin.surefire>3.0.0-M7</version.plugin.surefire>
        <version.plugin.source>3.2.1</version.plugin.source>
        <version.plugin.gpg>3.0.1</version.plugin.gpg>
-       <version.plugin.coveralls>4.3.0</version.plugin.coveralls>
-       <version.plugin.jaxb>2.3.1</version.plugin.jaxb>
-       <version.plugin.jacoco>0.8.10</version.plugin.jacoco>
    </properties>
    <build>
        <plugins>
@@ -97,34 +94,6 @@
                                <arg>loopback</arg>
                            </gpgArguments>
                        </configuration>
-                   </execution>
-               </executions>
-           </plugin>
-           <plugin>
-               <groupId>org.eluder.coveralls</groupId>
-               <artifactId>coveralls-maven-plugin</artifactId>
-               <version>${version.plugin.coveralls}</version>
-               <dependencies>
-                   <dependency>
-                       <groupId>javax.xml.bind</groupId>
-                       <artifactId>jaxb-api</artifactId>
-                       <version>${version.plugin.jaxb}</version>
-                   </dependency>
-               </dependencies>       
-               <configuration>
-                   <repoToken>${env.COVERALLS_REPO_TOKEN}</repoToken>
-               </configuration>
-           </plugin>
-           <plugin>
-               <groupId>org.jacoco</groupId>
-               <artifactId>jacoco-maven-plugin</artifactId>
-               <version>${version.plugin.jacoco}</version>
-               <executions>
-                   <execution>
-                      <id>prepare-agent</id>
-                      <goals>
-                         <goal>prepare-agent</goal>
-                      </goals>
                    </execution>
                </executions>
            </plugin>
